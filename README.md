@@ -2,7 +2,7 @@
 
 **Backend:** Firebase (Auth, Firestore, Storage, Cloud Functions)  
 **Mobile:** Android Studio – Java (XML UI, Firebase SDK)  
-**AI:** Trợ lý học tập qua API (gọi từ Cloud Functions để không lộ API key)
+**AI:** Trợ lý học tập qua API
 
 ---
 
@@ -14,7 +14,7 @@
 
 ---
 
-## 2) Firestore Collections (Schema đề xuất)
+## 2) Firestore Collections
 
 ### 2.1. `users/{uid}`
 - `role`: `"parent" | "teacher" | "admin"`
@@ -41,7 +41,7 @@
 
 ## 3) Quiz
 
-### 3.1. `quizzes/{quizId}`  (Client đọc 1 lần)
+### 3.1. `quizzes/{quizId}`
 **Chỉ chứa dữ liệu public để render UI**
 - `contentId` (nếu quiz là 1 content)
 - `title`, `topic`, `level`, `minAge`, `maxAge`
@@ -126,7 +126,7 @@
 
 # 7) BẢNG PHÂN CÔNG
 
-| API module | Thành viên 1 | Thành viên 2 | Thành viên 3 | Thành viên 4 |
+| API module | Sơn | Kiên | Tài | Giáp |
 |---|---|---|---|---|
 | 1) Auth & User Role API (`Firebase Auth` + `users`) | **Register/login/logout; tạo `users/{uid}` + role; điều hướng UI theo role; rules phần `users`; test accounts** | - | - | - |
 | 2) Children & Settings API (`children`) | - | **CRUD `children`; UI chọn hồ sơ trẻ; settings (dailyTimeLimitMin/enableAI/enableCommunity/allowedTypes); rules children; test** | - | - |
