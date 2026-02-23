@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UI Sơn - Luồng Học Sinh (Child)</title>
+
+  <!-- Google Fonts: Fredoka & Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;900&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+      THIẾT KẾ MỚI: CARTOON / BUBBLY UI DÀNH CHO TRẺ EM
+      Màu chủ đạo: Xanh lá + Trắng
+    ========================================================= */
+
+    :root {
+      /* Bảng màu chính (Green + White) */
+      --primary-green: #4ADE80; 
+      --light-green: #BBF7D0;
+      --dark-green: #14532D; 
+      --white: #FFFFFF;
+      --bg-app: #E8F5E9; 
+
+      /* Màu nhấn phụ */
+      --accent-yellow: #FDE047;
+      --accent-orange: #FB923C;
+      --accent-blue: #7DD3FC;
+      --accent-pink: #FBCFE8;
+
+      /* Hiệu ứng viền và bóng */
+      --border-thick: 4px solid var(--dark-green);
+      --border-thin: 2px solid var(--dark-green);
+      --shadow-solid: 0 6px 0 var(--dark-green);
+      --shadow-solid-sm: 0 4px 0 var(--dark-green);
+      --shadow-solid-btn: 0 8px 0 var(--dark-green);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #2C3E50; 
+      font-family: "Nunito", system-ui, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 60px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* ---------- Wrapper & Labels ---------- */
+    .screen-wrap { width: 375px; }
+    .label {
+      font-family: "Fredoka", system-ui, sans-serif;
+      font-weight: 700;
+      color: #fff;
+      background: var(--dark-green);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      margin: 0 0 16px 0;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    /* ---------- Figma Frames ---------- */
+    .frame {
+      width: 375px;
+      height: 812px;
+      border-radius: 40px;
+      border: 8px solid #111827;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-app); 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 30px;
+      background: #111827;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      z-index: 50;
+    }
+
+    /* ---------- Helpers ---------- */
+    .pad { padding: 24px; }
+    .top-safe { padding-top: 50px; }
+    .row { display: flex; align-items: center; }
+    .between { justify-content: space-between; }
+    .gap8 { gap: 8px; }
+    .gap10 { gap: 10px; }
+    .gap12 { gap: 12px; }
+    .col { display: flex; flex-direction: column; }
+    .center { justify-content: center; align-items: center; text-align: center; }
+    .flex-1 { flex: 1; overflow-y: auto; }
+    .flex-1::-webkit-scrollbar { display: none; }
+
+    /* ---------- Typography ---------- */
+    .title-kid { font-family: "Fredoka", system-ui, sans-serif; font-weight: 700; color: var(--dark-green); font-size: 22px; }
+    .kpi { font-family: "Fredoka", system-ui, sans-serif; font-weight: 700; color: var(--dark-green); }
+    .muted { font-weight: 700; color: rgba(20, 83, 45, 0.7); font-size: 14px; }
+
+    /* ---------- UI Components ---------- */
+    .btn {
+      border: var(--border-thick);
+      background: var(--white);
+      border-radius: 20px;
+      font-family: "Fredoka", system-ui, sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-solid-sm);
+      color: var(--dark-green);
+      text-align: center;
+      padding: 12px 20px;
+      transition: transform 0.1s;
+    }
+    .btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--dark-green); }
+
+    .btn-primary {
+      background: var(--primary-green);
+      box-shadow: var(--shadow-solid-btn);
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 20px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid);
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .pill {
+      background: var(--white);
+      border-radius: 999px;
+      padding: 8px 16px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: "Fredoka", sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: var(--accent-yellow);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    .chip {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: "Fredoka", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      background: var(--white);
+      color: var(--dark-green);
+      border: var(--border-thin);
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    /* Progress Bar */
+    .bar {
+      height: 16px;
+      border-radius: 999px;
+      background: #E2E8F0;
+      border: var(--border-thin);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      background: var(--primary-green);
+      border-right: var(--border-thin);
+    }
+
+    /* Custom AI Thỏ */
+    .ai-assistant {
+      position: absolute;
+      bottom: 20px; right: 20px;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px; z-index: 100;
+    }
+    .ai-avatar-float {
+      width: 70px; height: 70px;
+      background: var(--white); border: var(--border-thick); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; box-shadow: var(--shadow-solid);
+      cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+    .ai-badge {
+      position: absolute; top: -5px; right: -5px;
+      background: var(--accent-orange); color: white;
+      border-radius: 50%; width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka', sans-serif; font-size: 12px; font-weight: 900;
+      border: 2px solid var(--dark-green);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      background: var(--white);
+      border-top: var(--border-thick);
+      padding: 16px 24px 30px;
+      display: flex;
+      justify-content: space-between;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      box-shadow: 0 -4px 0 rgba(20, 83, 45, 0.1);
+      position: relative;
+      z-index: 10;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 12px;
+      color: #94A3B8; cursor: pointer;
+    }
+    .nav-item.active { color: var(--dark-green); }
+    .nav-icon { font-size: 24px; margin-bottom: 2px; }
+    .nav-item.active .nav-icon { transform: scale(1.2); filter: drop-shadow(0 2px 0 var(--primary-green)); }
+
+    /* Feed Post Card */
+    .post-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 16px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+      margin-bottom: 16px;
+    }
+    .action-btn {
+      background: #F1F5F9; border-radius: 12px; padding: 6px 12px;
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px;
+      color: var(--dark-green); border: var(--border-thin); cursor: pointer;
+      display: flex; gap: 6px; align-items: center;
+    }
+
+    /* Chat Bubbles */
+    .chat-bubble {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 20px;
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .chat-ai {
+      background: var(--white);
+      color: var(--dark-green);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-user {
+      background: var(--accent-yellow);
+      color: var(--dark-green);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+      1. MAIN UI (Trang chủ bé)
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">1. Main UI (4 Game + Icon AI)</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe flex-1" style="padding-bottom: 100px;">
+        <!-- Header -->
+        <div class="row between" style="margin-bottom: 24px;">
+          <div class="row gap12">
+            <div class="avatar">👧🏻</div>
+            <div class="col">
+              <div class="muted">Xin chào,</div>
+              <div class="title-kid">Bé Miu</div>
+            </div>
+          </div>
+          <div class="pill" style="font-size: 16px;">⭐ 120</div>
+        </div>
+
+        <div class="card" style="padding: 24px 20px;">
+          <div class="title-kid" style="font-size: 24px; margin-bottom: 4px;">Hôm nay học gì?</div>
+          <div class="muted" style="margin-bottom: 20px;">Chọn bài học để nhận sao nhé!</div>
+
+          <div class="grid2">
+            <!-- Mục 1: Trò chơi -->
+            <div class="card" style="padding:16px; margin:0; background:var(--white); cursor: pointer;">
+              <div style="font-size: 32px; margin-bottom: 8px;">🎮</div>
+              <div class="kpi" style="font-size:16px;">Trò chơi</div>
+              <div class="muted" style="font-size:12px;">Tư duy & Phản xạ</div>
+            </div>
+
+            <!-- Mục 2: Câu đố -->
+            <div class="card" style="padding:16px; margin:0; background:var(--white); cursor: pointer;">
+              <div style="font-size: 32px; margin-bottom: 8px;">❓</div>
+              <div class="kpi" style="font-size:16px;">Câu đố</div>
+              <div class="muted" style="font-size:12px;">Trắc nghiệm vui</div>
+            </div>
+
+            <!-- Mục 3: Màu sắc -->
+            <div class="card" style="padding:16px; margin:0; background:var(--white); cursor: pointer;">
+              <div style="font-size: 32px; margin-bottom: 8px;">🎨</div>
+              <div class="kpi" style="font-size:16px;">Màu sắc</div>
+              <div class="muted" style="font-size:12px;">Kéo thả, hội họa</div>
+            </div>
+
+            <!-- Mục 4: Số đếm -->
+            <div class="card" style="padding:16px; margin:0; background:var(--white); cursor: pointer;">
+              <div style="font-size: 32px; margin-bottom: 8px;">🔢</div>
+              <div class="kpi" style="font-size:16px;">Số đếm</div>
+              <div class="muted" style="font-size:12px;">Toán học cơ bản</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icon Chatbot Nổi Bật -->
+      <div class="ai-assistant" style="bottom: 100px;">
+        <div class="chip" style="background: var(--white); box-shadow: var(--shadow-solid-sm); margin-bottom: 4px; font-size: 12px;">Hỏi Thỏ nhé!</div>
+        <div class="ai-avatar-float">
+          🐰
+          <div class="ai-badge">1</div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav">
+        <div class="nav-item active"><div class="nav-icon">🏠</div>Trang chủ</div>
+        <div class="nav-item"><div class="nav-icon">🌍</div>Cộng đồng</div>
+        <div class="nav-item"><div class="nav-icon">📈</div>Tiến độ</div>
+        <div class="nav-item"><div class="nav-icon">🎒</div>Hồ sơ</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      2. AI CHATBOT UI
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">2. AI Chatbot UI</div>
+    <section class="frame" style="background: var(--white);">
+      <div class="notch"></div>
+
+      <!-- Header -->
+      <div class="pad top-safe row between" style="background: var(--primary-green); border-bottom: var(--border-thick); padding-bottom: 16px;">
+        <div class="pill" style="padding: 8px 12px;"><span>⬅️</span></div>
+        <div class="row gap10">
+          <span style="font-size: 24px;">🐰</span>
+          <div class="title-kid" style="color: var(--white); text-shadow: 0 2px 0 var(--dark-green);">Thỏ Trợ Lý</div>
+        </div>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <!-- Chat Box -->
+      <div class="pad flex-1 col" style="background: var(--bg-app);">
+        <div class="muted center" style="margin-bottom: 16px; font-size: 12px;">Hôm nay, 09:41</div>
+
+        <div class="chat-bubble chat-ai">
+          Chào bé Miu! Hôm nay bé muốn học số đếm hay làm bài tập ghép hình nào?
+        </div>
+        
+        <div class="chat-bubble chat-user">
+          Thỏ ơi, bài toán đếm quả táo làm thế nào ạ? 🍎
+        </div>
+
+        <div class="chat-bubble chat-ai">
+          Dễ lắm! Bé hãy dùng ngón tay chạm vào từng quả táo trên màn hình và đếm to: Một, Hai, Ba... nhé! Thử ngay nào! ✨
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div style="padding: 16px; background: var(--white); border-top: var(--border-thick); display: flex; gap: 12px; align-items: center;">
+        <div class="pill" style="padding: 12px; background: var(--accent-blue); font-size: 20px;">🎤</div>
+        <input type="text" placeholder="Nhắn cho Thỏ..." style="flex: 1; border: var(--border-thick); border-radius: 999px; padding: 12px 16px; font-family: 'Nunito', sans-serif; font-weight: 700; outline: none;">
+        <div class="pill" style="padding: 12px; background: var(--primary-green); font-size: 20px;">⬆️</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      3. CỘNG ĐỒNG UI
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">3. Cộng đồng (Feed/Social)</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe" style="padding-bottom: 10px;">
+        <div class="title-kid" style="font-size: 24px; text-align: center; margin-bottom: 16px;">Bảng Tin Lớp Học</div>
+        <!-- Thẻ đăng bài nhanh -->
+        <div class="card" style="padding: 16px; margin-bottom: 20px;">
+          <div class="row gap10">
+            <div class="avatar" style="width: 40px; height: 40px; font-size: 20px;">👧🏻</div>
+            <input type="text" placeholder="Bé muốn khoe thành tích gì?" style="flex:1; border:none; outline:none; font-family:'Nunito'; font-weight:700; background:transparent;">
+            <div class="pill" style="padding: 8px;">📷</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pad flex-1" style="padding-top: 0;">
+        <!-- Bài post 1 (Thành tích) -->
+        <div class="post-card">
+          <div class="row between" style="margin-bottom: 12px;">
+            <div class="row gap10">
+              <div class="avatar" style="width: 40px; height: 40px; font-size: 20px; background: var(--accent-blue);">👦🏻</div>
+              <div class="col">
+                <div class="kpi" style="font-size: 16px;">Bé Bo</div>
+                <div class="muted" style="font-size: 11px;">2 giờ trước</div>
+              </div>
+            </div>
+            <div class="chip" style="background: var(--accent-yellow);">Thành tích mới 🌟</div>
+          </div>
+          
+          <div class="kpi" style="font-size: 15px; margin-bottom: 12px; line-height: 1.4;">
+            Tớ vừa hoàn thành 100% bài tập Trắc nghiệm khoa học nè! 🦖🚀
+          </div>
+
+          <!-- Interaction bar -->
+          <div class="row gap10" style="border-top: 2px dashed var(--dark-green); padding-top: 12px;">
+            <div class="action-btn">❤️ Thích (5)</div>
+            <div class="action-btn">💬 Bình luận (2)</div>
+            <div class="action-btn" style="margin-left: auto;">⤴️ Chia sẻ</div>
+          </div>
+        </div>
+
+        <!-- Bài post 2 (Giáo viên) -->
+        <div class="post-card" style="background: #FEF9C3; border-color: #CA8A04;">
+          <div class="row between" style="margin-bottom: 12px;">
+            <div class="row gap10">
+              <div class="avatar" style="width: 40px; height: 40px; font-size: 20px; background: var(--white); border-color: #CA8A04;">👩‍🏫</div>
+              <div class="col">
+                <div class="kpi" style="font-size: 16px; color: #854D0E;">Cô Lan Anh</div>
+                <div class="muted" style="font-size: 11px; color: #A16207;">5 giờ trước</div>
+              </div>
+            </div>
+            <div class="chip" style="background: var(--white); border-color: #CA8A04;">Thông báo lớp</div>
+          </div>
+          
+          <div class="kpi" style="font-size: 15px; margin-bottom: 12px; color: #854D0E; line-height: 1.4;">
+            Tuần này cả lớp mình học rất ngoan. Cô đã gửi huy hiệu Nhanh Trí cho tất cả các bạn làm xong bài Màu Sắc nhé! 🎉
+          </div>
+
+          <div class="row gap10" style="border-top: 2px dashed #CA8A04; padding-top: 12px;">
+            <div class="action-btn" style="border-color: #CA8A04;">❤️ Thích (12)</div>
+            <div class="action-btn" style="border-color: #CA8A04;">💬 Bình luận (4)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav">
+        <div class="nav-item"><div class="nav-icon">🏠</div>Trang chủ</div>
+        <div class="nav-item active"><div class="nav-icon">🌍</div>Cộng đồng</div>
+        <div class="nav-item"><div class="nav-icon">📈</div>Tiến độ</div>
+        <div class="nav-item"><div class="nav-icon">🎒</div>Hồ sơ</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      4. TIẾN ĐỘ & THỐNG KÊ UI
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">4. Thống Kê & Tiến Độ</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe flex-1">
+        <div class="title-kid" style="font-size: 24px; text-align: center; margin-bottom: 20px;">Báo Cáo Học Tập</div>
+
+        <!-- Streak Card -->
+        <div class="card center col" style="padding: 24px; background: var(--accent-yellow);">
+          <div style="font-size: 50px; margin-bottom: 8px; filter: drop-shadow(var(--shadow-solid-sm));">🔥</div>
+          <div class="kpi" style="font-size: 20px;">Chuỗi ngày học chăm</div>
+          <div class="title-kid" style="font-size: 32px; color: var(--accent-orange); margin-top: 4px;">5 Ngày</div>
+          <div class="muted" style="margin-top: 8px; font-size: 13px;">Bé hãy học tiếp ngày mai nhé!</div>
+        </div>
+
+        <!-- Progress Bars -->
+        <div class="title-kid" style="font-size: 20px; margin-top: 24px; margin-bottom: 16px;">Kỹ năng của bé</div>
+
+        <div class="card" style="padding: 20px;">
+          <!-- Skill 1 -->
+          <div style="margin-bottom: 16px;">
+            <div class="row between">
+              <span class="kpi">🔢 Toán & Số đếm</span>
+              <span class="kpi">70%</span>
+            </div>
+            <div class="bar"><span style="width: 70%;"></span></div>
+          </div>
+
+          <!-- Skill 2 -->
+          <div style="margin-bottom: 16px;">
+            <div class="row between">
+              <span class="kpi">🎨 Nhận biết Màu Sắc</span>
+              <span class="kpi" style="color: var(--accent-orange);">100%</span>
+            </div>
+            <div class="bar"><span style="width: 100%; background: var(--accent-yellow);"></span></div>
+          </div>
+
+          <!-- Skill 3 -->
+          <div style="margin-bottom: 0;">
+            <div class="row between">
+              <span class="kpi">🧩 Logic & Phản xạ</span>
+              <span class="kpi" style="color: var(--accent-blue);">45%</span>
+            </div>
+            <div class="bar"><span style="width: 45%; background: var(--accent-blue);"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav">
+        <div class="nav-item"><div class="nav-icon">🏠</div>Trang chủ</div>
+        <div class="nav-item"><div class="nav-icon">🌍</div>Cộng đồng</div>
+        <div class="nav-item active"><div class="nav-icon">📈</div>Tiến độ</div>
+        <div class="nav-item"><div class="nav-icon">🎒</div>Hồ sơ</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      5. PROFILE UI (HỒ SƠ BÉ)
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">5. Profile (Hồ Sơ) & Huy Hiệu</div>
+    <section class="frame" style="background: var(--white);">
+      <div class="notch"></div>
+
+      <!-- Header Cover -->
+      <div style="background: var(--primary-green); padding: 70px 24px 30px; border-bottom: var(--border-thick); border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; text-align: center; box-shadow: var(--shadow-solid-sm); position: relative;">
+        <div class="avatar" style="width: 90px; height: 90px; font-size: 45px; margin: 0 auto 12px;">👧🏻</div>
+        <div class="title-kid" style="font-size: 26px; color: var(--white); text-shadow: 0 2px 0 var(--dark-green);">Bé Miu</div>
+        <div class="chip" style="margin-top: 8px;">Lớp: Mầm 1</div>
+        
+        <div class="pill" style="position: absolute; top: 60px; right: 20px; padding: 8px; box-shadow: none;">⚙️</div>
+      </div>
+
+      <div class="pad flex-1 col">
+        <div class="row between" style="margin-bottom: 16px;">
+          <div class="title-kid" style="font-size: 20px;">Bộ sưu tập Huy Hiệu</div>
+          <div class="muted" style="text-decoration: underline;">Xem tất cả</div>
+        </div>
+
+        <!-- Badges Grid -->
+        <div class="grid3" style="margin-bottom: 24px;">
+          <div class="col center gap8">
+            <div class="avatar" style="width: 70px; height: 70px; font-size: 35px; background: var(--bg-app);">🌟</div>
+            <span class="kpi" style="font-size: 12px; text-align: center;">Chăm ngoan</span>
+          </div>
+          <div class="col center gap8">
+            <div class="avatar" style="width: 70px; height: 70px; font-size: 35px; background: #FFF7ED; border-color: var(--accent-orange);">🎨</div>
+            <span class="kpi" style="font-size: 12px; text-align: center;">Họa sĩ nhí</span>
+          </div>
+          <div class="col center gap8">
+            <div class="avatar" style="width: 70px; height: 70px; font-size: 35px; background: #F8FAFC; border-color: #94A3B8; filter: grayscale(1); opacity: 0.5;">🧠</div>
+            <span class="muted" style="font-size: 12px; text-align: center;">Chưa mở</span>
+          </div>
+        </div>
+
+        <button class="btn" style="margin-top: auto;">✏️ Chỉnh sửa hồ sơ</button>
+        <button class="btn" style="margin-top: 12px; background: #FEE2E2; color: #DC2626; border-color: #DC2626; box-shadow: 0 4px 0 #DC2626;">Đăng xuất</button>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav">
+        <div class="nav-item"><div class="nav-icon">🏠</div>Trang chủ</div>
+        <div class="nav-item"><div class="nav-icon">🌍</div>Cộng đồng</div>
+        <div class="nav-item"><div class="nav-icon">📈</div>Tiến độ</div>
+        <div class="nav-item active"><div class="nav-icon">🎒</div>Hồ sơ</div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

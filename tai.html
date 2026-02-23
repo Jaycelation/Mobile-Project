@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UI Tài - Luồng Mini Games</title>
+
+  <!-- Google Fonts: Fredoka & Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;900&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+      THIẾT KẾ MỚI: CARTOON / BUBBLY UI DÀNH CHO TRẺ EM
+      Màu chủ đạo: Xanh lá + Trắng
+    ========================================================= */
+
+    :root {
+      /* Bảng màu chính (Green + White) */
+      --primary-green: #4ADE80; 
+      --light-green: #BBF7D0;
+      --dark-green: #14532D; 
+      --white: #FFFFFF;
+      --bg-app: #E8F5E9; 
+
+      /* Màu nhấn phụ cho Game */
+      --accent-yellow: #FDE047;
+      --accent-orange: #FB923C;
+      --accent-blue: #7DD3FC;
+      --accent-pink: #FBCFE8;
+      --accent-purple: #D8B4FE;
+
+      /* Hiệu ứng viền và bóng (Cartoon style) */
+      --border-thick: 4px solid var(--dark-green);
+      --border-thin: 2px solid var(--dark-green);
+      --shadow-solid: 0 6px 0 var(--dark-green);
+      --shadow-solid-sm: 0 4px 0 var(--dark-green);
+      --shadow-solid-btn: 0 8px 0 var(--dark-green);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #2C3E50; 
+      font-family: "Nunito", system-ui, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 60px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* ---------- Wrapper & Labels ---------- */
+    .screen-wrap { width: 375px; }
+    .label {
+      font-family: "Fredoka", system-ui, sans-serif;
+      font-weight: 700;
+      color: #fff;
+      background: var(--dark-green);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      margin: 0 0 16px 0;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    /* ---------- Figma Frames ---------- */
+    .frame {
+      width: 375px;
+      height: 812px;
+      border-radius: 40px;
+      border: 8px solid #111827;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-app); /* Màu nền app ngoài cùng: xanh lá nhạt */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 30px;
+      background: #111827;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      z-index: 50;
+    }
+
+    /* ---------- Helpers ---------- */
+    .pad { padding: 24px; }
+    .top-safe { padding-top: 50px; }
+    .row { display: flex; align-items: center; }
+    .between { justify-content: space-between; }
+    .gap8 { gap: 8px; }
+    .gap10 { gap: 10px; }
+    .gap12 { gap: 12px; }
+    .gap16 { gap: 16px; }
+    .col { display: flex; flex-direction: column; }
+    .center { justify-content: center; align-items: center; text-align: center; }
+    .flex-1 { flex: 1; overflow-y: auto; }
+
+    /* ---------- Typography ---------- */
+    .title-kid { font-family: "Fredoka", system-ui, sans-serif; font-weight: 700; color: var(--dark-green); font-size: 22px; }
+    .kpi { font-family: "Fredoka", system-ui, sans-serif; font-weight: 700; color: var(--dark-green); }
+    .muted { font-weight: 700; color: rgba(20, 83, 45, 0.7); }
+
+    /* ---------- UI Components ---------- */
+    .btn {
+      border: var(--border-thick);
+      background: var(--white);
+      border-radius: 20px;
+      font-family: "Fredoka", system-ui, sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-solid-sm);
+      color: var(--dark-green);
+      text-align: center;
+      padding: 14px 20px;
+      transition: transform 0.1s;
+    }
+    .btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--dark-green); }
+
+    .btn-primary {
+      background: var(--primary-green);
+      box-shadow: var(--shadow-solid-btn);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 20px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid);
+      position: relative;
+    }
+
+    .pill {
+      background: var(--white);
+      border-radius: 999px;
+      padding: 8px 16px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: "Fredoka", sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-family: "Fredoka", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      background: var(--white);
+      color: var(--dark-green);
+      border: var(--border-thin);
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    .hud {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 12px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* Vùng chơi Game */
+    .play-area {
+      background: var(--light-green); /* Tông màu xanh lá chuẩn Xanh/Trắng */
+      border-radius: 24px;
+      padding: 20px;
+      border: var(--border-thick);
+      margin-top: 16px;
+    }
+
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+    .slot {
+      background: rgba(255,255,255,0.6);
+      border-radius: 20px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Fredoka", sans-serif;
+      font-weight: 900;
+      border: 3px dashed var(--dark-green);
+      font-size: 32px;
+    }
+
+    .piece {
+      background: var(--white);
+      border-radius: 20px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-solid-sm);
+      font-size: 32px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .piece:active { transform: scale(0.95); }
+
+    /* Custom AI Thỏ */
+    .ai-assistant {
+      position: absolute;
+      bottom: 24px; left: 20px;
+      display: flex; align-items: flex-end; gap: 12px; z-index: 100;
+      pointer-events: none;
+    }
+    .ai-avatar {
+      width: 60px; height: 60px;
+      background: var(--white); border: var(--border-thick); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px; box-shadow: var(--shadow-solid-sm);
+    }
+    .ai-bubble {
+      background: var(--white);
+      border: var(--border-thick);
+      padding: 10px 14px;
+      border-radius: 20px;
+      border-bottom-left-radius: 0;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--dark-green);
+      box-shadow: var(--shadow-solid-sm);
+      margin-bottom: 20px; 
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+      GAME 1: TÌM QUY LUẬT (Pattern)
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">1. Game: Tìm Quy Luật</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe flex-1">
+        <!-- HUD - Head Up Display -->
+        <div class="hud">
+          <div class="pill"><span>⬅️</span></div>
+          <div class="chip" style="font-size:16px;">Level 3</div>
+          <div class="chip" style="background:var(--accent-yellow);">⏳ 00:18</div>
+        </div>
+
+        <div class="card">
+          <div class="kpi" style="font-size:22px; text-align:center;">Dãy hình thiếu gì?</div>
+
+          <div class="play-area">
+            <div class="row between" style="gap:12px;">
+              <div class="slot" style="flex:1; background:var(--white); border-style: solid;">🟦</div>
+              <div class="slot" style="flex:1; background:var(--white); border-style: solid;">🟩</div>
+              <div class="slot" style="flex:1; background:var(--white); border-style: solid;">🟦</div>
+              <div class="slot" style="flex:1; background:var(--accent-yellow); border-style:dashed;">❓</div>
+            </div>
+
+            <div class="kpi" style="margin-top:24px; font-size:16px; text-align:center; margin-bottom: 12px;">Chọn đáp án:</div>
+            <div class="grid3">
+              <div class="piece">🟩</div>
+              <div class="piece">🟦</div>
+              <div class="piece">🟨</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Assistant -->
+      <div class="ai-assistant">
+        <div class="ai-avatar">🐰</div>
+        <div class="ai-bubble">Xanh dương, Xanh lá, Xanh dương... rồi gì nữa ta?</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      GAME 2: TINH MẮT NHANH TAY (Reflex)
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">2. Game: Nhanh Tay</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe flex-1">
+        <div class="hud">
+          <div class="pill"><span>⬅️</span></div>
+          <div class="chip" style="font-size:16px;">Level 5</div>
+          <div class="chip" style="background:var(--accent-pink);">⏳ 00:08</div>
+        </div>
+
+        <div class="card">
+          <div class="row center gap10" style="margin-bottom: 16px;">
+            <div class="kpi" style="font-size:22px; text-align:center;">Chạm nhanh vào:</div>
+            <div class="piece" style="width: 50px; height: 50px; font-size: 24px; box-shadow: none;">🐸</div>
+          </div>
+
+          <div class="play-area" style="background: var(--white); padding: 12px;">
+            <div class="grid3">
+              <div class="piece" style="background: var(--light-green);">🐸</div>
+              <div class="piece" style="opacity:0.4; background:#E2E8F0; box-shadow:none;">🐢</div>
+              <div class="piece" style="opacity:0.4; background:#E2E8F0; box-shadow:none;">🐍</div>
+              <div class="piece" style="opacity:0.4; background:#E2E8F0; box-shadow:none;">🐊</div>
+              <div class="piece" style="opacity:0.4; background:#E2E8F0; box-shadow:none;">🐢</div>
+              <div class="piece" style="background: var(--light-green);">🐸</div>
+              <div class="piece" style="opacity:0.4; background:#E2E8F0; box-shadow:none;">🦎</div>
+              <div class="piece" style="background: var(--light-green);">🐸</div>
+              <div class="piece" style="opacity:0.4; background:#E2E8F0; box-shadow:none;">🐍</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Assistant -->
+      <div class="ai-assistant">
+        <div class="ai-avatar">🐰</div>
+        <div class="ai-bubble">Nhanh tay bắt chú ếch xanh nào!</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      GAME 3: GHÉP TRANH (Jigsaw)
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">3. Game: Ghép Tranh</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe flex-1">
+        <div class="hud">
+          <div class="pill"><span>⬅️</span></div>
+          <div class="chip" style="font-size:16px;">Level 2</div>
+          <div class="chip" style="background:var(--accent-yellow);">⏳ 01:20</div>
+        </div>
+
+        <div class="card">
+          <div class="kpi" style="font-size:22px; text-align:center;">Hoàn thiện bức tranh</div>
+
+          <div class="play-area">
+            <!-- Khung tranh -->
+            <div class="grid2" style="gap:12px; margin-bottom: 20px;">
+              <div class="slot col" style="height:140px;">🌲 <br><span style="font-size:12px; font-weight:700;">(Khung 1)</span></div>
+              <div class="grid2" style="gap:12px;">
+                <div class="slot" style="font-size:14px; height:64px;">Mây ☁️</div>
+                <div class="slot" style="font-size:14px; height:64px; background: var(--accent-yellow); border-style:solid;">Mặt trời ☀️</div>
+                <div class="slot" style="font-size:14px; height:64px;">Chim 🦅</div>
+                <div class="slot" style="font-size:14px; height:64px;">Cỏ 🌿</div>
+              </div>
+            </div>
+
+            <!-- Mảnh ghép -->
+            <div class="kpi" style="font-size:14px; text-align:center; margin-bottom:10px;">Kéo các mảnh ghép lên trên:</div>
+            <div class="grid4">
+              <div class="piece" style="height: 50px; font-size: 24px;">☁️</div>
+              <div class="piece" style="height: 50px; font-size: 24px; opacity:0.3; box-shadow:none;">☀️</div> <!-- Đã kéo -->
+              <div class="piece" style="height: 50px; font-size: 24px;">🦅</div>
+              <div class="piece" style="height: 50px; font-size: 24px;">🌿</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Assistant -->
+      <div class="ai-assistant">
+        <div class="ai-avatar">🐰</div>
+        <div class="ai-bubble">Bé đã tìm thấy mặt trời rồi, giỏi quá!</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      GAME 4: LẬT HÌNH TRÍ NHỚ (Memory)
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">4. Game: Trí Nhớ</div>
+    <section class="frame">
+      <div class="notch"></div>
+
+      <div class="pad top-safe flex-1">
+        <div class="hud">
+          <div class="pill"><span>⬅️</span></div>
+          <div class="chip" style="font-size:16px;">Level 4</div>
+          <div class="chip" style="background:var(--accent-blue);">Lỗi: 0/3</div>
+        </div>
+
+        <div class="card">
+          <div class="kpi" style="font-size:22px; text-align:center;">Tìm cặp hình giống nhau</div>
+
+          <div class="play-area" style="background: var(--white);">
+            <div class="grid3">
+              <!-- Thẻ úp -->
+              <div class="piece" style="background: var(--primary-green); color: var(--white); font-size: 20px;">❓</div>
+              <!-- Thẻ ngửa -->
+              <div class="piece" style="border-color: var(--accent-orange); background: #FFF7ED;">🍎</div>
+              <div class="piece" style="background: var(--primary-green); color: var(--white); font-size: 20px;">❓</div>
+              
+              <div class="piece" style="background: var(--primary-green); color: var(--white); font-size: 20px;">❓</div>
+              <!-- Thẻ ngửa -->
+              <div class="piece" style="border-color: var(--accent-orange); background: #FFF7ED;">🍎</div>
+              <!-- Đã tìm thấy -->
+              <div class="piece" style="opacity: 0.2; box-shadow: none;">🍌</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Assistant -->
+      <div class="ai-assistant">
+        <div class="ai-avatar">🐰</div>
+        <div class="ai-bubble">Wow, bé đã nhớ vị trí quả táo!</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+      5. WIN POPUP / KHEN THƯỞNG
+  ========================== -->
+  <div class="screen-wrap">
+    <div class="label">5. Win Popup (Phản hồi/Khen thưởng)</div>
+    <section class="frame" style="background: var(--primary-green);">
+      <div class="notch"></div>
+
+      <div class="pad top-safe center col flex-1" style="padding-bottom: 60px;">
+        
+        <!-- Icon Winner -->
+        <div class="row gap12" style="margin-bottom: 24px;">
+          <div class="piece" style="font-size:60px; width:100px; height:100px; border-radius:50%; box-shadow: var(--shadow-solid);">🏆</div>
+        </div>
+
+        <div class="card" style="width:100%; text-align:center; padding: 40px 20px;">
+          <div class="title-kid" style="font-size:32px; color:var(--dark-green);">Tuyệt Vời!</div>
+          <div class="kpi" style="font-size:16px; margin-top:10px; color: #475569;">Bé đã hoàn thành xuất sắc bài học</div>
+
+          <!-- Rating Stars -->
+          <div class="row center gap10" style="margin: 30px 0;">
+            <span style="font-size:45px; color:var(--accent-yellow); text-shadow: 0 4px 0 var(--dark-green);">★</span>
+            <span style="font-size:55px; color:var(--accent-yellow); text-shadow: 0 4px 0 var(--dark-green); transform: translateY(-10px);">★</span>
+            <span style="font-size:45px; color:var(--accent-yellow); text-shadow: 0 4px 0 var(--dark-green);">★</span>
+          </div>
+
+          <!-- Phần thưởng cộng thêm -->
+          <div class="chip" style="font-size: 16px; margin-bottom: 24px; padding: 10px 20px; border-color: var(--accent-orange); background: #FFF7ED;">
+            + 10 Điểm Kinh nghiệm 🌟
+          </div>
+
+          <button class="btn btn-primary" style="padding:16px; border-radius: 999px;">Chơi Tiếp Nào!</button>
+          <div class="muted" style="margin-top: 16px; font-size: 14px; text-decoration: underline; cursor: pointer;">Về Trang chủ</div>
+        </div>
+      </div>
+
+      <!-- AI Assistant -->
+      <div class="ai-assistant">
+        <div class="ai-avatar" style="background: var(--accent-yellow);">🐰</div>
+        <div class="ai-bubble" style="bottom: 10px;">Giỏi quá! Cố gắng phát huy nhé bé! 🎉</div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
