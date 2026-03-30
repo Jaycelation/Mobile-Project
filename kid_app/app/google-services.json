@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "109319878833",
+    "project_id": "kidlearn-app-bebbe",
+    "storage_bucket": "kidlearn-app-bebbe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109319878833:android:0af3013cca0da2eb3d0a90",
+        "android_client_info": {
+          "package_name": "com.example.kid_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYmBMj--yX8mbB1mIrR-JG3XwckkEYbzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

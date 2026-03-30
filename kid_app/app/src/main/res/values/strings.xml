@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KidLearn</string>
+
+    <!-- Common -->
+    <string name="btn_confirm">Xác nhận</string>
+    <string name="btn_cancel">Hủy</string>
+    <string name="btn_save">Lưu</string>
+    <string name="btn_back">Quay lại</string>
+    <string name="btn_next">Tiếp theo</string>
+    <string name="btn_start">Bắt đầu</string>
+    <string name="btn_retry">Thử lại</string>
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="btn_finish">Hoàn thành</string>
+    <string name="loading">Đang tải…</string>
+    <string name="error_generic">Đã có lỗi xảy ra. Vui lòng thử lại.</string>
+    <string name="error_network">Không có kết nối mạng.</string>
+
+    <!-- Auth -->
+    <string name="welcome_title">Chào mừng đến KidLearn!</string>
+    <string name="welcome_subtitle">Học vui, học thông minh mỗi ngày</string>
+    <string name="btn_sign_in">Đăng nhập</string>
+    <string name="btn_sign_up">Đăng ký</string>
+    <string name="btn_sign_out">Đăng xuất</string>
+    <string name="hint_email">Địa chỉ email</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_full_name">Họ và tên</string>
+    <string name="hint_confirm_password">Xác nhận mật khẩu</string>
+    <string name="label_role">Bạn là</string>
+    <string name="role_parent">Phụ huynh</string>
+    <string name="role_teacher">Giáo viên</string>
+    <string name="link_forgot_password">Quên mật khẩu?</string>
+    <string name="link_already_have_account">Đã có tài khoản? Đăng nhập</string>
+    <string name="link_no_account">Chưa có tài khoản? Đăng ký</string>
+
+    <!-- Parent -->
+    <string name="parent_home_title">Trang chủ phụ huynh</string>
+    <string name="nav_children">Hồ sơ bé</string>
+    <string name="nav_settings">Cài đặt</string>
+    <string name="nav_classes">Lớp học</string>
+    <string name="nav_progress">Tiến độ</string>
+
+    <!-- Child -->
+    <string name="child_home_greeting">Xin chào, %1$s! 👋</string>
+    <string name="nav_games">Trò chơi</string>
+    <string name="nav_quiz">Câu đố</string>
+    <string name="nav_colors">Màu sắc</string>
+    <string name="nav_counting">Số đếm</string>
+    <string name="nav_ai_chat">Trợ lý AI</string>
+
+    <!-- Teacher -->
+    <string name="teacher_home_title">Lớp học của tôi</string>
+    <string name="nav_my_classes">Lớp học</string>
+    <string name="nav_assignments">Bài tập</string>
+    <string name="nav_students">Học sinh</string>
+
+    <!-- Admin -->
+    <string name="admin_home_title">Quản trị hệ thống</string>
+    <string name="nav_users">Người dùng</string>
+    <string name="nav_content">Nội dung</string>
+    <string name="nav_reports">Báo cáo</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_coming_soon">Tính năng đang được phát triển…</string>
+
+    <!-- Parent - Child Profile (Bước 4) -->
+    <string name="add_child_title">Thêm hồ sơ bé</string>
+    <string name="edit_child_title">Chỉnh sửa hồ sơ bé</string>
+    <string name="child_settings_title">Cài đặt cho bé</string>
+    <string name="hint_full_name_child">Họ và tên bé</string>
+    <string name="hint_nick_name">Tên gọi (biệt danh)</string>
+    <string name="hint_birth_date">Ngày sinh (yyyy-MM-dd)</string>
+    <string name="label_gender">Giới tính</string>
+    <string name="label_age_group">Nhóm tuổi</string>
+    <string name="label_relationship">Quan hệ với bé</string>
+    <string name="label_daily_limit">Giới hạn thời gian / ngày (phút)</string>
+    <string name="label_ai_enabled">Bật trợ lý AI</string>
+    <string name="label_content_filter">Bộ lọc nội dung</string>
+    <string name="btn_add_child">+ Thêm bé</string>
+    <string name="btn_delete_child">Xóa hồ sơ bé</string>
+    <string name="msg_no_children">Chưa có hồ sơ bé nào.\nHãy thêm bé đầu tiên!</string>
+    <string name="msg_child_created">Đã tạo hồ sơ bé thành công!</string>
+    <string name="msg_child_updated">Đã cập nhật hồ sơ bé!</string>
+    <string name="msg_settings_saved">Đã lưu cài đặt!</string>
+
+    <!-- Bước 5 - Child Home -->
+    <string name="child_home_title">Học cùng KidLearn</string>
+    <string name="module_ai_disabled">Tính năng AI bị tắt bởi phụ huynh 🔒</string>
+    <string name="msg_no_child_selected">Vui lòng chọn hồ sơ bé trước!</string>
+    <string name="btn_switch_child">Chuyển bé</string>
+
+</resources>

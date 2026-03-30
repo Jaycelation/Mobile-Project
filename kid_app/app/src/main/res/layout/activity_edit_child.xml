@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_edit_child.xml — Chỉnh sửa hồ sơ bé -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="32dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_green"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:paddingTop="44dp">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="@color/white"
+                android:contentDescription="Quay lại"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="Chỉnh sửa hồ sơ bé"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Avatar preview -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_green"
+            android:gravity="center"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:id="@+id/tv_avatar_preview"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:background="@drawable/bg_avatar_circle"
+                android:gravity="center"
+                android:text="👶"
+                android:textSize="48sp"/>
+
+        </LinearLayout>
+
+        <!-- Form panel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Họ tên -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_full_name"
+                style="@style/InputLayout.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Họ và tên *">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Tên gọi -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_nick_name"
+                style="@style/InputLayout.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Tên gọi (không bắt buộc)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nick_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Ngày sinh -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_birth_date"
+                style="@style/InputLayout.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ngày sinh (yyyy-MM-dd)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_birth_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:maxLines="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Giới tính -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Giới tính"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"/>
+
+            <RadioGroup
+                android:id="@+id/rg_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/rb_male"   android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="24dp" android:text="Bé trai 👦"/>
+                <RadioButton android:id="@+id/rb_female" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bé gái 👧"/>
+            </RadioGroup>
+
+            <!-- Nhóm tuổi -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Nhóm tuổi *"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"/>
+
+            <RadioGroup
+                android:id="@+id/rg_age_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/rb_age_3_5"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="16dp" android:text="3–5"/>
+                <RadioButton android:id="@+id/rb_age_6_8"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="16dp" android:text="6–8"/>
+                <RadioButton android:id="@+id/rb_age_9_12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9–12"/>
+            </RadioGroup>
+
+            <!-- ProgressBar -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Lưu thay đổi -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:text="💾 Lưu thay đổi"/>
+
+            <!-- Xóa hồ sơ -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:strokeColor="@color/status_error"
+                android:textColor="@color/status_error"
+                android:text="🗑️ Xóa hồ sơ bé"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

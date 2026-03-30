@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- item_child_card.xml — Thẻ bé trong danh sách, dùng ở RecyclerView -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_child_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_child_card_selector"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    android:elevation="2dp">
+
+    <!-- Avatar emoji -->
+    <TextView
+        android:id="@+id/tv_avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_avatar_circle"
+        android:gravity="center"
+        android:text="👧"
+        android:textSize="28sp"/>
+
+    <!-- Thông tin bé -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_child_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên bé"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_child_age_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_child_birth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <!-- Nút Sửa hồ sơ -->
+    <ImageButton
+        android:id="@+id/btn_child_edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_edit"
+        android:tint="@color/accent_blue"
+        android:contentDescription="Sửa hồ sơ"/>
+
+    <!-- Nút Cài đặt -->
+    <ImageButton
+        android:id="@+id/btn_child_settings"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_manage"
+        android:tint="@color/primary_green"
+        android:contentDescription="Cài đặt"/>
+
+</LinearLayout>

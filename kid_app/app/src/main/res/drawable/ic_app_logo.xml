@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icon sách + ngôi sao đơn giản làm logo app -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Vòng tròn nền trắng mờ -->
+    <path
+        android:fillColor="#33FFFFFF"
+        android:pathData="M60,10 A50,50 0 1,1 60,110 A50,50 0 1,1 60,10 Z"/>
+
+    <!-- Quyển sách -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,35 L35,85 Q35,88 38,88 L60,88 L60,35 Z"/>
+    <path
+        android:fillColor="#E8F5E9"
+        android:pathData="M60,35 L60,88 L82,88 Q85,88 85,85 L85,35 Z"/>
+    <!-- Gáy sách -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M58,32 L62,32 L62,90 L58,90 Z"/>
+    <!-- Dòng chữ trên sách -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M40,48 L55,48 L55,50 L40,50 Z"/>
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M40,54 L55,54 L55,56 L40,56 Z"/>
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M40,60 L55,60 L55,62 L40,62 Z"/>
+
+    <!-- Ngôi sao nhỏ góc trên phải -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M80,28 L82,24 L84,28 L88,28 L85,31 L86,35 L82,33 L78,35 L79,31 L76,28 Z"/>
+</vector>

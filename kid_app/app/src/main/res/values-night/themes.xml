@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Giữ nguyên theme ban đêm giống ban ngày cho app trẻ em -->
+    <style name="Theme.Kid_app" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryVariant">@color/primary_green_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary_yellow</item>
+        <item name="android:colorBackground">@color/bg_main</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-rounded</item>
+    </style>
+</resources>

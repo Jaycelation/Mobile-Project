@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Quyền mạng cho Firebase và AI API -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".KidLearnApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Kid_app"
+        tools:targetApi="31">
+
+        <!-- ==================== LAUNCHER ==================== -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Kid_app.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ==================== AUTH ==================== -->
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Auth" />
+
+        <activity
+            android:name=".auth.SignInActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Auth"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".auth.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Auth"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".auth.ForgotPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Auth"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ==================== PARENT (Bước 4) ==================== -->
+        <activity
+            android:name=".parent.ParentHomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".parent.AddChildActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".parent.EditChildActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".parent.ChildSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ==================== CHILD (Bước 5) ==================== -->
+        <!-- Child không đăng nhập trực tiếp.
+             Parent chọn bé → lưu selectedChildId → mở ChildHomeActivity. -->
+        <activity
+            android:name=".child.ChildHomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Child" />
+
+        <!-- Game placeholder → Bước 6 sẽ implement đầy đủ -->
+        <activity
+            android:name=".child.GameListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Child" />
+
+        <!-- Quiz placeholder → Bước 7 -->
+        <activity
+            android:name=".child.QuizListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Child" />
+
+        <!-- Color placeholder → Bước 8 -->
+        <activity
+            android:name=".child.ColorListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Child" />
+
+        <!-- Counting placeholder → Bước 9 -->
+        <activity
+            android:name=".child.CountingListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Child" />
+
+        <!-- AI Chat placeholder → Bước 10 -->
+        <activity
+            android:name=".child.AiChatActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kid_app.Child" />
+
+        <!-- ==================== TEACHER (Bước 11 sẽ mở rộng) ==================== -->
+        <activity
+            android:name=".teacher.TeacherHomeActivity"
+            android:exported="false" />
+
+        <!-- ==================== ADMIN (Bước 13 sẽ mở rộng) ==================== -->
+        <activity
+            android:name=".admin.AdminHomeActivity"
+            android:exported="false" />
+
+        <!-- ==================== PLACEHOLDER ==================== -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
