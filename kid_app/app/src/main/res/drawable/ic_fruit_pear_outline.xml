@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Quả lê đen trắng -->
+    <path
+        android:pathData="M50,30c-8,0 -12,10 -12,20c0,5 2,10 2,15c0,10 5,15 10,15s10,-5 10,-15c0,-5 2,-10 2,-15c0,-10 -4,-20 -12,-20z"
+        android:strokeWidth="3"
+        android:strokeColor="#424242"
+        android:fillColor="#F5F5F5"/>
+    <path
+        android:pathData="M50,30v-5"
+        android:strokeWidth="3"
+        android:strokeColor="#424242"
+        android:strokeLineCap="round"/>
+</vector>

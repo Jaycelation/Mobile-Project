@@ -1,0 +1,11 @@
+local.properties
+
+
+app/google-services.json
+
+
+*.jks
+*.keystore
+
+build/
+app/build/

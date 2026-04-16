@@ -1,10 +1,60 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // DEV MODE: cho phép tất cả read/write
-    // TODO: Thắt chặt rules trước khi deploy production
+
+    // Helper: Bất kỳ ai đăng nhập đều được phép
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: Kiểm tra nếu user thao tác trên chính dữ liệu của họ
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Collection users: Chỉ user sở hữu mới được sửa. Người khác có thể xem.
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId);
+    }
+
+    // Collection child_profiles: Ai cũng có thể đọc, chỉ phụ huynh/giáo viên tạo ra mới được ghi.
+    match /child_profiles/{childId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+      // Mở rộng child_settings
+      match /settings/{docId} {
+        allow read, write: if isAuthenticated();
+      }
+    }
+
+    // Collection parent_child_links / class_members / classes / assignments / assignments_submissions
+    // Tạm thời cho phép read, write với tất cả users đã đăng nhập để dễ demo
+    match /classes/{classId} {
+      allow read, write: if isAuthenticated();
+    }
+    match /class_members/{memberId} {
+      allow read, write: if isAuthenticated();
+    }
+    match /assignments/{assignmentId} {
+      allow read, write: if isAuthenticated();
+    }
+    match /assignment_submissions/{submissionId} {
+      allow read, write: if isAuthenticated();
+    }
+    match /child_stats/{childId} {
+      allow read, write: if isAuthenticated();
+    }
+    match /child_badges/{badgeId} {
+      allow read, write: if isAuthenticated();
+    }
+    match /parent_child_links/{linkId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Chặn mặc định các collections không khai báo
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }

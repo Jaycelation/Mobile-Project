@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/white" />
+            <corners android:radius="12dp" />
+            <stroke android:width="2dp" android:color="@color/primary_green_dark" />
+        </shape>
+    </item>
+    <item android:gravity="center">
+        <bitmap android:src="@android:drawable/ic_delete" android:tint="@color/status_error" android:alpha="0"/> <!-- Placeholder -->
+    </item>
+</layer-list>

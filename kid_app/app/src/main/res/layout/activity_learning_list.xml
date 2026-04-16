@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_icon_circle"
+            android:src="@drawable/ic_back"
+            app:tint="@color/primary_green_dark" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_explanation_box"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📖"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Bé học tập"
+                android:textColor="@color/primary_green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_home"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_icon_circle"
+            android:src="@drawable/ic_home"
+            app:tint="@color/primary_green_dark" />
+    </RelativeLayout>
+
+    <!-- Main Container -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh sách bài học"
+                android:textColor="@color/primary_green_dark"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- Bảng chữ cái (NEW) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/white"
+                android:elevation="2dp"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/icon_learning_alphabet"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:backgroundTint="#AD1457"
+                    android:gravity="center"
+                    android:text="🔤"
+                    android:textSize="26sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_toEndOf="@id/icon_learning_alphabet"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bảng chữ cái"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Làm quen với 29 chữ cái Tiếng Việt"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_alphabet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/primary_green"
+                    android:text="CHƠI"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+
+            <!-- Các con số -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/white"
+                android:elevation="2dp"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/icon_learning_counting"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:backgroundTint="@color/secondary_yellow"
+                    android:gravity="center"
+                    android:text="🔢"
+                    android:textSize="26sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_toEndOf="@id/icon_learning_counting"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Các con số"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Làm quen với các số từ 1 đến 20"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_counting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/primary_green"
+                    android:text="CHƠI"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+
+            <!-- Hình học logic -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/white"
+                android:elevation="2dp"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/icon_learning_shape"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:backgroundTint="@color/accent_blue"
+                    android:gravity="center"
+                    android:text="📐"
+                    android:textSize="26sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_toEndOf="@id/icon_learning_shape"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hình học logic"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhận biết hình khối cơ bản"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_shape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/primary_green"
+                    android:text="CHƠI"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+
+            <!-- Các loại quả -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/white"
+                android:elevation="2dp"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/icon_learning_object"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:backgroundTint="@color/secondary_orange"
+                    android:gravity="center"
+                    android:text="🍎"
+                    android:textSize="26sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_toEndOf="@id/icon_learning_object"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Các loại quả"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhận biết các loại quả ngọt"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_object"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/primary_green"
+                    android:text="CHƠI"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+
+            <!-- Màu sắc -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/white"
+                android:elevation="2dp"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/icon_learning_color"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:backgroundTint="@color/accent_pink"
+                    android:gravity="center"
+                    android:text="🎨"
+                    android:textSize="26sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_toEndOf="@id/icon_learning_color"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Màu sắc"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khám phá thế giới muôn màu"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/primary_green"
+                    android:text="CHƠI"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+
+            <!-- Bạn nhỏ quanh bé -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/white"
+                android:elevation="2dp"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/icon_learning_sound"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:backgroundTint="@color/accent_purple"
+                    android:gravity="center"
+                    android:text="🦁"
+                    android:textSize="26sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_toEndOf="@id/icon_learning_sound"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bạn nhỏ quanh bé"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nghe tiếng kêu các bạn động vật"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/primary_green"
+                    android:text="CHƠI"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

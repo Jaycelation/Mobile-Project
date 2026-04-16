@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- item_child_card.xml — Thẻ bé trong danh sách, dùng ở RecyclerView -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_child_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -65,21 +65,21 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@android:drawable/ic_menu_edit"
-        android:tint="@color/accent_blue"
+        app:tint="@color/accent_blue"
         android:contentDescription="Sửa hồ sơ"/>
 
-    <!-- Nút Cài đặt -->
+    <!-- Nút Xóa (Thùng rác) -->
     <ImageButton
-        android:id="@+id/btn_child_settings"
+        android:id="@+id/btn_child_delete"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@android:drawable/ic_menu_manage"
-        android:tint="@color/primary_green"
-        android:contentDescription="Cài đặt"/>
+        android:src="@android:drawable/ic_menu_delete"
+        app:tint="#FF4444"
+        android:contentDescription="Xóa bé"/>
 
 </LinearLayout>

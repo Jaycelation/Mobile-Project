@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_class_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_explanation_box"
+                android:backgroundTint="@color/secondary_yellow_light"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp"
+                android:text="Lớp mầm 1"
+                android:textColor="@color/primary_green_dark"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_due_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hạn: 04/12/2026"
+                    android:textColor="@color/status_error"
+                    android:textSize="12sp" />
+
+                <ImageButton
+                    android:id="@+id/btn_delete_assignment"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Xóa bài tập"
+                    android:src="@android:drawable/ic_menu_delete"
+                    android:tint="@color/status_error"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_assignment_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="1-5"
+            android:textColor="@color/primary_green_dark"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/pb_completion"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="14dp"
+            android:progress="70"
+            android:progressDrawable="@drawable/custom_progress_bar" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_details"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:text="Xem chi tiết"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_green_dark"
+            android:textStyle="bold"
+            app:backgroundTint="@color/primary_green_pale"
+            app:cornerRadius="24dp"
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconPadding="8dp"
+            app:iconTint="@color/primary_green_dark"
+            app:strokeWidth="0dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

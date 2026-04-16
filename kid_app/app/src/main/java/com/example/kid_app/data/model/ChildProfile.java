@@ -37,10 +37,15 @@ public class ChildProfile {
 
     /**
      * Nullable — mã lớp học hiện tại.
-     * Đây chỉ là dữ liệu hỗ trợ để load nhanh.
-     * Logic thành viên lớp dựa trên class_members collection.
+     * Cần được dùng làm trường chuẩn.
      */
     private String currentClassId;
+
+    /** Fallback trường hợp data cũ */
+    private String classId;
+
+    /** Tên lớp học, thường được cập nhật kèm currentClassId */
+    private String className;
 
     @ServerTimestamp
     private Date createdAt;
@@ -87,6 +92,17 @@ public class ChildProfile {
 
     public String getCurrentClassId() { return currentClassId; }
     public void setCurrentClassId(String currentClassId) { this.currentClassId = currentClassId; }
+
+    public String getClassId() { return classId; }
+    public void setClassId(String classId) { this.classId = classId; }
+
+    public String getClassName() { return className; }
+    public void setClassName(String className) { this.className = className; }
+
+    /** Helper: Ưu tiên currentClassId, fallback classId */
+    public String getPrimaryClassId() {
+        return (currentClassId != null && !currentClassId.isEmpty()) ? currentClassId : classId;
+    }
 
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }

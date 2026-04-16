@@ -17,20 +17,16 @@ public class ColorListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_module_placeholder);
-
-        String icon  = getIntent().getStringExtra("module_icon");
-        String title = getIntent().getStringExtra("module_title");
-        String step  = getIntent().getStringExtra("module_step");
-
-        TextView tvIcon  = findViewById(R.id.tv_module_icon);
-        TextView tvTitle = findViewById(R.id.tv_module_title);
-        TextView tvDesc  = findViewById(R.id.tv_module_desc);
-
-        if (icon  != null) tvIcon.setText(icon);
-        if (title != null) tvTitle.setText(title);
-        if (step  != null) tvDesc.setText("Module này sẽ có ở " + step + "!");
+        setContentView(R.layout.activity_color_menu);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        
+        findViewById(R.id.card_mode_1).setOnClickListener(v -> {
+            startActivity(new android.content.Intent(this, ColorGameActivity.class));
+        });
+        
+        findViewById(R.id.card_mode_2).setOnClickListener(v -> {
+            startActivity(new android.content.Intent(this, ColorMatchGameActivity.class));
+        });
     }
 }

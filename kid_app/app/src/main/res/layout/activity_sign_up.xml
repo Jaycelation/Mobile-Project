@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_auth_gradient">
 
-    <!-- Header nhỏ hơn Sign In để dành chỗ cho form -->
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 style="@style/InputLayout.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="24dp"
                 android:hint="@string/hint_confirm_password"
                 app:passwordToggleEnabled="true"
                 app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
@@ -120,42 +120,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Chọn role -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_role"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:layout_marginBottom="8dp"/>
-
-            <RadioGroup
-                android:id="@+id/rg_role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="24dp">
-
-                <RadioButton
-                    android:id="@+id/rb_parent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/role_parent"
-                    android:textColor="@color/text_primary"
-                    android:buttonTint="@color/primary_green"
-                    android:checked="true"/>
-
-                <RadioButton
-                    android:id="@+id/rb_teacher"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/role_teacher"
-                    android:textColor="@color/text_primary"
-                    android:buttonTint="@color/primary_green"/>
-            </RadioGroup>
 
             <!-- Nút đăng ký -->
             <com.google.android.material.button.MaterialButton

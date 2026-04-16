@@ -5,16 +5,14 @@ package com.example.kid_app.common;
  * Chứa: key Intent, SharedPreferences, collection Firestore, role người dùng.
  */
 public final class AppConstants {
-
     private AppConstants() {}
 
-    // ==================== USER ROLES ====================
+    /* ==================== USER ROLES ==================== */
     public static final String ROLE_PARENT = "parent";
     public static final String ROLE_TEACHER = "teacher";
     public static final String ROLE_ADMIN = "admin";
-    // Child không đăng nhập trực tiếp — được truy cập qua profile của Parent
 
-    // ==================== INTENT KEYS ====================
+    /* ==================== INTENT KEYS ==================== */
     public static final String KEY_CHILD_ID = "child_id";
     public static final String KEY_CONTENT_ID = "content_id";
     public static final String KEY_LEVEL_ID = "level_id";
@@ -23,7 +21,7 @@ public final class AppConstants {
     public static final String KEY_ASSIGNMENT_ID = "assignment_id";
     public static final String KEY_CONVERSATION_ID = "conversation_id";
 
-    // ==================== SHARED PREFERENCES ====================
+    /* ==================== SHARED PREFERENCES ==================== */
     public static final String PREF_NAME = "kidlearn_prefs";
     public static final String PREF_SELECTED_CHILD_ID = "selected_child_id";
     public static final String PREF_USER_ROLE = "user_role";
@@ -75,7 +73,7 @@ public final class AppConstants {
     public static final String COL_AI_CONVERSATIONS = "ai_conversations";
 
     // ==================== FIRESTORE SUBCOLLECTIONS ====================
-    // Giải thích: subcollection khi dữ liệu chỉ có nghĩa gắn với document cha
+    /* Giải thích: subcollection khi dữ liệu chỉ có nghĩa gắn với document cha */
 
     /** Cài đặt của bé — subcollection dưới child_profiles/<child_id>/settings */
     public static final String SUBCOL_SETTINGS = "settings";
@@ -93,32 +91,32 @@ public final class AppConstants {
     /** Tin nhắn AI — subcollection dưới ai_conversations/<conv_id>/messages */
     public static final String SUBCOL_AI_MESSAGES = "messages";
 
-    // ==================== CONTENT TYPES ====================
+    /* ==================== CONTENT TYPES ==================== */
     public static final String CONTENT_TYPE_GAME = "game";
     public static final String CONTENT_TYPE_QUIZ = "quiz";
     public static final String CONTENT_TYPE_COLOR = "color_activity";
     public static final String CONTENT_TYPE_COUNTING = "counting_activity";
 
-    // ==================== SESSION TYPES ====================
+    /* ==================== SESSION TYPES ==================== */
     public static final String SESSION_FREE_PLAY = "free_play";
     public static final String SESSION_ASSIGNMENT = "assignment";
 
-    // ==================== AGE GROUPS ====================
+    /* ==================== AGE GROUPS ==================== */
     public static final String AGE_GROUP_3_5 = "3-5";
     public static final String AGE_GROUP_6_8 = "6-8";
     public static final String AGE_GROUP_9_12 = "9-12";
 
-    // ==================== STATUS ====================
+    /* ==================== STATUS ==================== */
     public static final String STATUS_ACTIVE = "active";
     public static final String STATUS_INACTIVE = "inactive";
     public static final String STATUS_DELETED = "deleted";
 
-    // ==================== DIFFICULTY ====================
+    /* ==================== DIFFICULTY ==================== */
     public static final String DIFFICULTY_EASY = "easy";
     public static final String DIFFICULTY_MEDIUM = "medium";
     public static final String DIFFICULTY_HARD = "hard";
 
-    // ==================== AI ====================
+    /* ==================== AI ==================== */
     /** Sender role trong ai_messages: 0=user(child), 1=assistant(AI) */
     public static final int AI_ROLE_USER = 0;
     public static final int AI_ROLE_ASSISTANT = 1;

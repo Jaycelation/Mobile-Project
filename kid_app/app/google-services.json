@@ -12,7 +12,12 @@
           "package_name": "com.example.kid_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "109319878833-98b1bagno9lk5h5clf4216863iuaeivh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCYmBMj--yX8mbB1mIrR-JG3XwckkEYbzs"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109319878833-98b1bagno9lk5h5clf4216863iuaeivh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

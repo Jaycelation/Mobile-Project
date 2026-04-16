@@ -28,6 +28,9 @@ public class ActivityAttempt {
     /** Nullable — chỉ có khi làm bài theo assignment của giáo viên */
     private String assignmentId;
 
+    /** "game" | "quiz" | "color" | "counting" */
+    private String contentType;
+
     /** "free_play" | "assignment" */
     private String sessionType;
 
@@ -51,11 +54,12 @@ public class ActivityAttempt {
     // Required by Firestore
     public ActivityAttempt() {}
 
-    public ActivityAttempt(String childId, String contentId, String levelId, String sessionType) {
+    public ActivityAttempt(String childId, String contentId, String levelId, String sessionType, String contentType) {
         this.childId = childId;
         this.contentId = contentId;
         this.levelId = levelId;
         this.sessionType = sessionType;
+        this.contentType = contentType;
         this.isPassed = "in_progress";
         this.score = 0;
         this.durationSeconds = 0;
@@ -79,6 +83,9 @@ public class ActivityAttempt {
 
     public String getSessionType() { return sessionType; }
     public void setSessionType(String sessionType) { this.sessionType = sessionType; }
+
+    public String getContentType() { return contentType; }
+    public void setContentType(String contentType) { this.contentType = contentType; }
 
     public int getScore() { return score; }
     public void setScore(int score) { this.score = score; }

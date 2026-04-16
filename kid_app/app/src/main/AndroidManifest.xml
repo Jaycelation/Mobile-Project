@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Quyền mạng cho Firebase và AI API -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".KidLearnApp"
@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kid_app"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <!-- ==================== LAUNCHER ==================== -->
@@ -30,101 +31,73 @@
         </activity>
 
         <!-- ==================== AUTH ==================== -->
-        <activity
-            android:name=".WelcomeActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Auth" />
+        <activity android:name=".WelcomeActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Auth" />
+        <activity android:name=".auth.SignInActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Auth" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".auth.SignUpActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Auth" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".auth.ForgotPasswordActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Auth" android:windowSoftInputMode="adjustResize" />
 
-        <activity
-            android:name=".auth.SignInActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Auth"
-            android:windowSoftInputMode="adjustResize" />
+        <!-- ==================== PARENT ==================== -->
+        <activity android:name=".parent.ParentHomeActivity" android:exported="false" />
+        <activity android:name=".parent.AddChildActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".parent.EditChildActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".parent.ChildSettingsActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".parent.JoinClassActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
 
-        <activity
-            android:name=".auth.SignUpActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Auth"
-            android:windowSoftInputMode="adjustResize" />
+        <!-- ==================== CHILD ==================== -->
+        <activity android:name=".child.ChildHomeActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.LearningListActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.GameListActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.PatternGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.FastEyeGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.PuzzleGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ColorGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.CountingGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.AlphabetLearningActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.QuizListActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.QuizPlayActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.AnimalGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.AnimalSoundGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ObjectGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ShapeGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ShadowMatchGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.AiChatActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.CommunityFeedActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.CreatePostActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".child.ChildProgressActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ChildProfileActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ChildAssignmentActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.NumberMatchGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.FruitMatchGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ColorMatchGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.AlphabetMatchGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.CountingFruitGameActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.BadgeCollectionActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.LeaderboardActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ParentFeedbackListActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.ParentFeedbackActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".child.QuizHistoryActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
 
-        <activity
-            android:name=".auth.ForgotPasswordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Auth"
-            android:windowSoftInputMode="adjustResize" />
+        <!-- ==================== TEACHER ==================== -->
+        <activity android:name=".teacher.TeacherHomeActivity" android:exported="false" />
+        <activity android:name=".teacher.CreateClassActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".teacher.CreateAssignmentActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".teacher.ClassManagementActivity" android:exported="false" />
+        <activity android:name=".teacher.ClassDetailActivity" android:exported="false" />
+        <activity android:name=".teacher.AddStudentActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".teacher.AssignmentManagementActivity" android:exported="false" />
+        <activity android:name=".teacher.AssignmentDetailActivity" android:exported="false" />
+        <activity android:name=".teacher.FeedbackListActivity" android:exported="false" />
+        <activity android:name=".teacher.FeedbackChatActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
+        <activity android:name=".teacher.TeacherProfileActivity" android:exported="false" />
+        <activity android:name=".teacher.EditTeacherProfileActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
 
-        <!-- ==================== PARENT (Bước 4) ==================== -->
-        <activity
-            android:name=".parent.ParentHomeActivity"
-            android:exported="false" />
+        <!-- ==================== ADMIN ==================== -->
+        <activity android:name=".admin.AdminHomeActivity" android:exported="false" />
+        <activity android:name=".admin.UserManagementActivity" android:exported="false" />
+        <activity android:name=".admin.ContentManagementActivity" android:exported="false" />
+        <activity android:name=".admin.SystemReportActivity" android:exported="false" />
 
-        <activity
-            android:name=".parent.AddChildActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".parent.EditChildActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".parent.ChildSettingsActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- ==================== CHILD (Bước 5) ==================== -->
-        <!-- Child không đăng nhập trực tiếp.
-             Parent chọn bé → lưu selectedChildId → mở ChildHomeActivity. -->
-        <activity
-            android:name=".child.ChildHomeActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Child" />
-
-        <!-- Game placeholder → Bước 6 sẽ implement đầy đủ -->
-        <activity
-            android:name=".child.GameListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Child" />
-
-        <!-- Quiz placeholder → Bước 7 -->
-        <activity
-            android:name=".child.QuizListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Child" />
-
-        <!-- Color placeholder → Bước 8 -->
-        <activity
-            android:name=".child.ColorListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Child" />
-
-        <!-- Counting placeholder → Bước 9 -->
-        <activity
-            android:name=".child.CountingListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Child" />
-
-        <!-- AI Chat placeholder → Bước 10 -->
-        <activity
-            android:name=".child.AiChatActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Kid_app.Child" />
-
-        <!-- ==================== TEACHER (Bước 11 sẽ mở rộng) ==================== -->
-        <activity
-            android:name=".teacher.TeacherHomeActivity"
-            android:exported="false" />
-
-        <!-- ==================== ADMIN (Bước 13 sẽ mở rộng) ==================== -->
-        <activity
-            android:name=".admin.AdminHomeActivity"
-            android:exported="false" />
-
-        <!-- ==================== PLACEHOLDER ==================== -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
 
     </application>
 

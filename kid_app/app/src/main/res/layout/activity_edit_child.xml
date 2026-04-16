@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- activity_edit_child.xml — Chỉnh sửa hồ sơ bé -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -28,7 +27,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_media_previous"
-                android:tint="@color/white"
+                app:tint="@color/white"
                 android:contentDescription="Quay lại"/>
 
             <TextView
@@ -132,30 +131,10 @@
                 android:id="@+id/rg_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:orientation="horizontal">
                 <RadioButton android:id="@+id/rb_male"   android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="24dp" android:text="Bé trai 👦"/>
                 <RadioButton android:id="@+id/rb_female" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bé gái 👧"/>
-            </RadioGroup>
-
-            <!-- Nhóm tuổi -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Nhóm tuổi *"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"/>
-
-            <RadioGroup
-                android:id="@+id/rg_age_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="horizontal">
-                <RadioButton android:id="@+id/rb_age_3_5"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="16dp" android:text="3–5"/>
-                <RadioButton android:id="@+id/rb_age_6_8"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="16dp" android:text="6–8"/>
-                <RadioButton android:id="@+id/rb_age_9_12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9–12"/>
             </RadioGroup>
 
             <!-- ProgressBar -->

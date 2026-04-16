@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary - Xanh lá chủ đạo -->
-    <color name="primary_green">#2E7D32</color>
-    <color name="primary_green_light">#4CAF50</color>
-    <color name="primary_green_dark">#1B5E20</color>
-    <color name="primary_green_soft">#A5D6A7</color>
+    <!-- Primary - Xanh lá chủ đạo (Pastel nhẹ nhàng) -->
+    <color name="primary_green">#66BB6A</color>
+    <color name="primary_green_light">#A5D6A7</color>
+    <color name="primary_green_dark">#2E7D32</color>
+    <color name="primary_green_soft">#C8E6C9</color>
     <color name="primary_green_pale">#E8F5E9</color>
 
-    <!-- Secondary - Vàng cam vui tươi -->
-    <color name="secondary_yellow">#FFC107</color>
-    <color name="secondary_yellow_light">#FFD54F</color>
-    <color name="secondary_orange">#FF6F00</color>
+    <!-- Secondary - Vàng cam vui tươi (Màu phấn) -->
+    <color name="secondary_yellow">#FFD54F</color>
+    <color name="secondary_yellow_light">#FFF176</color>
+    <color name="secondary_orange">#FFB74D</color>
 
     <!-- Accent - Xanh dương trẻ em -->
-    <color name="accent_blue">#1976D2</color>
-    <color name="accent_blue_light">#64B5F6</color>
-    <color name="accent_purple">#7B1FA2</color>
-    <color name="accent_pink">#E91E63</color>
+    <color name="accent_blue">#64B5F6</color>
+    <color name="accent_blue_light">#BBDEFB</color>
+    <color name="accent_purple">#BA68C8</color>
+    <color name="accent_pink">#F06292</color>
 
     <!-- Neutrals -->
     <color name="white">#FFFFFF</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#212121</color>
     <color name="gray_100">#F5F5F5</color>
     <color name="gray_200">#EEEEEE</color>
     <color name="gray_300">#E0E0E0</color>
@@ -29,26 +29,26 @@
     <color name="gray_900">#212121</color>
 
     <!-- Text Colors -->
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="text_hint">#BDBDBD</color>
+    <color name="text_primary">#2E3440</color>
+    <color name="text_secondary">#4C566A</color>
+    <color name="text_hint">#D8DEE9</color>
     <color name="text_on_primary">#FFFFFF</color>
 
-    <!-- Background -->
-    <color name="bg_main">#F1F8E9</color>
+    <!-- Background (Màu trắng kem nhạt cực kỳ dịu mắt) -->
+    <color name="bg_main">#F9FBE7</color>
     <color name="bg_card">#FFFFFF</color>
     <color name="bg_overlay">#80000000</color>
 
     <!-- Status Colors -->
-    <color name="status_success">#4CAF50</color>
-    <color name="status_error">#F44336</color>
-    <color name="status_warning">#FF9800</color>
-    <color name="status_info">#2196F3</color>
+    <color name="status_success">#81C784</color>
+    <color name="status_error">#E57373</color>
+    <color name="status_warning">#FFB74D</color>
+    <color name="status_info">#64B5F6</color>
 
-    <!-- Module Colors -->
-    <color name="module_game">#FF6F00</color>
-    <color name="module_quiz">#1565C0</color>
-    <color name="module_color">#AD1457</color>
-    <color name="module_count">#00695C</color>
-    <color name="module_ai">#6A1B9A</color>
+    <!-- Module Colors (Chỉnh sang tone Cute) -->
+    <color name="module_game">#FFB74D</color>
+    <color name="module_quiz">#64B5F6</color>
+    <color name="module_color">#F06292</color>
+    <color name="module_count">#4DB6AC</color>
+    <color name="module_ai">#9575CD</color>
 </resources>

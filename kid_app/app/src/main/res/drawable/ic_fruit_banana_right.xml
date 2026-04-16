@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="50dp"
+    android:height="100dp"
+    android:viewportWidth="50"
+    android:viewportHeight="100">
+    <!-- Nửa phải quả chuối - Đã căn chỉnh lại sang lề trái của khung hình -->
+    <path
+        android:pathData="M0,30c15,0 25,15 25,30c0,10 -5,25 -15,30c-5,2 -10,1 -10,0v-60z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:startX="0" android:startY="30" android:endX="25" android:endY="90" android:type="linear">
+                <item android:offset="0" android:color="#FFF176"/>
+                <item android:offset="1" android:color="#FBC02D"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Cuống chuối -->
+    <path android:pathData="M0,30c0,-5 -3,-8 -6,-8" android:strokeWidth="3" android:strokeColor="#8BC34A" android:strokeLineCap="round"/>
+</vector>

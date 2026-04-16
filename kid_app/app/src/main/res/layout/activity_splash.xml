@@ -4,61 +4,88 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_green">
+    android:background="@color/bg_main">
 
-    <!-- Logo icon giả lập bằng emoji text -->
-    <TextView
-        android:id="@+id/tv_logo_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🎓"
-        android:textSize="80sp"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/tv_app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <!-- Trang trí hình nền mờ -->
+    <View
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="#1566BB6A"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:id="@+id/tv_app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="KidLearn"
-        android:textSize="42sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-rounded"
-        app:layout_constraintBottom_toTopOf="@+id/tv_tagline"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_logo_icon"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="-100dp"
+        android:layout_marginStart="-100dp"/>
 
-    <TextView
-        android:id="@+id/tv_tagline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Học vui mỗi ngày 🌟"
-        android:textSize="18sp"
-        android:textColor="#CCFFFFFF"
-        android:fontFamily="sans-serif-rounded"
-        app:layout_constraintBottom_toTopOf="@+id/progress_loading"
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="#15FFD54F"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_app_name"
-        android:layout_marginBottom="48dp"/>
+        android:layout_marginBottom="-50dp"
+        android:layout_marginEnd="-50dp"/>
 
-    <ProgressBar
-        android:id="@+id/progress_loading"
+    <!-- Vùng chứa Logo chính với khung tròn và bóng đổ -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tagline"
-        android:layout_marginBottom="80dp"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="110dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_splash_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_app" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="KidLearn"
+            android:textColor="@color/primary_green_dark"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-rounded" />
+
+        <TextView
+            android:id="@+id/tv_tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Khám phá thế giới cùng bé 🌈"
+            android:textColor="@color/text_secondary"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-rounded" />
+
+    </LinearLayout>
+
+    <!-- Loading phía dưới -->
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminateTint="@color/primary_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="60dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

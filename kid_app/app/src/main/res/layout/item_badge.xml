@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/iv_badge_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_launcher"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="@color/primary_green_pale"
+        android:padding="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_badge_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Bé chăm chỉ"
+        android:textColor="@color/primary_green_dark"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+</LinearLayout>

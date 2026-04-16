@@ -8,21 +8,9 @@ import com.example.kid_app.auth.AuthService;
 import com.example.kid_app.common.BaseActivity;
 import com.example.kid_app.data.mapper.DocumentMapper;
 import com.example.kid_app.data.model.Account;
-import com.google.android.material.button.MaterialButton;
 
 /**
  * AdminHomeActivity — màn hình chính của Admin.
- *
- * Hiện tại là placeholder, sẽ được hoàn thiện ở Bước 13 với:
- * - Xem danh sách người dùng
- * - CRUD content_catalog
- * - Xem báo cáo tổng hợp
- *
- * Lưu ý quan trọng:
- * - Admin KHÔNG đăng ký qua app — tài khoản được tạo thủ công
- *   (ví dụ: qua Firebase Console hoặc Cloud Functions).
- * - Khi đăng nhập bằng email admin, role="admin" được lưu trong
- *   Firestore và SplashActivity/SignInActivity sẽ điều hướng tới đây.
  */
 public class AdminHomeActivity extends BaseActivity {
 
@@ -43,13 +31,24 @@ public class AdminHomeActivity extends BaseActivity {
     private void bindViews() {
         tvWelcome = findViewById(R.id.tv_welcome);
 
-        MaterialButton btnSignOut = findViewById(R.id.btn_sign_out);
-        btnSignOut.setOnClickListener(v -> signOut());
+        // Chức năng 1: Quản lý người dùng
+        findViewById(R.id.card_manage_users).setOnClickListener(v -> {
+            navigateTo(UserManagementActivity.class);
+        });
+
+        // Chức năng 2: Quản lý nội dung học
+        findViewById(R.id.card_manage_content).setOnClickListener(v -> {
+            navigateTo(ContentManagementActivity.class);
+        });
+
+        // Chức năng 3: Xem báo cáo hệ thống
+        findViewById(R.id.card_reports).setOnClickListener(v -> {
+            navigateTo(SystemReportActivity.class);
+        });
+
+        findViewById(R.id.card_sign_out).setOnClickListener(v -> signOut());
     }
 
-    /**
-     * Tải thông tin tài khoản admin từ Firestore.
-     */
     private void loadUserInfo() {
         authService.getCurrentUserAccount()
                 .addOnSuccessListener(doc -> {
@@ -59,7 +58,7 @@ public class AdminHomeActivity extends BaseActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Không block UI, chỉ giữ text mặc định
+                    // Mặc định là "Admin" nếu lỗi
                 });
     }
 

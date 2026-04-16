@@ -1,481 +1,306 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_main"
-    android:fillViewport="true"
-    tools:context=".child.ChildHomeActivity">
+    android:background="@color/bg_main">
 
-    <LinearLayout
+    <!-- Header & Profile -->
+    <View
+        android:id="@+id/header_bg"
         android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/bg_child_home_header"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="#4DFFFFFF"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <ImageButton
+        android:id="@+id/btn_settings"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="#4DFFFFFF"
+        android:src="@android:drawable/ic_menu_manage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_child_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/bg_avatar_circle"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_child_greeting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="12dp"
+        android:text="Chào bé! 👋"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_child_avatar" />
 
-        <!-- ==================== HEADER ==================== -->
-        <RelativeLayout
+    <TextView
+        android:id="@+id/tv_current_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Danh hiệu: Mầm Non Chăm Chỉ 🌱"
+        android:textColor="#FFEB3B"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_child_greeting" />
+
+    <TextView
+        android:id="@+id/tv_today_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Thứ Hai, 13/04/2026"
+        android:textColor="#E0F2F1"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_badge" />
+
+    <!-- Stats Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_stats"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="32dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/header_bg"
+        app:layout_constraintBottom_toBottomOf="@id/header_bg">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/bg_child_home_header">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-            <!-- Nút back về màn chọn bé (phụ huynh) -->
-            <ImageButton
-                android:id="@+id/btn_switch_child"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_icon_circle"
-                android:contentDescription="Chuyển bé"
-                android:src="@android:drawable/ic_menu_revert"
-                android:tint="@color/white" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView android:id="@+id/tv_total_points" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/secondary_yellow" android:textSize="20sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⭐ Điểm" android:textSize="12sp" />
+            </LinearLayout>
 
-            <!-- Nút cài đặt (phụ huynh vào settings) -->
-            <ImageButton
-                android:id="@+id/btn_settings"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_icon_circle"
-                android:contentDescription="Cài đặt"
-                android:src="@android:drawable/ic_menu_manage"
-                android:tint="@color/white" />
+            <View android:layout_width="1dp" android:layout_height="40dp" android:layout_gravity="center" android:background="#EEEEEE" />
 
-            <!-- Avatar bé -->
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_child_avatar"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_below="@+id/btn_switch_child"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="4dp"
-                android:src="@mipmap/ic_launcher"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="3dp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView android:id="@+id/tv_streak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/secondary_orange" android:textSize="20sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥 Chuỗi" android:textSize="12sp" />
+            </LinearLayout>
 
-            <!-- Tên bé -->
-            <TextView
-                android:id="@+id/tv_child_greeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_child_avatar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Xin chào, Bé Bi! 👋" />
+            <View android:layout_width="1dp" android:layout_height="40dp" android:layout_gravity="center" android:background="#EEEEEE" />
 
-            <!-- Ngày hôm nay -->
-            <TextView
-                android:id="@+id/tv_today_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_child_greeting"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="2dp"
-                android:textColor="#CCFFFFFF"
-                android:textSize="13sp"
-                tools:text="Thứ Sáu, 28/03/2026" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView android:id="@+id/tv_completed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/primary_green" android:textSize="22sp" android:textStyle="bold" />
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@android:drawable/checkbox_on_background"
+                        app:tint="#A5D6A7" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Xong"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        <!-- ==================== STATS STRIP ==================== -->
+    <!-- Content Area -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/card_stats">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="-20dp"
-            android:background="@drawable/bg_stats_card"
-            android:elevation="4dp"
-            android:orientation="horizontal"
-            android:paddingVertical="12dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Điểm tổng -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_total_points"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/secondary_yellow"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:text="1250" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⭐ Điểm"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@color/gray_200" />
-
-            <!-- Streak -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_streak"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/secondary_orange"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:text="5" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🔥 Chuỗi ngày"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@color/gray_200" />
-
-            <!-- Hoàn thành -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_completed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/primary_green"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:text="32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="✅ Hoàn thành"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- ==================== TIÊU ĐỀ MODULE ==================== -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="🎯 Hôm nay học gì?"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- ==================== MODULE GRID (2×2) ==================== -->
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:columnCount="2"
-            android:rowCount="2"
-            android:useDefaultMargins="true">
-
-            <!-- Card TRÒ CHƠI -->
+            <!-- Assignments Card -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_games"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_module_game"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/bg_icon_circle"
-                        android:gravity="center"
-                        android:text="🎮"
-                        android:textSize="28sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="4dp"
-                        android:text="Trò chơi"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@android:id/text1"
-                        android:layout_alignParentStart="true"
-                        android:text="Học qua chơi"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Card CÂU ĐỐ -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_quiz"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_module_quiz"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/bg_icon_circle"
-                        android:gravity="center"
-                        android:text="🧩"
-                        android:textSize="28sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="4dp"
-                        android:text="Câu đố"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@android:id/text1"
-                        android:layout_alignParentStart="true"
-                        android:text="Trắc nghiệm vui"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Card MÀU SẮC -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_colors"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_module_color"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/bg_icon_circle"
-                        android:gravity="center"
-                        android:text="🎨"
-                        android:textSize="28sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="4dp"
-                        android:text="Màu sắc"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@android:id/text1"
-                        android:layout_alignParentStart="true"
-                        android:text="Nhận biết màu"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Card SỐ ĐẾM -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_counting"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_module_counting"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/bg_icon_circle"
-                        android:gravity="center"
-                        android:text="🔢"
-                        android:textSize="28sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="4dp"
-                        android:text="Số đếm"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@android:id/text1"
-                        android:layout_alignParentStart="true"
-                        android:text="Học đếm số"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-        </GridLayout>
-
-        <!-- ==================== AI TRỢ LÝ BANNER ==================== -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_ai_assistant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="6dp">
-
-            <LinearLayout
+                android:id="@+id/card_assignments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_module_ai"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <!-- Icon AI -->
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/bg_icon_circle"
-                    android:gravity="center"
-                    android:text="🤖"
-                    android:textSize="30sp" />
-
-                <!-- Mô tả -->
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Trợ lý AI"
-                        android:textColor="@color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_ai_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Hỏi tôi bất cứ điều gì nhé! 💬"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="13sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:background="@drawable/bg_explanation_box"
+                    android:backgroundTint="#E3F2FD">
+                    <TextView android:layout_width="45dp" android:layout_height="45dp" android:background="@drawable/bg_icon_circle" android:backgroundTint="@color/white" android:gravity="center" android:text="📝" android:textSize="22sp" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bài tập cô giao" android:textColor="@color/primary_green_dark" android:textStyle="bold" android:textSize="16sp" />
+                        <TextView android:id="@+id/tv_assignment_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nhấn để xem các bài tập mới nhé!" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    </LinearLayout>
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/gray_500" />
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                <!-- Arrow -->
-                <TextView
-                    android:layout_width="wrap_content"
+            <!-- Feedback Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="@color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+                    <TextView android:layout_width="45dp" android:layout_height="45dp" android:background="@drawable/bg_icon_circle" android:backgroundTint="#FFF3E0" android:gravity="center" android:text="✉️" android:textSize="22sp" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lời nhắn từ cô giáo" android:textColor="@color/primary_green_dark" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bé nhấn vào đây để xem cô nhận xét nhé!" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    </LinearLayout>
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/gray_500" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
+            <!-- Portals -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:orientation="horizontal">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_learning_portal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="#AD1457">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                        <ImageView android:layout_width="60dp" android:layout_height="60dp" android:src="@android:drawable/ic_menu_agenda" app:tint="#80FFFFFF" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="HỌC TẬP" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_practice_portal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="#EF6C00">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                        <ImageView android:layout_width="60dp" android:layout_height="60dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#80FFFFFF" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="THỰC HÀNH" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
+    <!-- AI Chat Bot FAB -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fab_ai_chat"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="32.5dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="🤖"
+            android:textSize="38sp" />
+    </androidx.cardview.widget.CardView>    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout android:id="@+id/nav_home" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏠" android:textSize="20sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Trang chủ" android:textColor="@color/primary_green" android:textSize="10sp" android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_community" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌍" android:textSize="20sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cộng đồng" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_progress" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📈" android:textSize="20sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tiến độ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_profile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎒" android:textSize="20sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hồ sơ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

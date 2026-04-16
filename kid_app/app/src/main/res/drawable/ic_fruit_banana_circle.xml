@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- 1. Vòng tròn nền trắng, viền xanh đậm -->
+    <path
+        android:pathData="M50,50m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0"
+        android:strokeWidth="4"
+        android:strokeColor="#1B5E20"
+        android:fillColor="#FFFFFF"/>
+
+    <!-- 2. Thân quả chuối (Đổ bóng vàng) -->
+    <path
+        android:pathData="M75,30c-15,0 -25,15 -25,30c0,10 5,25 15,30c10,5 20,0 20,-15c0,-15 -10,-45 -10,-45z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="50" android:startY="30"
+                android:endX="75" android:endY="90"
+                android:type="linear">
+                <item android:offset="0" android:color="#FFF176"/>
+                <item android:offset="1" android:color="#FBC02D"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- 3. Cuống chuối -->
+    <path
+        android:pathData="M75,30c0,-5 -3,-8 -6,-8"
+        android:strokeWidth="3"
+        android:strokeColor="#8BC34A"
+        android:strokeLineCap="round"/>
+</vector>

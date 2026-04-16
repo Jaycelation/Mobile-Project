@@ -12,10 +12,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * ContentRepository — thao tác với:
- * - /content_catalog/ (danh sách nội dung)
- * - /content_catalog/{id}/levels/ (levels)
- * - /content_catalog/{id}/questions/ (câu hỏi quiz)
- * - /content_catalog/{id}/detail/ (chi tiết game/quiz/màu/đếm)
+ * - /content_catalog/
+ * - /content_catalog/{id}/levels/
+ * - /content_catalog/{id}/questions/
  */
 public class ContentRepository {
 
@@ -29,24 +28,22 @@ public class ContentRepository {
 
     public Task<QuerySnapshot> getAllActiveContent() {
         return db.collection(AppConstants.COL_CONTENT_CATALOG)
-                .whereEqualTo("status", "active")
-                .whereEqualTo("deletedAt", null)
-                .get();
+                .whereEqualTo("status", AppConstants.STATUS_ACTIVE)
+                .get(); // ❌ bỏ deletedAt
     }
 
     public Task<QuerySnapshot> getContentByType(String contentType) {
         return db.collection(AppConstants.COL_CONTENT_CATALOG)
                 .whereEqualTo("contentType", contentType)
-                .whereEqualTo("status", "active")
-                .whereEqualTo("deletedAt", null)
-                .get();
+                .whereEqualTo("status", AppConstants.STATUS_ACTIVE)
+                .get(); // ❌ bỏ deletedAt
     }
 
     public Task<QuerySnapshot> getContentByTypeAndAge(String contentType, String ageGroup) {
         return db.collection(AppConstants.COL_CONTENT_CATALOG)
                 .whereEqualTo("contentType", contentType)
                 .whereEqualTo("ageGroup", ageGroup)
-                .whereEqualTo("status", "active")
+                .whereEqualTo("status", AppConstants.STATUS_ACTIVE)
                 .get();
     }
 
@@ -65,13 +62,12 @@ public class ContentRepository {
     public Task<Void> softDeleteContent(String contentId) {
         return db.collection(AppConstants.COL_CONTENT_CATALOG)
                 .document(contentId)
-                .update("deletedAt", new java.util.Date(), "status", "deleted");
+                .update("status", AppConstants.STATUS_DELETED);
     }
 
-    // ==================== CONTENT DETAIL (game/quiz/color/counting) ====================
+    // ==================== CONTENT DETAIL ====================
 
     public Task<DocumentSnapshot> getContentDetail(String contentId, String detailDocId) {
-        // detailDocId: "game_detail" | "quiz_detail" | "color_detail" | "counting_detail"
         return db.collection(AppConstants.COL_CONTENT_CATALOG)
                 .document(contentId)
                 .collection("detail")

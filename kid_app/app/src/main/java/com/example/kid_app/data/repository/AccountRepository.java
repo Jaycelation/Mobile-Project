@@ -11,7 +11,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * AccountRepository — thao tác với /accounts collection.
- * Được dùng sau khi FirebaseAuth tạo user thành công.
  */
 public class AccountRepository {
 
@@ -21,7 +20,7 @@ public class AccountRepository {
         this.db = FirestoreHelper.getInstance().getFirestore();
     }
 
-    /** Tạo document account mới (sau khi đăng ký thành công) */
+    /** Tạo document account mới */
     public Task<Void> createAccount(String uid, Account account) {
         return db.collection(AppConstants.COL_ACCOUNTS)
                 .document(uid)
@@ -42,26 +41,22 @@ public class AccountRepository {
                 .set(account);
     }
 
-    /** Soft delete — ghi deleted_at */
-    public Task<Void> softDeleteAccount(String uid) {
+    /** Xóa vĩnh viễn tài khoản khỏi Firestore */
+    public Task<Void> deleteAccount(String uid) {
         return db.collection(AppConstants.COL_ACCOUNTS)
                 .document(uid)
-                .update("deletedAt", new java.util.Date(),
-                        "status", AppConstants.STATUS_DELETED);
+                .delete();
     }
 
-    /** Lấy tất cả tài khoản (chỉ Admin dùng) */
+    /** Lấy tất cả tài khoản để Admin quản lý */
     public Task<QuerySnapshot> getAllAccounts() {
-        return db.collection(AppConstants.COL_ACCOUNTS)
-                .whereEqualTo("deletedAt", null)
-                .get();
+        return db.collection(AppConstants.COL_ACCOUNTS).get();
     }
 
     /** Lấy tài khoản theo role */
     public Task<QuerySnapshot> getAccountsByRole(String role) {
         return db.collection(AppConstants.COL_ACCOUNTS)
                 .whereEqualTo("role", role)
-                .whereEqualTo("deletedAt", null)
                 .get();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.kid_app.common;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void hideLoading(ProgressBar progressBar) {
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    // ---- Progress Dialog ----
+
+    protected void showProgressDialog(String message) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.setMessage(message);
+        if (!isFinishing()) {
+            progressDialog.show();
+        }
+    }
+
+    protected void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 
@@ -62,5 +84,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        hideProgressDialog();
+        super.onDestroy();
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="50dp"
+    android:height="100dp"
+    android:viewportWidth="50"
+    android:viewportHeight="100">
+    <!-- Nửa phải quả táo -->
+    <path
+        android:pathData="M0,35c15,0 25,8 25,25c0,18 -12,28 -25,28v-53z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:startX="0" android:startY="35" android:endX="25" android:endY="88" android:type="linear">
+                <item android:offset="0" android:color="#FF5252"/><item android:offset="1" android:color="#A00000"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:pathData="M0,32c5,-5 12,-2 12,5c0,5 -7,8 -12,5z" android:fillColor="#4CAF50"/>
+</vector>

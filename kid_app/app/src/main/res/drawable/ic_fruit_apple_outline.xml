@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Quả táo đen trắng (Outline) -->
+    <path
+        android:pathData="M50,35c-15,0 -25,8 -25,25c0,18 12,28 25,28s25,-10 25,-28c0,-17 -10,-25 -25,-25z"
+        android:strokeWidth="3"
+        android:strokeColor="#424242"
+        android:fillColor="#F5F5F5"/>
+    <path
+        android:pathData="M50,35c0,-5 3,-8 6,-8"
+        android:strokeWidth="3"
+        android:strokeColor="#424242"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M52,32c5,-5 12,-2 12,5c0,5 -7,8 -12,5z"
+        android:strokeWidth="2"
+        android:strokeColor="#424242"
+        android:fillColor="#EEEEEE"/>
+</vector>

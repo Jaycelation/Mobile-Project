@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,46 +23,28 @@ import com.example.kid_app.data.model.Account;
 import com.example.kid_app.data.model.ChildProfile;
 import com.example.kid_app.data.model.ParentChildLink;
 import com.example.kid_app.data.repository.ChildProfileRepository;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ParentHomeActivity — Trang chủ của Phụ huynh (Bước 4).
- *
- * Chức năng:
- * 1. Hiển thị tên phụ huynh.
- * 2. Tải danh sách hồ sơ bé qua parent_child_links.
- * 3. Thêm bé mới → AddChildActivity.
- * 4. Chọn bé → lưu selectedChildId vào SharedPreferences (cho Bước 5 dùng).
- * 5. Mở Settings → ChildSettingsActivity.
- * 6. Đăng xuất.
- *
- * Flow child selection:
- * Phụ huynh chọn bé → lưu childId vào prefs → điều hướng tới ChildHomeActivity (Bước 5).
- * Hiện tại chỉ toast xác nhận, placeholder điều hướng sẽ thêm ở Bước 5.
- */
 public class ParentHomeActivity extends BaseActivity {
 
-    private AuthService           authService;
-    private ChildProfileService   childProfileService;
+    private AuthService authService;
+    private ChildProfileService childProfileService;
     private ChildProfileRepository childProfileRepository;
 
-    private TextView     tvParentName;
-    private ProgressBar  progressBar;
+    private TextView tvParentName;
+    private ProgressBar progressBar;
     private RecyclerView rvChildren;
     private LinearLayout layoutEmpty;
 
-    private ChildAdapter    childAdapter;
+    private ChildAdapter childAdapter;
     private List<ChildProfile> childList = new ArrayList<>();
 
-    // Launcher để nhận kết quả từ Add/Edit → reload danh sách
     private final ActivityResultLauncher<Intent> childFormLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
-                    loadChildren(); // reload sau khi tạo/sửa/xóa bé
+                    loadChildren();
                 }
             });
 
@@ -69,26 +53,33 @@ public class ParentHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_home);
 
-        authService            = new AuthService();
-        childProfileService    = new ChildProfileService();
-        childProfileRepository  = new ChildProfileRepository();
+        authService = new AuthService();
+        childProfileService = new ChildProfileService();
+        childProfileRepository = new ChildProfileRepository();
 
         bindViews();
         loadParentName();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // LUÔN LÀM MỚI DANH SÁCH KHI QUAY LẠI MÀN HÌNH NÀY
         loadChildren();
     }
 
     private void bindViews() {
         tvParentName = findViewById(R.id.tv_parent_name);
-        progressBar  = findViewById(R.id.progress_bar);
-        rvChildren   = findViewById(R.id.rv_children);
-        layoutEmpty  = findViewById(R.id.layout_empty);
+        progressBar = findViewById(R.id.progress_bar);
+        rvChildren = findViewById(R.id.rv_children);
+        layoutEmpty = findViewById(R.id.layout_empty);
 
-        // RecyclerView setup
         childAdapter = new ChildAdapter(childList, new ChildAdapter.ChildClickListener() {
             @Override
             public void onChildClick(ChildProfile child) {
-                selectChild(child);
+                if (child != null && child.getChildId() != null) {
+                    selectChild(child);
+                }
             }
 
             @Override
@@ -99,26 +90,76 @@ public class ParentHomeActivity extends BaseActivity {
             }
 
             @Override
-            public void onSettingsClick(ChildProfile child) {
-                openChildSettings(child);
+            public void onDeleteClick(ChildProfile child) {
+                confirmDeleteChild(child);
             }
         });
         rvChildren.setLayoutManager(new LinearLayoutManager(this));
         rvChildren.setAdapter(childAdapter);
 
-        // Nút thêm bé
-        MaterialButton btnAddChild = findViewById(R.id.btn_add_child);
-        btnAddChild.setOnClickListener(v -> {
+        findViewById(R.id.btn_add_child).setOnClickListener(v -> {
             Intent intent = new Intent(this, AddChildActivity.class);
             childFormLauncher.launch(intent);
         });
 
-        // Nút đăng xuất
-        android.widget.ImageButton btnSignOut = findViewById(R.id.btn_sign_out);
-        btnSignOut.setOnClickListener(v -> signOut());
+        findViewById(R.id.btn_join_class_portal).setOnClickListener(v -> showChildSelectionDialog());
+
+        findViewById(R.id.btn_sign_out).setOnClickListener(v -> signOut());
     }
 
-    // ==================== LOAD DATA ====================
+    private void confirmDeleteChild(ChildProfile child) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xóa hồ sơ bé")
+                .setMessage("Bạn có chắc chắn muốn xóa hồ sơ của bé " + child.getDisplayName() + "?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    deleteChild(child);
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    private void deleteChild(ChildProfile child) {
+        showLoading(progressBar);
+        childProfileRepository.hardDeleteChildProfile(child.getChildId())
+                .addOnSuccessListener(v -> {
+                    hideLoading(progressBar);
+                    Toast.makeText(this, "Đã xóa sạch hồ sơ và dữ liệu liên quan thành công", Toast.LENGTH_SHORT).show();
+                    loadChildren();
+                })
+                .addOnFailureListener(e -> {
+                    hideLoading(progressBar);
+                    Toast.makeText(this, "Lỗi khi xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void showChildSelectionDialog() {
+        if (childList.isEmpty()) {
+            Toast.makeText(this, "Vui lòng tạo hồ sơ bé trước!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (childList.size() == 1) {
+            openJoinClass(childList.get(0));
+        } else {
+            String[] names = new String[childList.size()];
+            for (int i = 0; i < childList.size(); i++) {
+                names[i] = childList.get(i).getDisplayName();
+            }
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Chọn bé tham gia lớp học")
+                    .setItems(names, (dialog, which) -> openJoinClass(childList.get(which)))
+                    .setNegativeButton("Hủy", null)
+                    .show();
+        }
+    }
+
+    private void openJoinClass(ChildProfile child) {
+        Intent intent = new Intent(this, JoinClassActivity.class);
+        intent.putExtra(AppConstants.KEY_CHILD_ID, child.getChildId());
+        intent.putExtra("child_name", child.getDisplayName());
+        startActivity(intent);
+    }
 
     private void loadParentName() {
         authService.getCurrentUserAccount()
@@ -127,41 +168,27 @@ public class ParentHomeActivity extends BaseActivity {
                     if (account != null && account.getFullName() != null) {
                         tvParentName.setText(account.getFullName());
                     }
-                })
-                .addOnFailureListener(e -> { /* giữ text mặc định */ });
+                });
     }
 
-    /**
-     * Load danh sách bé:
-     * 1. Lấy tất cả parent_child_links của parent hiện tại.
-     * 2. Với mỗi link → load child_profile tương ứng.
-     * 3. Hiển thị vào RecyclerView.
-     *
-     * Cách hiệu quả hơn khi scale: dùng whereIn query.
-     * Hiện tại dùng vòng lặp vì số bé ít (thường < 5).
-     */
     private void loadChildren() {
-        String parentId = authService.getCurrentUser() != null
-                ? authService.getCurrentUser().getUid() : null;
+        String parentId = authService.getCurrentUser() != null ? authService.getCurrentUser().getUid() : null;
         if (parentId == null) return;
 
         showLoading(progressBar);
-        childList.clear();
-        childAdapter.notifyDataSetChanged();
-
         childProfileService.getChildrenLinksOfParent(parentId)
                 .addOnSuccessListener(querySnapshot -> {
                     List<ParentChildLink> links = DocumentMapper.listParentChildLinks(querySnapshot);
-
                     if (links.isEmpty()) {
+                        childList.clear();
+                        childAdapter.notifyDataSetChanged();
                         hideLoading(progressBar);
                         showEmptyState(true);
                         return;
                     }
 
-                    // Dùng counter để biết khi nào load xong tất cả
+                    childList.clear();
                     final int[] remaining = {links.size()};
-
                     for (ParentChildLink link : links) {
                         childProfileRepository.getChildProfile(link.getChildId())
                                 .addOnSuccessListener(doc -> {
@@ -185,48 +212,28 @@ public class ParentHomeActivity extends BaseActivity {
                                     }
                                 });
                     }
-                })
-                .addOnFailureListener(e -> {
-                    hideLoading(progressBar);
-                    showToast("Không tải được danh sách bé: " + e.getMessage());
                 });
     }
 
-    // ==================== ACTIONS ====================
-
-    /**
-     * Phụ huynh chọn bé để "vào chế độ học".
-     * Lưu childId vào SharedPreferences — ChildHomeActivity (Bước 5) sẽ đọc.
-     */
     private void selectChild(ChildProfile child) {
         getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
                 .edit()
                 .putString(AppConstants.PREF_SELECTED_CHILD_ID, child.getChildId())
                 .apply();
-
-        // Bước 5: điều hướng thật sang ChildHomeActivity
-        navigateTo(com.example.kid_app.child.ChildHomeActivity.class);
-    }
-
-    private void openChildSettings(ChildProfile child) {
-        Intent intent = new Intent(this, ChildSettingsActivity.class);
+        
+        Intent intent = new Intent(this, com.example.kid_app.child.ChildHomeActivity.class);
         intent.putExtra(AppConstants.KEY_CHILD_ID, child.getChildId());
-        childFormLauncher.launch(intent);
+        startActivity(intent);
     }
 
     private void signOut() {
         authService.signOut();
-        getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
-                .edit()
-                .remove(AppConstants.PREF_SELECTED_CHILD_ID)
-                .apply();
+        getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE).edit().remove(AppConstants.PREF_SELECTED_CHILD_ID).apply();
         navigateToClearStack(com.example.kid_app.WelcomeActivity.class);
     }
 
-    // ==================== UI HELPERS ====================
-
     private void showEmptyState(boolean show) {
-        layoutEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
-        rvChildren.setVisibility(show ? View.GONE : View.VISIBLE);
+        if (layoutEmpty != null) layoutEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (rvChildren != null) rvChildren.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 }

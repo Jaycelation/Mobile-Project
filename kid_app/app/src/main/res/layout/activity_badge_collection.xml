@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_icon_circle"
+            android:backgroundTint="#FFFFFF"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="@color/primary_green_dark" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Bộ Sưu Tập 🏆"
+            android:textColor="@color/primary_green_dark"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="24dp">
+
+            <!-- Progress Summary Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/secondary_yellow">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hành trình của bé"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_badge_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Đang tải dữ liệu..."
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_points_needed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Cố gắng lên bé ơi! 🚀"
+                        android:textColor="@color/primary_green_dark"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Badges List -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Danh sách huy hiệu"
+                android:textColor="@color/primary_green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:columnCount="2"
+                android:useDefaultMargins="true">
+
+                <!-- Huy hiệu 20 điểm -->
+                <LinearLayout android:id="@+id/layout_badge_20" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical" android:layout_marginBottom="24dp" android:alpha="0.4">
+                    <ImageView android:id="@+id/iv_badge_20" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/btn_star_big_on" android:background="@drawable/bg_icon_circle" android:backgroundTint="#E8F5E9" android:padding="15dp" app:tint="@color/gray_500"/>
+                    <TextView android:id="@+id/tv_badge_20_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Chăm ngoan" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đạt 20 điểm" android:textSize="11sp" android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+
+                <!-- Huy hiệu 500 điểm -->
+                <LinearLayout android:id="@+id/layout_badge_500" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical" android:layout_marginBottom="24dp" android:alpha="0.4">
+                    <ImageView android:id="@+id/iv_badge_500" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/ic_menu_gallery" android:background="@drawable/bg_icon_circle" android:backgroundTint="#FFF3E0" android:padding="15dp" app:tint="@color/gray_500"/>
+                    <TextView android:id="@+id/tv_badge_500_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Họa sĩ nhí" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đạt 500 điểm" android:textSize="11sp" android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+
+                <!-- Huy hiệu 1000 điểm -->
+                <LinearLayout android:id="@+id/layout_badge_1000" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical" android:layout_marginBottom="24dp" android:alpha="0.4">
+                    <ImageView android:id="@+id/iv_badge_1000" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/ic_menu_edit" android:background="@drawable/bg_icon_circle" android:backgroundTint="#E3F2FD" android:padding="15dp" app:tint="@color/gray_500"/>
+                    <TextView android:id="@+id/tv_badge_1000_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Học Giả Nhí" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đạt 1000 điểm" android:textSize="11sp" android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+
+                <!-- Huy hiệu 2000 điểm -->
+                <LinearLayout android:id="@+id/layout_badge_2000" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical" android:layout_marginBottom="24dp" android:alpha="0.4">
+                    <ImageView android:id="@+id/iv_badge_2000" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/ic_menu_compass" android:background="@drawable/bg_icon_circle" android:backgroundTint="#F3E5F5" android:padding="15dp" app:tint="@color/gray_500"/>
+                    <TextView android:id="@+id/tv_badge_2000_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Bậc Thầy Kiến Thức" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đạt 2000 điểm" android:textSize="11sp" android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+
+                <!-- Huy hiệu 5000 điểm -->
+                <LinearLayout android:id="@+id/layout_badge_5000" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical" android:layout_marginBottom="24dp" android:alpha="0.4">
+                    <ImageView android:id="@+id/iv_badge_5000" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/ic_menu_send" android:background="@drawable/bg_icon_circle" android:backgroundTint="#E0F2F1" android:padding="15dp" app:tint="@color/gray_500"/>
+                    <TextView android:id="@+id/tv_badge_5000_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Siêu Nhân Trí Tuệ" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đạt 5000 điểm" android:textSize="11sp" android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+
+                <!-- Huy hiệu 10000 điểm -->
+                <LinearLayout android:id="@+id/layout_badge_10000" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical" android:layout_marginBottom="24dp" android:alpha="0.4">
+                    <ImageView android:id="@+id/iv_badge_10000" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/btn_star_big_on" android:background="@drawable/bg_icon_circle" android:backgroundTint="#FFFDE7" android:padding="15dp" app:tint="@color/gray_500"/>
+                    <TextView android:id="@+id/tv_badge_10000_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Huyền Thoại KidLearn" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đạt 10000 điểm" android:textSize="11sp" android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+            </GridLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

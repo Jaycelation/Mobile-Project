@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- 1. Vòng tròn nền trắng, viền xanh đậm -->
+    <path
+        android:pathData="M50,50m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0"
+        android:strokeWidth="4"
+        android:strokeColor="#1B5E20"
+        android:fillColor="#FFFFFF"/>
+
+    <!-- 2. Thân quả lê (Đổ bóng) -->
+    <path
+        android:pathData="M50,30c-8,0 -12,10 -12,20c0,5 2,10 2,15c0,10 5,15 10,15s10,-5 10,-15c0,-5 2,-10 2,-15c0,-10 -4,-20 -12,-20z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="50" android:startY="30"
+                android:endX="50" android:endY="80"
+                android:type="linear">
+                <item android:offset="0" android:color="#D4E157"/>
+                <item android:offset="1" android:color="#9E9D24"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- 3. Cuống -->
+    <path
+        android:pathData="M50,30v-5"
+        android:strokeWidth="3"
+        android:strokeColor="#5D4037"
+        android:strokeLineCap="round"/>
+</vector>

@@ -16,18 +16,13 @@ import java.util.List;
 
 /**
  * ChildAdapter — hiển thị danh sách hồ sơ bé trong RecyclerView.
- *
- * Events:
- * - onChildClick(child)    : chọn bé để vào chế độ học
- * - onEditClick(child)     : mở form sửa hồ sơ
- * - onSettingsClick(child) : mở màn cài đặt
  */
 public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHolder> {
 
     public interface ChildClickListener {
         void onChildClick(ChildProfile child);
         void onEditClick(ChildProfile child);
-        void onSettingsClick(ChildProfile child);
+        void onDeleteClick(ChildProfile child); // Thêm sự kiện xóa
     }
 
     private final List<ChildProfile> children;
@@ -63,7 +58,7 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
         private final TextView    tvAgeGroup;
         private final TextView    tvBirth;
         private final ImageButton btnEdit;
-        private final ImageButton btnSettings;
+        private final ImageButton btnDelete; // Nút xóa mới
 
         ChildViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,7 +67,7 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
             tvAgeGroup  = itemView.findViewById(R.id.tv_child_age_group);
             tvBirth     = itemView.findViewById(R.id.tv_child_birth);
             btnEdit     = itemView.findViewById(R.id.btn_child_edit);
-            btnSettings = itemView.findViewById(R.id.btn_child_settings);
+            btnDelete   = itemView.findViewById(R.id.btn_child_delete);
         }
 
         void bind(ChildProfile child, ChildClickListener listener) {
@@ -96,9 +91,9 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
                 btnEdit.setOnClickListener(v -> listener.onEditClick(child));
             }
 
-            // Nút Settings
-            if (btnSettings != null) {
-                btnSettings.setOnClickListener(v -> listener.onSettingsClick(child));
+            // Nút Delete
+            if (btnDelete != null) {
+                btnDelete.setOnClickListener(v -> listener.onDeleteClick(child));
             }
         }
     }
