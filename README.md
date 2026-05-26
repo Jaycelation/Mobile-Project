@@ -26,6 +26,17 @@ Phân công dưới đây bám theo bộ khung báo cáo cá nhân `khung_bao_ca
 | B22DCAT159 | Nguyễn Thanh Kiên | Học số đếm; kết nối lớp học & giáo viên | `CountingListActivity`, `CountingGameActivity`, `CountingFruitGameActivity`, `NumberMatchGameActivity`, `CreateClassActivity`, `ClassManagementActivity`, `ClassDetailActivity`, `JoinClassActivity`, `AssignmentManagementActivity`, `CreateAssignmentActivity`, `ChildAssignmentActivity` | `ContentRepository`, `ActivityAttemptRepository`, `ClassRepository`, `AssignmentRepository` | `ContentCatalog`, `CountingActivity`, `ContentLevel`, `ActivityAttempt`, `AppClass`, `ClassMember`, `Assignment`, `AssignmentSubmission`, `LeaderboardSnapshot` |
 | B22DCAT247 | Nguyễn Thanh Sơn | Học màu sắc; tài khoản, hồ sơ & cài đặt phụ huynh | `ColorListActivity`, `ColorGameActivity`, `ColorMatchGameActivity`, `SignInActivity`, `SignUpActivity`, `ForgotPasswordActivity`, `ParentHomeActivity`, `AddChildActivity`, `EditChildActivity`, `ChildSettingsActivity`, `ChildProfileActivity` | `AuthService`, `AccountRepository`, `ChildProfileService`, `ChildProfileRepository`, `ContentRepository`, `ActivityAttemptRepository` | `Account`, `ParentChildLink`, `ChildProfile`, `ChildSettings`, `ContentCatalog`, `ColorActivity`, `ContentLevel`, `ActivityAttempt` |
 
+### 2.1. Chức năng bổ sung không đánh số
+
+Các chức năng dưới đây có code trong dự án nhưng không nằm trong các mục chỉ mục 2.1.x của khung báo cáo cá nhân. Nhóm vẫn gán người phụ trách để khi mô tả source code không bị bỏ sót, nhưng không thêm số chỉ mục mới.
+
+| Thành viên | Chức năng/code bổ sung | File/Class liên quan |
+|---|---|---|
+| Đặng Đức Tài | Các trò chơi nhận biết/ghép hình mở rộng | `ShadowMatchGameActivity`, `ShapeGameActivity`, `ObjectGameActivity`, `AnimalGameActivity`, `AnimalSoundGameActivity`, `FruitMatchGameActivity` |
+| Nguyễn Hồng Giáp | Học chữ cái, cộng đồng và hỗ trợ người dùng | `AlphabetLearningActivity`, `AlphabetMatchGameActivity`, `CommunityFeedActivity`, `CreatePostActivity`, `HelpSupportActivity` |
+| Nguyễn Thanh Kiên | Màn hình giáo viên, hồ sơ giáo viên, thông báo và phản hồi phía giáo viên | `TeacherHomeActivity`, `TeacherProfileActivity`, `EditTeacherProfileActivity`, `TeacherNotificationActivity`, `NotificationSettingsActivity`, `FeedbackListActivity`, `FeedbackChatActivity`, `AssignmentDetailActivity`, `AddStudentActivity` |
+| Nguyễn Thanh Sơn | Màn hình khởi động/điều hướng, quản trị và lớp dùng chung | `SplashActivity`, `WelcomeActivity`, `MainActivity`, `AdminHomeActivity`, `UserManagementActivity`, `ContentManagementActivity`, `SystemReportActivity`, `BaseActivity`, `AppConstants`, `KidLearnApp`, `FirestoreHelper` |
+
 ## 3. Kiến trúc hệ thống
 
 ```text
@@ -56,12 +67,16 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | API hồ sơ trẻ và cài đặt phụ huynh | `child_profiles`, `parent_child_links`, `child_profiles/{childId}/settings` | Tạo/sửa hồ sơ trẻ, chọn hồ sơ trẻ, lưu cài đặt học tập và giới hạn sử dụng | Sơn | `ChildProfileService`, `ChildProfileRepository`, `ParentHomeActivity`, `AddChildActivity`, `EditChildActivity`, `ChildSettingsActivity` |
 | API học màu sắc | `content_catalog`, `content_catalog/{contentId}/levels`, `activity_attempts` | Hiển thị bài học màu sắc, xử lý tương tác chọn/kéo thả và lưu kết quả | Sơn | `ColorListActivity`, `ColorGameActivity`, `ColorMatchGameActivity`, `ContentRepository`, `ActivityAttemptRepository` |
 | API trò chơi giáo dục | `content_catalog`, `content_catalog/{contentId}/levels`, `activity_attempts`, `answers` | Chơi game tư duy/phản xạ, lưu đáp án, điểm số và trạng thái hoàn thành | Tài | `GameListActivity`, `PatternGameActivity`, `FastEyeGameActivity`, `PuzzleGameActivity`, `ActivityAttemptRepository` |
+| API trò chơi nhận biết/ghép hình mở rộng | `content_catalog`, `activity_attempts`, `answers` | Xử lý các game ghép hình, nhận biết hình dạng, đồ vật, âm thanh và trái cây | Tài | `ShadowMatchGameActivity`, `ShapeGameActivity`, `ObjectGameActivity`, `AnimalGameActivity`, `AnimalSoundGameActivity`, `FruitMatchGameActivity` |
 | API phản hồi và khen thưởng | `badges`, `child_badges`, `child_stats`, `feedback_notes`, `leaderboard_snapshots` | Cộng điểm, trao huy hiệu, xem tiến độ, bảng xếp hạng và phản hồi/khen thưởng | Tài | `BadgeRepository`, `FeedbackRepository`, `ChildProgressActivity`, `BadgeCollectionActivity`, `LeaderboardActivity`, `ParentFeedbackActivity` |
 | API quiz/trắc nghiệm | `content_catalog/{contentId}/questions`, `activity_attempts`, `answers` | Hiển thị quiz, xử lý đáp án, tính điểm và lưu lịch sử làm bài | Giáp | `QuizListActivity`, `QuizPlayActivity`, `QuizHistoryActivity`, `ContentRepository`, `ActivityAttemptRepository` |
 | API trợ lý học tập AI | Gemini API, `ai_conversations`, `ai_conversations/{conversationId}/messages` | Gửi câu hỏi của trẻ tới Gemini, nhận phản hồi, lưu hội thoại và tin nhắn | Giáp | `GeminiService`, `AiRepository`, `AiChatActivity` |
+| API học chữ cái | `content_catalog`, `activity_attempts` | Hiển thị bài học chữ cái và game ghép chữ cái | Giáp | `AlphabetLearningActivity`, `AlphabetMatchGameActivity`, `ContentRepository`, `ActivityAttemptRepository` |
+| API bài đăng cộng đồng và hỗ trợ | `posts`, `posts/{postId}/comments`, Firebase Storage | Tạo bài đăng cộng đồng, hiển thị bảng tin, thích/bình luận, tải ảnh bài đăng lên và hỗ trợ người dùng | Giáp | `CommunityFeedActivity`, `CreatePostActivity`, `HelpSupportActivity` |
 | API học số đếm | `content_catalog`, `content_catalog/{contentId}/levels`, `activity_attempts` | Hiển thị hoạt động số đếm, xử lý âm thanh/sự kiện chạm và lưu kết quả | Kiên | `CountingListActivity`, `CountingGameActivity`, `CountingFruitGameActivity`, `NumberMatchGameActivity`, `ActivityAttemptRepository` |
 | API lớp học và giáo viên | `classes`, `class_members`, `assignments`, `assignment_submissions` | Giáo viên tạo lớp, cấp mã tham gia, phụ huynh cho trẻ tham gia lớp, giáo viên giao bài và xem bài nộp | Kiên | `ClassRepository`, `AssignmentRepository`, `CreateClassActivity`, `ClassManagementActivity`, `ClassDetailActivity`, `JoinClassActivity`, `CreateAssignmentActivity`, `ChildAssignmentActivity` |
-| API bài đăng cộng đồng | `posts`, `posts/{postId}/comments`, Firebase Storage | Tạo bài đăng cộng đồng, hiển thị bảng tin, thích/bình luận, tải ảnh bài đăng lên | Chức năng mở rộng ngoài phạm vi cá nhân v2 | `CommunityFeedActivity`, `CreatePostActivity` |
+| API thông báo/phản hồi phía giáo viên | `feedback_notes`, `assignments`, `child_badges`, `classes` | Hiển thị thông báo, hồ sơ giáo viên, danh sách phản hồi và trao đổi với phụ huynh | Kiên | `TeacherNotificationActivity`, `NotificationSettingsActivity`, `FeedbackListActivity`, `FeedbackChatActivity`, `TeacherProfileActivity` |
+| API quản trị và nền tảng chung | `accounts`, `content_catalog`, báo cáo hệ thống | Quản lý người dùng, nội dung, báo cáo và điều hướng khởi động ứng dụng | Sơn | `AdminHomeActivity`, `UserManagementActivity`, `ContentManagementActivity`, `SystemReportActivity`, `SplashActivity`, `WelcomeActivity`, `MainActivity` |
 
 ### 4.1. API nghiệp vụ tiêu biểu
 
@@ -73,15 +88,19 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | `loadColorContent(contentId)` | Mã nội dung màu sắc | Bài học/level màu sắc | `ContentRepository` + color activities | Sơn |
 | `startGameAttempt(childId, contentId)` | Mã trẻ, mã game | Lượt chơi mới | `ActivityAttemptRepository.startAttempt()` | Tài |
 | `completeGameAttempt(childId, attemptId, score, status)` | Mã trẻ, lượt chơi, điểm, trạng thái | Kết quả trò chơi được lưu | `ActivityAttemptRepository.completeAttempt()` | Tài |
+| `completeExtendedGame(childId, gameType, score)` | Mã trẻ, loại game mở rộng, điểm | Kết quả game mở rộng được lưu | Các activity game nhận biết/ghép hình + `ActivityAttemptRepository` | Tài |
 | `awardBadge(childId, badgeId)` | Mã trẻ, mã huy hiệu | Huy hiệu đã trao | `BadgeRepository.awardBadge()` | Tài |
 | `getFeedbackForChild(childId)` | Mã trẻ | Danh sách phản hồi/khen thưởng | `FeedbackRepository.getFeedbackForChild()` | Tài |
 | `getQuizQuestions(contentId)` | Mã nội dung quiz | Danh sách câu hỏi | `ContentRepository.getQuizQuestions()` | Giáp |
 | `submitQuizAttempt(childId, attemptId, answers)` | Mã trẻ, lượt làm bài, đáp án | Điểm và lịch sử làm bài | `QuizPlayActivity` + `ActivityAttemptRepository` | Giáp |
 | `assistantChat(childId, message)` | Mã trẻ, câu hỏi | Câu trả lời từ AI | `AiChatActivity` + `GeminiService` | Giáp |
+| `createCommunityPost(childId, content, imageUri)` | Mã trẻ, nội dung, ảnh nếu có | Bài đăng cộng đồng | `CreatePostActivity` + Firestore/Storage | Giáp |
 | `loadCountingContent(contentId)` | Mã nội dung số đếm | Bài học/level số đếm | `ContentRepository` + counting activities | Kiên |
 | `joinClassByCode(joinCode, childId)` | Mã tham gia, mã trẻ | Trẻ được thêm vào lớp | `JoinClassActivity` + `ClassRepository` | Kiên |
 | `createAssignment(classId, contentId)` | Mã lớp, nội dung/bài học | Bài tập mới cho lớp | `CreateAssignmentActivity` + `AssignmentRepository` | Kiên |
 | `submitAssignment(assignmentId, childId, score)` | Mã bài tập, mã trẻ, điểm | Bài nộp được cập nhật | `AssignmentRepository.submitAssignment()` | Kiên |
+| `loadTeacherNotifications(teacherId)` | Mã giáo viên | Danh sách thông báo giáo viên | `TeacherNotificationActivity` + Firestore | Kiên |
+| `loadAdminReport()` | Điều kiện lọc báo cáo nếu có | Báo cáo tổng quan hệ thống | `SystemReportActivity` + Firestore | Sơn |
 
 ### 4.2. API chi tiết
 
@@ -98,6 +117,7 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | GAME-01 | GET | `/content_catalog`, `/content_catalog/{contentId}/levels` | `contentType=game`, `ageGroup` | Danh sách game/level | `GameListActivity`, `ContentRepository` | Tài |
 | GAME-02 | POST | `/child_profiles/{childId}/activity_attempts` | `childId`, `contentId`, thời gian bắt đầu | `attemptId` | `ActivityAttemptRepository.startAttempt()` | Tài |
 | GAME-03 | PATCH | `/child_profiles/{childId}/activity_attempts/{attemptId}` | `score`, `status`, `completedAt` | Kết quả trò chơi | `ActivityAttemptRepository.completeAttempt()` | Tài |
+| GAME-04 | POST/PATCH | `/child_profiles/{childId}/activity_attempts` | `gameType`, đáp án, điểm | Kết quả game nhận biết/ghép hình | `ShadowMatchGameActivity`, `ShapeGameActivity`, `ObjectGameActivity`, `AnimalGameActivity`, `AnimalSoundGameActivity`, `FruitMatchGameActivity` | Tài |
 | REWARD-01 | POST | `/child_badges` | `childId`, `badgeId`, nguồn nhận huy hiệu | Huy hiệu đã trao | `BadgeRepository.awardBadge()` | Tài |
 | REWARD-02 | GET | `/leaderboard_snapshots`, `/child_stats` | `classId`, `childId`, `periodType` | Tiến độ/bảng xếp hạng | `FeedbackRepository`, `ChildProgressActivity`, `LeaderboardActivity` | Tài |
 | FEEDBACK-01 | POST/GET | `/feedback_notes` | `teacherId`, `childId`, nội dung phản hồi | Phản hồi/khen thưởng | `FeedbackRepository`, `ParentFeedbackActivity` | Tài |
@@ -105,6 +125,9 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | QUIZ-02 | POST/PATCH | `/child_profiles/{childId}/activity_attempts` | `answers`, `score`, `status` | Kết quả làm quiz | `QuizPlayActivity`, `ActivityAttemptRepository` | Giáp |
 | AI-01 | POST | Gemini API | `prompt`, ngữ cảnh học tập | Câu trả lời AI | `GeminiService.generateResponse()` | Giáp |
 | AI-02 | POST/GET | `/ai_conversations/{conversationId}/messages` | `childId`, `message`, `senderType` | Lịch sử tin nhắn AI | `AiRepository.addMessage()`, `AiRepository.getMessages()` | Giáp |
+| ALPHA-01 | GET/POST | `/content_catalog`, `/child_profiles/{childId}/activity_attempts` | `contentType=alphabet`, đáp án | Nội dung chữ cái và kết quả ghép chữ | `AlphabetLearningActivity`, `AlphabetMatchGameActivity` | Giáp |
+| POST-01 | POST | Firebase Storage `posts/{fileId}` + `/posts` | Nội dung bài đăng, ảnh nếu có | `postId`, `imageUrl` | `CreatePostActivity` | Giáp |
+| POST-02 | POST | `/posts/{postId}/comments` | `postId`, `commentText`, `authorId` | Bình luận mới | `CommunityFeedActivity` | Giáp |
 | COUNT-01 | GET | `/content_catalog`, `/content_catalog/{contentId}/levels` | `contentType=counting`, `ageGroup` | Nội dung/level số đếm | `ContentRepository`, `CountingListActivity` | Kiên |
 | COUNT-02 | POST/PATCH | `/child_profiles/{childId}/activity_attempts` | `childId`, đáp án, điểm | Kết quả học số đếm | `CountingGameActivity`, `CountingFruitGameActivity`, `NumberMatchGameActivity` | Kiên |
 | CLASS-01 | POST | `/classes` | `teacherId`, `className`, `joinCode` | `classId` | `ClassRepository.createClass()` | Kiên |
@@ -113,6 +136,8 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | ASSIGN-01 | POST | `/assignments` | `classId`, `teacherId`, nội dung bài tập | `assignmentId` | `AssignmentRepository.createAssignment()` | Kiên |
 | ASSIGN-02 | GET | `/assignments?classId={classId}` | `classId` | Danh sách bài tập của lớp | `AssignmentRepository.getAssignmentsByClass()` | Kiên |
 | ASSIGN-03 | POST/PATCH | `/assignment_submissions` | `assignmentId`, `childId`, `score`, `latestAttemptId` | Bài nộp đã cập nhật | `AssignmentRepository.submitAssignment()` | Kiên |
+| TEACHER-01 | GET | `/classes`, `/assignments`, `/feedback_notes` | `teacherId` | Hồ sơ, thông báo và phản hồi phía giáo viên | `TeacherHomeActivity`, `TeacherProfileActivity`, `TeacherNotificationActivity`, `FeedbackListActivity`, `FeedbackChatActivity` | Kiên |
+| ADMIN-01 | GET/POST/PATCH | `/accounts`, `/content_catalog` | Dữ liệu người dùng/nội dung/báo cáo | Quản trị người dùng, nội dung và báo cáo | `AdminHomeActivity`, `UserManagementActivity`, `ContentManagementActivity`, `SystemReportActivity` | Sơn |
 
 ## 5. Bảng dữ liệu trong Firestore
 
@@ -130,7 +155,7 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | `child_stats` | Điểm, chuỗi học liên tiếp, tiến độ | Tài |
 | `badges` | Danh mục huy hiệu | Tài |
 | `child_badges` | Huy hiệu trẻ đã nhận | Tài |
-| `feedback_notes` | Phiên phản hồi/khen thưởng | Tài |
+| `feedback_notes` | Phiên phản hồi/khen thưởng | Tài, Kiên |
 | `leaderboard_snapshots` | Dữ liệu bảng xếp hạng | Tài |
 | `ai_conversations` | Hội thoại AI | Giáp |
 | `ai_conversations/{conversationId}/messages` | Tin nhắn AI | Giáp |
@@ -138,8 +163,8 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | `class_members` | Thành viên lớp | Kiên |
 | `assignments` | Bài tập giáo viên giao | Kiên |
 | `assignment_submissions` | Bài nộp của trẻ | Kiên |
-| `posts` | Bài đăng cộng đồng | Chức năng mở rộng |
-| `posts/{postId}/comments` | Bình luận bài đăng | Chức năng mở rộng |
+| `posts` | Bài đăng cộng đồng | Giáp |
+| `posts/{postId}/comments` | Bình luận bài đăng | Giáp |
 
 ## 6. API gọi ngoài
 
@@ -147,7 +172,7 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 |---|---|---|
 | Firebase Authentication | `AuthService`, `SignInActivity`, `ForgotPasswordActivity` | Đăng nhập, đăng ký, đặt lại mật khẩu |
 | Cloud Firestore | Các repository và một số activity liên quan | Lưu/đọc dữ liệu nghiệp vụ |
-| Firebase Storage | `CreatePostActivity`, `FirestoreHelper` | Lưu ảnh bài đăng cộng đồng nếu dùng chức năng mở rộng |
+| Firebase Storage | `CreatePostActivity`, `FirestoreHelper` | Lưu ảnh bài đăng cộng đồng |
 | Gemini API | `GeminiService`, `AiChatActivity` | Sinh câu trả lời cho trợ lý AI |
 
 ## 7. Hướng dẫn cài đặt và triển khai
