@@ -11,17 +11,15 @@
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="colorError">@color/status_error</item>
-        <item name="android:fontFamily">sans-serif-rounded</item>
+        <!-- Đổi font chữ mặc định cho toàn bộ ứng dụng -->
+        <item name="android:fontFamily">@font/quicksand_medium</item>
         <item name="android:windowBackground">@color/bg_main</item>
     </style>
 
     <!-- Splash / Welcome theme -->
     <style name="Theme.Kid_app.Splash" parent="Theme.Kid_app">
-        <!-- Đối với Android 12+, cấu hình icon khởi động hệ thống -->
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/logo_app</item>
         <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/white</item>
-
-        <!-- Cấu hình cũ cho Android thấp hơn -->
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -38,23 +36,23 @@
         <item name="android:statusBarColor">@color/primary_green</item>
     </style>
 
-    <!-- Text Styles -->
+    <!-- Text Styles - Cập nhật font Quicksand -->
     <style name="TextStyle.Title.Large" parent="">
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
     </style>
 
     <style name="TextStyle.Title.Medium" parent="">
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
     </style>
 
     <style name="TextStyle.Body" parent="">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
     </style>
 
     <!-- Button Styles -->
@@ -65,7 +63,7 @@
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
     </style>
 
     <style name="Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -74,6 +72,7 @@
         <item name="cornerRadius">24dp</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
     </style>
 
     <!-- Card Style -->
