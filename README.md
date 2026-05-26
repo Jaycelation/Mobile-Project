@@ -61,7 +61,7 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | API trợ lý học tập AI | Gemini API, `ai_conversations`, `ai_conversations/{conversationId}/messages` | Gửi câu hỏi của trẻ tới Gemini, nhận phản hồi, lưu hội thoại và tin nhắn | Giáp | `GeminiService`, `AiRepository`, `AiChatActivity` |
 | API học số đếm | `content_catalog`, `content_catalog/{contentId}/levels`, `activity_attempts` | Hiển thị hoạt động số đếm, xử lý âm thanh/sự kiện chạm và lưu kết quả | Kiên | `CountingListActivity`, `CountingGameActivity`, `CountingFruitGameActivity`, `NumberMatchGameActivity`, `ActivityAttemptRepository` |
 | API lớp học và giáo viên | `classes`, `class_members`, `assignments`, `assignment_submissions` | Giáo viên tạo lớp, cấp mã tham gia, phụ huynh cho trẻ tham gia lớp, giáo viên giao bài và xem bài nộp | Kiên | `ClassRepository`, `AssignmentRepository`, `CreateClassActivity`, `ClassManagementActivity`, `ClassDetailActivity`, `JoinClassActivity`, `CreateAssignmentActivity`, `ChildAssignmentActivity` |
-| API bài đăng cộng đồng | `posts`, `posts/{postId}/comments`, Firebase Storage | Tạo bài đăng cộng đồng, hiển thị bảng tin, thích/bình luận, tải ảnh bài đăng lên | Chức năng phụ ngoài khung báo cáo cá nhân chính | `CommunityFeedActivity`, `CreatePostActivity` |
+| API bài đăng cộng đồng | `posts`, `posts/{postId}/comments`, Firebase Storage | Tạo bài đăng cộng đồng, hiển thị bảng tin, thích/bình luận, tải ảnh bài đăng lên | Chức năng mở rộng ngoài phạm vi cá nhân v2 | `CommunityFeedActivity`, `CreatePostActivity` |
 
 ### 4.1. API nghiệp vụ tiêu biểu
 
@@ -138,8 +138,8 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 | `class_members` | Thành viên lớp | Kiên |
 | `assignments` | Bài tập giáo viên giao | Kiên |
 | `assignment_submissions` | Bài nộp của trẻ | Kiên |
-| `posts` | Bài đăng cộng đồng | Chức năng phụ |
-| `posts/{postId}/comments` | Bình luận bài đăng | Chức năng phụ |
+| `posts` | Bài đăng cộng đồng | Chức năng mở rộng |
+| `posts/{postId}/comments` | Bình luận bài đăng | Chức năng mở rộng |
 
 ## 6. API gọi ngoài
 
@@ -147,7 +147,7 @@ Bảng dưới đây mô tả các nhóm API ở mức nghiệp vụ. Dự án k
 |---|---|---|
 | Firebase Authentication | `AuthService`, `SignInActivity`, `ForgotPasswordActivity` | Đăng nhập, đăng ký, đặt lại mật khẩu |
 | Cloud Firestore | Các repository và một số activity liên quan | Lưu/đọc dữ liệu nghiệp vụ |
-| Firebase Storage | `CreatePostActivity`, `FirestoreHelper` | Lưu ảnh bài đăng cộng đồng nếu dùng chức năng phụ |
+| Firebase Storage | `CreatePostActivity`, `FirestoreHelper` | Lưu ảnh bài đăng cộng đồng nếu dùng chức năng mở rộng |
 | Gemini API | `GeminiService`, `AiChatActivity` | Sinh câu trả lời cho trợ lý AI |
 
 ## 7. Hướng dẫn cài đặt và triển khai
