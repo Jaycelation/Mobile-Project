@@ -1,16 +1,23 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
 }
 
-import java.util.Properties
 val localProperties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
     localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
-val geminiApiKey = localProperties.getProperty("GEMINI_API_KEY", "\"\"")
 
+fun buildConfigString(value: String): String = "\"" +
+    value.replace("\\", "\\\\").replace("\"", "\\\"") +
+    "\""
+
+val geminiApiKey = localProperties.getProperty("GEMINI_API_KEY")
+    ?: System.getenv("GEMINI_API_KEY")
+    ?: ""
 
 android {
     namespace = "com.example.kid_app"
@@ -25,7 +32,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
-        buildConfigField("String", "GEMINI_API_KEY", geminiApiKey)
+        buildConfigField("String", "GEMINI_API_KEY", buildConfigString(geminiApiKey))
     }
 
     buildFeatures {
