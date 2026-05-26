@@ -38,12 +38,14 @@ public class ClassRepository {
      * Giáo viên tạo lớp mới.
      * Trả về DocumentReference để lấy classId tự sinh.
      */
+    // Chuc nang: giao vien tao lop hoc moi tren Firestore.
     public Task<DocumentReference> createClass(AppClass appClass) {
         return db.collection(AppConstants.COL_CLASSES)
                 .add(appClass);
     }
 
     /** Lấy lớp theo id */
+    // Chuc nang: doc thong tin lop hoc theo ma lop.
     public Task<DocumentSnapshot> getClassById(String classId) {
         return db.collection(AppConstants.COL_CLASSES)
                 .document(classId)
@@ -54,6 +56,7 @@ public class ClassRepository {
      * Lấy lớp theo join code — dùng khi parent nhập code để đăng ký cho bé.
      * Kết quả: nếu QuerySnapshot.isEmpty() → không tìm thấy lớp.
      */
+    // Chuc nang: tim lop hoc theo ma tham gia de phu huynh dang ky cho tre.
     public Task<QuerySnapshot> getClassByJoinCode(String joinCode) {
         return db.collection(AppConstants.COL_CLASSES)
                 .whereEqualTo("joinCode", joinCode)
@@ -63,6 +66,7 @@ public class ClassRepository {
     }
 
     /** Lấy tất cả lớp của một giáo viên */
+    // Chuc nang: lay danh sach lop hoc cua mot giao vien.
     public Task<QuerySnapshot> getClassesByTeacher(String teacherId) {
         return db.collection(AppConstants.COL_CLASSES)
                 .whereEqualTo("teacherId", teacherId)
@@ -72,6 +76,7 @@ public class ClassRepository {
     }
 
     /** Cập nhật thông tin lớp */
+    // Chuc nang: cap nhat thong tin lop hoc.
     public Task<Void> updateClass(String classId, AppClass appClass) {
         return db.collection(AppConstants.COL_CLASSES)
                 .document(classId)
@@ -79,6 +84,7 @@ public class ClassRepository {
     }
 
     /** Soft delete lớp học */
+    // Chuc nang: an lop hoc bang cach cap nhat trang thai deleted.
     public Task<Void> softDeleteClass(String classId) {
         Map<String, Object> updates = new HashMap<>();
         updates.put("status", AppConstants.STATUS_DELETED);
@@ -94,12 +100,14 @@ public class ClassRepository {
      * Thêm bé vào lớp (parent dùng join code).
      * Trả về DocumentReference để lấy memberId.
      */
+    // Chuc nang: them tre vao lop hoc sau khi ma tham gia hop le.
     public Task<DocumentReference> addMember(ClassMember member) {
         return db.collection(AppConstants.COL_CLASS_MEMBERS)
                 .add(member);
     }
 
     /** Lấy tất cả thành viên của một lớp (giáo viên xem) */
+    // Chuc nang: lay danh sach tre dang tham gia mot lop hoc.
     public Task<QuerySnapshot> getMembersOfClass(String classId) {
         return db.collection(AppConstants.COL_CLASS_MEMBERS)
                 .whereEqualTo("classId", classId)
@@ -111,6 +119,7 @@ public class ClassRepository {
      * Lấy tất cả lớp mà một bé tham gia.
      * Kết quả là danh sách ClassMember → từ đó lấy classId.
      */
+    // Chuc nang: lay danh sach lop hoc ma mot tre dang tham gia.
     public Task<QuerySnapshot> getClassesOfChild(String childId) {
         return db.collection(AppConstants.COL_CLASS_MEMBERS)
                 .whereEqualTo("childId", childId)
@@ -121,6 +130,7 @@ public class ClassRepository {
     /**
      * Kiểm tra bé đã tham gia lớp chưa — tránh thêm trùng.
      */
+    // Chuc nang: kiem tra tre da co trong lop hay chua de tranh them trung.
     public Task<QuerySnapshot> checkChildInClass(String classId, String childId) {
         return db.collection(AppConstants.COL_CLASS_MEMBERS)
                 .whereEqualTo("classId", classId)
@@ -132,6 +142,7 @@ public class ClassRepository {
     /**
      * Bé/phụ huynh rời khỏi lớp — soft delete bằng cách update leftAt và status.
      */
+    // Chuc nang: cho tre roi khoi lop bang cach cap nhat trang thai thanh left.
     public Task<Void> removeMember(String memberId) {
         Map<String, Object> updates = new HashMap<>();
         updates.put("memberStatus", "left");

@@ -39,12 +39,14 @@ public class AiRepository {
      * Tạo conversation mới khi bé bắt đầu chat với AI.
      * Trả về DocumentReference để lấy conversationId.
      */
+    // Chuc nang: tao cuoc hoi thoai AI moi cho tre trong Firestore.
     public Task<DocumentReference> createConversation(AiConversation conversation) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .add(conversation);
     }
 
     /** Lấy conversation theo id */
+    // Chuc nang: doc thong tin mot cuoc hoi thoai AI theo id.
     public Task<DocumentSnapshot> getConversation(String conversationId) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .document(conversationId)
@@ -55,6 +57,7 @@ public class AiRepository {
      * Lấy tất cả conversation của bé, mới nhất trước.
      * Dùng để hiển thị lịch sử chat.
      */
+    // Chuc nang: lay danh sach cuoc hoi thoai AI cua mot tre.
     public Task<QuerySnapshot> getConversationsByChild(String childId) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .whereEqualTo("childId", childId)
@@ -66,6 +69,7 @@ public class AiRepository {
      * Lấy conversation theo context (ví dụ: quiz_help cho quiz cụ thể).
      * contextType: "free_chat" | "quiz_help" | "game_help"
      */
+    // Chuc nang: tim cuoc hoi thoai AI theo ngu canh bai hoc, game hoac quiz.
     public Task<QuerySnapshot> getConversationByContext(String childId,
                                                          String contextType,
                                                          String contextRefId) {
@@ -78,6 +82,7 @@ public class AiRepository {
     }
 
     /** Cập nhật updatedAt khi có tin nhắn mới */
+    // Chuc nang: cap nhat thoi gian moi nhat khi cuoc hoi thoai co tin nhan moi.
     public Task<Void> touchConversation(String conversationId) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .document(conversationId)
@@ -91,6 +96,7 @@ public class AiRepository {
      * Path: /ai_conversations/{conversationId}/messages/{messageId}
      * Trả về DocumentReference để lấy messageId.
      */
+    // Chuc nang: luu tin nhan cua tre hoac AI vao subcollection messages.
     public Task<DocumentReference> addMessage(String conversationId, AiMessage message) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .document(conversationId)
@@ -102,6 +108,7 @@ public class AiRepository {
      * Lấy tất cả tin nhắn trong conversation, theo thứ tự thời gian.
      * Dùng để rebuild context khi mở lại cuộc trò chuyện.
      */
+    // Chuc nang: doc toan bo tin nhan trong mot cuoc hoi thoai AI.
     public Task<QuerySnapshot> getMessages(String conversationId) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .document(conversationId)
@@ -114,6 +121,7 @@ public class AiRepository {
      * Lấy N tin nhắn gần nhất — dùng làm context window cho AI.
      * Giới hạn để tránh gửi quá nhiều token lên API.
      */
+    // Chuc nang: lay mot so tin nhan gan nhat de lam ngu canh gui len AI.
     public Task<QuerySnapshot> getRecentMessages(String conversationId, int limit) {
         return db.collection(AppConstants.COL_AI_CONVERSATIONS)
                 .document(conversationId)

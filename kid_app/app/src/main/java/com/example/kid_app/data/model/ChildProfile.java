@@ -32,6 +32,9 @@ public class ChildProfile {
 
     private String avatarUrl;
 
+    /** UID phụ huynh tạo hồ sơ; dùng cho Firestore Security Rules. */
+    private String ownerParentId;
+
     /** "3-5" | "6-8" | "9-12" — xem AppConstants.AGE_GROUP_* */
     private String ageGroup;
 
@@ -86,6 +89,9 @@ public class ChildProfile {
 
     public String getAvatarUrl() { return avatarUrl; }
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
+
+    public String getOwnerParentId() { return ownerParentId; }
+    public void setOwnerParentId(String ownerParentId) { this.ownerParentId = ownerParentId; }
 
     public String getAgeGroup() { return ageGroup; }
     public void setAgeGroup(String ageGroup) { this.ageGroup = ageGroup; }

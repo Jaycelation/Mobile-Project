@@ -102,9 +102,7 @@ public final class AppConstants {
     public static final String SESSION_ASSIGNMENT = "assignment";
 
     /* ==================== AGE GROUPS ==================== */
-    public static final String AGE_GROUP_3_5 = "3-5";
-    public static final String AGE_GROUP_6_8 = "6-8";
-    public static final String AGE_GROUP_9_12 = "9-12";
+    public static final String AGE_GROUP_1_5 = "1-5";
 
     /* ==================== STATUS ==================== */
     public static final String STATUS_ACTIVE = "active";

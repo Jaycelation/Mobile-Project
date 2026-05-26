@@ -31,7 +31,9 @@ public class SignInActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // Chuc nang: khoi tao Firebase Auth de lay phien dang nhap hien tai.
         auth = FirebaseAuth.getInstance();
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
 
         bindViews();
@@ -68,6 +70,7 @@ public class SignInActivity extends BaseActivity {
         showLoading(progressBar);
         setFormEnabled(false);
 
+        // Chuc nang: goi Firebase Auth de dang nhap bang email va mat khau.
         auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> loadUserAndNavigate())
                 .addOnFailureListener(e -> {
@@ -80,6 +83,7 @@ public class SignInActivity extends BaseActivity {
     private void loadUserAndNavigate() {
         String uid = auth.getCurrentUser().getUid();
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("accounts")
                 .document(uid)
                 .get()

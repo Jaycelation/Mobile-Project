@@ -35,18 +35,21 @@ public class ChildProfileRepository {
     // ==================== CHILD PROFILE ====================
 
     /** Tạo hồ sơ bé mới và khởi tạo stats */
+    // Chuc nang: tao ho so tre moi trong collection child_profiles.
     public Task<Void> createChildProfile(String childId, ChildProfile profile) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
                 .set(profile);
     }
 
+    // Chuc nang: doc thong tin ho so cua mot tre.
     public Task<DocumentSnapshot> getChildProfile(String childId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
                 .get();
     }
 
+    // Chuc nang: cap nhat thong tin ho so tre.
     public Task<Void> updateChildProfile(String childId, ChildProfile profile) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -54,6 +57,7 @@ public class ChildProfileRepository {
     }
 
     /** Xóa sạch dữ liệu của bé khỏi hệ thống (Dành cho Phụ huynh) */
+    // Chuc nang: xoa ho so tre va cac du lieu lien quan bang WriteBatch Firestore.
     public Task<Void> hardDeleteChildProfile(String childId) {
         WriteBatch batch = db.batch();
 
@@ -109,6 +113,7 @@ public class ChildProfileRepository {
                 });
     }
 
+    // Chuc nang: an ho so tre bang cach ghi thoi diem deletedAt.
     public Task<Void> softDeleteChildProfile(String childId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -117,6 +122,7 @@ public class ChildProfileRepository {
 
     // ==================== CHILD SETTINGS ====================
 
+    // Chuc nang: doc cai dat hoc tap va kiem soat phu huynh cua tre.
     public Task<DocumentSnapshot> getChildSettings(String childId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -125,6 +131,7 @@ public class ChildProfileRepository {
                 .get();
     }
 
+    // Chuc nang: luu cai dat hoc tap va gioi han su dung cua tre.
     public Task<Void> saveChildSettings(String childId, ChildSettings settings) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -135,18 +142,21 @@ public class ChildProfileRepository {
 
     // ==================== PARENT-CHILD LINKS ====================
 
+    // Chuc nang: lay danh sach tre thuoc mot phu huynh.
     public Task<QuerySnapshot> getChildrenOfParent(String parentId) {
         return db.collection(AppConstants.COL_PARENT_CHILD_LINKS)
                 .whereEqualTo("parentId", parentId)
                 .get();
     }
 
+    // Chuc nang: lay danh sach phu huynh co lien ket voi mot tre.
     public Task<QuerySnapshot> getParentsOfChild(String childId) {
         return db.collection(AppConstants.COL_PARENT_CHILD_LINKS)
                 .whereEqualTo("childId", childId)
                 .get();
     }
 
+    // Chuc nang: tao lien ket giua phu huynh va ho so tre.
     public Task<Void> createParentChildLink(String linkId, ParentChildLink link) {
         return db.collection(AppConstants.COL_PARENT_CHILD_LINKS)
                 .document(linkId)
@@ -155,12 +165,14 @@ public class ChildProfileRepository {
 
     // ==================== CHILD STATS ====================
 
+    // Chuc nang: doc thong ke diem, streak va tien do cua tre.
     public Task<DocumentSnapshot> getChildStats(String childId) {
         return db.collection(AppConstants.COL_CHILD_STATS)
                 .document(childId)
                 .get();
     }
 
+    // Chuc nang: khoi tao ban ghi thong ke khi tre moi duoc tao.
     public Task<Void> initChildStats(String childId) {
         ChildStats stats = new ChildStats(childId);
         return db.collection(AppConstants.COL_CHILD_STATS)
@@ -169,6 +181,7 @@ public class ChildProfileRepository {
     }
 
     /** Cộng điểm cho bé và tự động kiểm tra tặng huy hiệu */
+    // Chuc nang: cong diem, cap nhat streak va kiem tra dieu kien nhan huy hieu.
     public Task<Void> addPoints(String childId, int points) {
         return db.collection(AppConstants.COL_CHILD_STATS)
                 .document(childId)
@@ -224,12 +237,14 @@ public class ChildProfileRepository {
     }
 
     /** Ghi nhận hoàn thành 1 bài học cụ thể (từ 7 trò chơi học tập) */
+    // Chuc nang: ghi nhan tre da hoan thanh mot bai hoc cu the.
     public void completeLesson(String childId, String lessonId) {
         db.collection(AppConstants.COL_CHILD_STATS)
                 .document(childId)
                 .update("completedLessons", FieldValue.arrayUnion(lessonId));
     }
 
+    // Chuc nang: kiem tra cac moc diem va goi cap huy hieu neu tre dat dieu kien.
     private void checkAndAwardBadges(String childId, long totalPoints) {
         // Mốc 500: Tân Binh Chăm Chỉ
         if (totalPoints >= 500) {
@@ -253,6 +268,7 @@ public class ChildProfileRepository {
         }
     }
 
+    // Chuc nang: chi cap huy hieu neu tre chua tung nhan huy hieu do.
     private void awardBadgeIfMissing(String childId, String badgeId, String badgeName) {
         db.collection(AppConstants.COL_CHILD_BADGES)
                 .whereEqualTo("childId", childId)

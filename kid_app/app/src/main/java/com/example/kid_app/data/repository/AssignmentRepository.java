@@ -27,11 +27,13 @@ public class AssignmentRepository {
     // ==================== ASSIGNMENTS ====================
 
     /** Giáo viên tạo bài tập mới */
+    // Chuc nang: giao vien tao bai tap moi cho lop hoc.
     public Task<DocumentReference> createAssignment(Assignment assignment) {
         return db.collection(AppConstants.COL_ASSIGNMENTS)
                 .add(assignment);
     }
 
+    // Chuc nang: doc thong tin chi tiet cua mot bai tap.
     public Task<DocumentSnapshot> getAssignment(String assignmentId) {
         return db.collection(AppConstants.COL_ASSIGNMENTS)
                 .document(assignmentId)
@@ -39,6 +41,7 @@ public class AssignmentRepository {
     }
 
     /** Lấy tất cả bài tập của một lớp */
+    // Chuc nang: lay danh sach bai tap da giao cho mot lop.
     public Task<QuerySnapshot> getAssignmentsByClass(String classId) {
         return db.collection(AppConstants.COL_ASSIGNMENTS)
                 .whereEqualTo("classId", classId)
@@ -48,6 +51,7 @@ public class AssignmentRepository {
     }
 
     /** Lấy bài tập của giáo viên */
+    // Chuc nang: lay danh sach bai tap do mot giao vien tao.
     public Task<QuerySnapshot> getAssignmentsByTeacher(String teacherId) {
         return db.collection(AppConstants.COL_ASSIGNMENTS)
                 .whereEqualTo("teacherId", teacherId)
@@ -55,6 +59,7 @@ public class AssignmentRepository {
                 .get();
     }
 
+    // Chuc nang: cap nhat trang thai bai tap nhu published, hidden hoac deleted.
     public Task<Void> updateAssignmentStatus(String assignmentId, int status) {
         return db.collection(AppConstants.COL_ASSIGNMENTS)
                 .document(assignmentId)
@@ -64,12 +69,14 @@ public class AssignmentRepository {
     // ==================== ASSIGNMENT SUBMISSIONS ====================
 
     /** Tạo submission record khi bé bắt đầu làm bài */
+    // Chuc nang: tao ban ghi bai nop khi tre bat dau lam bai tap.
     public Task<DocumentReference> createSubmission(AssignmentSubmission submission) {
         return db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
                 .add(submission);
     }
 
     /** Lấy submission của bé cho bài cụ thể */
+    // Chuc nang: tim bai nop cua mot tre cho mot bai tap cu the.
     public Task<QuerySnapshot> getSubmission(String assignmentId, String childId) {
         return db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
                 .whereEqualTo("assignmentId", assignmentId)
@@ -79,6 +86,7 @@ public class AssignmentRepository {
     }
 
     /** Cập nhật kết quả submission sau khi bé nộp bài */
+    // Chuc nang: cap nhat diem va trang thai khi tre nop bai tap.
     public Task<Void> submitAssignment(String submissionId, String latestAttemptId, int score) {
         return db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
                 .document(submissionId)
@@ -91,6 +99,7 @@ public class AssignmentRepository {
     }
 
     /** Giáo viên đánh giá/review bài nộp */
+    // Chuc nang: giao vien danh dau bai nop da duoc xem xet.
     public Task<Void> reviewSubmission(String submissionId) {
         return db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
                 .document(submissionId)
@@ -99,6 +108,7 @@ public class AssignmentRepository {
     }
 
     /** Lấy tất cả submission của một assignment (giáo viên xem) */
+    // Chuc nang: lay tat ca bai nop cua mot bai tap de giao vien theo doi.
     public Task<QuerySnapshot> getSubmissionsForAssignment(String assignmentId) {
         return db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
                 .whereEqualTo("assignmentId", assignmentId)
@@ -106,6 +116,7 @@ public class AssignmentRepository {
     }
 
     /** Lấy tất cả submission của bé (lịch sử bài làm) */
+    // Chuc nang: lay lich su bai nop cua mot tre.
     public Task<QuerySnapshot> getSubmissionsForChild(String childId) {
         return db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
                 .whereEqualTo("childId", childId)

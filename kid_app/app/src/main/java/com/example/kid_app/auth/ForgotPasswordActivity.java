@@ -61,6 +61,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         showLoading(progressBar);
         setFormEnabled(false);
 
+        // Chuc nang: goi Firebase Auth thong qua AuthService de gui email dat lai mat khau.
         authService.sendPasswordResetEmail(email)
                 .addOnSuccessListener(unused -> {
                     hideLoading(progressBar);

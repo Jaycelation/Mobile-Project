@@ -56,6 +56,7 @@ public class AuthService {
      * Đăng nhập bằng email/password.
      * UI cần gọi getAccount() sau khi đăng nhập để biết role.
      */
+    // Chuc nang: goi Firebase Auth de dang nhap nguoi dung bang email va mat khau.
     public Task<AuthResult> signIn(String email, String password) {
         return firebaseAuth.signInWithEmailAndPassword(email.trim(), password);
     }
@@ -72,6 +73,7 @@ public class AuthService {
      * Role được truyền vào ("parent" | "teacher").
      * Không hỗ trợ role "admin" đăng ký qua app — admin được tạo thủ công.
      */
+    // Chuc nang: dang ky tai khoan tren Firebase Auth va tao ban ghi account tren Firestore.
     public Task<Void> signUp(String email, String password, String fullName, String role) {
         return firebaseAuth
                 .createUserWithEmailAndPassword(email.trim(), password)
@@ -100,6 +102,7 @@ public class AuthService {
      * Gửi email đặt lại mật khẩu.
      * Firebase Auth tự xử lý — app không lưu gì thêm.
      */
+    // Chuc nang: goi API Firebase Auth de gui email dat lai mat khau.
     public Task<Void> sendPasswordResetEmail(String email) {
         return firebaseAuth.sendPasswordResetEmail(email.trim());
     }
@@ -110,6 +113,7 @@ public class AuthService {
      * Lấy account document của user hiện tại từ Firestore.
      * Dùng sau khi đăng nhập để xác định role và điều hướng.
      */
+    // Chuc nang: doc du lieu account hien tai tu Firestore de lay vai tro nguoi dung.
     public Task<DocumentSnapshot> getCurrentUserAccount() {
         FirebaseUser user = getCurrentUser();
         if (user == null) return Tasks.forException(new Exception("Chưa đăng nhập"));
@@ -119,6 +123,7 @@ public class AuthService {
     // ==================== ĐĂNG XUẤT ====================
 
     /** Đăng xuất — xóa session Firebase Auth */
+    // Chuc nang: dang xuat va xoa phien dang nhap hien tai tren Firebase Auth.
     public void signOut() {
         firebaseAuth.signOut();
     }

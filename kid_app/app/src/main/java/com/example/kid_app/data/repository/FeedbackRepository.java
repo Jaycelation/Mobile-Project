@@ -38,12 +38,14 @@ public class FeedbackRepository {
      * Giáo viên tạo phản hồi cho bé.
      * Trả về DocumentReference để lấy feedbackId.
      */
+    // Chuc nang: giao vien tao phan hoi ca nhan cho tre.
     public Task<DocumentReference> createFeedback(FeedbackNote note) {
         return db.collection(AppConstants.COL_FEEDBACK_NOTES)
                 .add(note);
     }
 
     /** Lấy phản hồi theo id */
+    // Chuc nang: doc chi tiet mot phan hoi theo id.
     public Task<DocumentSnapshot> getFeedbackById(String feedbackId) {
         return db.collection(AppConstants.COL_FEEDBACK_NOTES)
                 .document(feedbackId)
@@ -54,6 +56,7 @@ public class FeedbackRepository {
      * Lấy tất cả phản hồi của một bé — hiển thị cho parent/child.
      * Sắp xếp mới nhất trước.
      */
+    // Chuc nang: lay tat ca phan hoi ma mot tre nhan duoc.
     public Task<QuerySnapshot> getFeedbackForChild(String childId) {
         return db.collection(AppConstants.COL_FEEDBACK_NOTES)
                 .whereEqualTo("childId", childId)
@@ -64,6 +67,7 @@ public class FeedbackRepository {
     /**
      * Lấy phản hồi giáo viên đã gửi — dùng trong màn hình teacher dashboard.
      */
+    // Chuc nang: lay cac phan hoi do mot giao vien da gui.
     public Task<QuerySnapshot> getFeedbackByTeacher(String teacherId) {
         return db.collection(AppConstants.COL_FEEDBACK_NOTES)
                 .whereEqualTo("teacherId", teacherId)
@@ -74,6 +78,7 @@ public class FeedbackRepository {
     /**
      * Lấy phản hồi liên quan đến một bài tập cụ thể.
      */
+    // Chuc nang: lay phan hoi lien quan den mot bai tap cu the.
     public Task<QuerySnapshot> getFeedbackForAssignment(String childId, String assignmentId) {
         return db.collection(AppConstants.COL_FEEDBACK_NOTES)
                 .whereEqualTo("childId", childId)
@@ -88,6 +93,7 @@ public class FeedbackRepository {
      * Thường được gọi từ Cloud Function hoặc batch job cuối tuần/tháng.
      * Trả về DocumentReference để lấy snapshotId.
      */
+    // Chuc nang: luu snapshot bang xep hang de hien thi thanh tich theo ky.
     public Task<DocumentReference> saveSnapshot(LeaderboardSnapshot snapshot) {
         return db.collection(AppConstants.COL_LEADERBOARD_SNAPSHOTS)
                 .add(snapshot);
@@ -97,6 +103,7 @@ public class FeedbackRepository {
      * Lấy snapshot mới nhất của một lớp trong kỳ hiện tại.
      * periodType: "weekly" | "monthly" | "all_time"
      */
+    // Chuc nang: lay bang xep hang moi nhat cua lop theo tuan, thang hoac toan thoi gian.
     public Task<QuerySnapshot> getLatestSnapshot(String classId, String periodType) {
         return db.collection(AppConstants.COL_LEADERBOARD_SNAPSHOTS)
                 .whereEqualTo("classId", classId)
@@ -110,6 +117,7 @@ public class FeedbackRepository {
      * Lấy lịch sử snapshot của một lớp theo kỳ.
      * Dùng để vẽ biểu đồ tiến độ theo thời gian.
      */
+    // Chuc nang: lay lich su bang xep hang de phuc vu thong ke tien do.
     public Task<QuerySnapshot> getSnapshotHistory(String classId, String periodType, int limit) {
         return db.collection(AppConstants.COL_LEADERBOARD_SNAPSHOTS)
                 .whereEqualTo("classId", classId)

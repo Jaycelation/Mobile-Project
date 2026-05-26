@@ -39,6 +39,7 @@ public class ActivityAttemptRepository {
      * Tạo attempt mới khi bé bắt đầu làm bài.
      * Trả về DocumentReference để lấy attemptId sinh ra.
      */
+    // Chuc nang: tao lan lam bai moi cho tre khi bat dau mot hoat dong hoc tap.
     public Task<DocumentReference> startAttempt(String childId, ActivityAttempt attempt) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -47,6 +48,7 @@ public class ActivityAttemptRepository {
     }
 
     /** Lấy attempt theo id */
+    // Chuc nang: doc thong tin mot lan lam bai theo ma attempt.
     public Task<DocumentSnapshot> getAttempt(String childId, String attemptId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -59,6 +61,7 @@ public class ActivityAttemptRepository {
      * Cập nhật kết quả khi bé hoàn thành bài.
      * Chỉ update các field cần thiết, không ghi đè toàn bộ document.
      */
+    // Chuc nang: cap nhat diem, trang thai va thoi gian khi tre hoan thanh hoat dong.
     public Task<Void> completeAttempt(String childId,
                                       String attemptId,
                                       int score,
@@ -81,6 +84,7 @@ public class ActivityAttemptRepository {
      * Lấy lịch sử attempt gần đây nhất của bé cho một nội dung cụ thể.
      * Hữu ích để kiểm tra xem bé đã hoàn thành level này chưa.
      */
+    // Chuc nang: lay lich su lam bai cua tre theo mot noi dung cu the.
     public Task<QuerySnapshot> getAttemptsByContent(String childId, String contentId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -94,6 +98,7 @@ public class ActivityAttemptRepository {
      * Lấy tất cả attempt gần đây của bé (trang lịch sử học tập).
      * Giới hạn 20 để tránh tải quá nhiều.
      */
+    // Chuc nang: lay cac lan hoc gan nhat cua tre de hien thi lich su hoc tap.
     public Task<QuerySnapshot> getRecentAttempts(String childId, int limit) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -106,6 +111,7 @@ public class ActivityAttemptRepository {
     /**
      * Lấy attempt đã pass của bé — dùng để kiểm tra điều kiện unlock level tiếp theo.
      */
+    // Chuc nang: kiem tra tre da vuot qua mot noi dung hay chua.
     public Task<QuerySnapshot> getPassedAttemptsByContent(String childId, String contentId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)
@@ -121,6 +127,7 @@ public class ActivityAttemptRepository {
      * Lưu câu trả lời của bé cho một câu hỏi trong attempt.
      * Path: /child_profiles/{child_id}/activity_attempts/{attempt_id}/answers/{answer_id}
      */
+    // Chuc nang: luu cau tra loi chi tiet cua tre trong mot lan lam bai.
     public Task<DocumentReference> saveAnswer(String childId,
                                                String attemptId,
                                                AttemptAnswer answer) {
@@ -133,6 +140,7 @@ public class ActivityAttemptRepository {
     }
 
     /** Lấy tất cả câu trả lời của một attempt */
+    // Chuc nang: doc toan bo cau tra loi cua mot lan lam bai.
     public Task<QuerySnapshot> getAnswers(String childId, String attemptId) {
         return db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(childId)

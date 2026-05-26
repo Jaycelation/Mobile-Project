@@ -33,9 +33,10 @@ public class ChildStats {
     public ChildStats(String childId) {
         this.childId = childId;
         this.totalPoints = 0;
-        this.streakDays = 0;
+        this.streakDays = 0; // Mặc định là 0 khi mới tạo
         this.totalCompleted = 0;
         this.totalPlayTimeSeconds = 0;
+        this.lastActiveAt = null; // Chưa có hoạt động
     }
 
     // Getters & Setters

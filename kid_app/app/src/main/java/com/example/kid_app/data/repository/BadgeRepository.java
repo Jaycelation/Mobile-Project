@@ -30,6 +30,7 @@ public class BadgeRepository {
     // ==================== BADGE DEFINITIONS (toàn hệ thống) ====================
 
     /** Admin tạo badge mới */
+    // Chuc nang: tao dinh nghia huy hieu moi trong Firestore.
     public Task<Void> createBadge(String badgeId, Badge badge) {
         return db.collection(AppConstants.COL_BADGES)
                 .document(badgeId)
@@ -37,6 +38,7 @@ public class BadgeRepository {
     }
 
     /** Lấy tất cả badge active */
+    // Chuc nang: lay tat ca huy hieu dang hoat dong de hien thi cho tre.
     public Task<QuerySnapshot> getAllBadges() {
         return db.collection(AppConstants.COL_BADGES)
                 .whereEqualTo("isActive", true)
@@ -44,6 +46,7 @@ public class BadgeRepository {
     }
 
     /** Lấy badge theo id */
+    // Chuc nang: doc thong tin chi tiet cua mot huy hieu.
     public Task<DocumentSnapshot> getBadgeById(String badgeId) {
         return db.collection(AppConstants.COL_BADGES)
                 .document(badgeId)
@@ -54,6 +57,7 @@ public class BadgeRepository {
      * Lấy badge theo loại tiêu chí.
      * criteriaType: "total_points" | "streak_days" | "content_complete" | ...
      */
+    // Chuc nang: loc huy hieu theo loai dieu kien nhan.
     public Task<QuerySnapshot> getBadgesByCriteriaType(String criteriaType) {
         return db.collection(AppConstants.COL_BADGES)
                 .whereEqualTo("criteriaType", criteriaType)
@@ -67,12 +71,14 @@ public class BadgeRepository {
      * Trao huy hiệu cho bé.
      * Trả về DocumentReference để lấy childBadgeId sinh ra.
      */
+    // Chuc nang: cap huy hieu cho tre va luu ban ghi vao child_badges.
     public Task<DocumentReference> awardBadge(ChildBadge childBadge) {
         return db.collection(AppConstants.COL_CHILD_BADGES)
                 .add(childBadge);
     }
 
     /** Lấy tất cả huy hiệu của một bé */
+    // Chuc nang: lay danh sach huy hieu ma tre da dat duoc.
     public Task<QuerySnapshot> getChildBadges(String childId) {
         return db.collection(AppConstants.COL_CHILD_BADGES)
                 .whereEqualTo("childId", childId)
@@ -84,6 +90,7 @@ public class BadgeRepository {
      * Kiểm tra bé đã có badge cụ thể chưa — tránh trao trùng.
      * Kết quả: nếu QuerySnapshot.isEmpty() → chưa có, có thể trao.
      */
+    // Chuc nang: kiem tra tre da co huy hieu nay chua de tranh cap trung.
     public Task<QuerySnapshot> checkChildHasBadge(String childId, String badgeId) {
         return db.collection(AppConstants.COL_CHILD_BADGES)
                 .whereEqualTo("childId", childId)
@@ -96,6 +103,7 @@ public class BadgeRepository {
      * Lấy badge bé vừa nhận từ một nguồn cụ thể.
      * sourceType: "game" | "quiz" | "color_activity" | "counting_activity"
      */
+    // Chuc nang: lay huy hieu duoc cap tu mot nguon nhu game, quiz hoac bai hoc.
     public Task<QuerySnapshot> getBadgesBySource(String childId, String sourceType, String sourceId) {
         return db.collection(AppConstants.COL_CHILD_BADGES)
                 .whereEqualTo("childId", childId)
