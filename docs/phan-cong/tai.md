@@ -7,11 +7,19 @@
 | 2.1.1 | Trò chơi giáo dục tương tác | Thiết kế giao diện game và lập trình thuật toán logic trò chơi |
 | 2.1.8 | Hệ thống phản hồi và khen thưởng | Xây dựng hiệu ứng chúc mừng, huy hiệu và lưu trữ thành tích học tập |
 
+### Chức năng bổ sung không đánh số
+
+| Chức năng/code bổ sung | File/Class liên quan | Ghi chú |
+|---|---|---|
+| Các trò chơi nhận biết/ghép hình mở rộng | `ShadowMatchGameActivity`, `ShapeGameActivity`, `ObjectGameActivity`, `AnimalGameActivity`, `AnimalSoundGameActivity`, `FruitMatchGameActivity` | Có code trong dự án nhưng không gán thêm chỉ mục mới |
+
 ## 2. Kiến trúc chi tiết module
 
 ```text
 GameListActivity
   -> PatternGameActivity / FastEyeGameActivity / PuzzleGameActivity
+  -> ShadowMatchGameActivity / ShapeGameActivity / ObjectGameActivity
+  -> AnimalGameActivity / AnimalSoundGameActivity / FruitMatchGameActivity
   -> ActivityAttemptRepository
   -> child_profiles/{childId}/activity_attempts
 
@@ -30,6 +38,8 @@ ParentFeedbackActivity / ParentFeedbackListActivity
 | `PatternGameActivity` | Trò chơi tìm quy luật |
 | `FastEyeGameActivity` | Trò chơi phản xạ nhanh |
 | `PuzzleGameActivity` | Trò chơi ghép tranh |
+| `ShadowMatchGameActivity`, `ShapeGameActivity`, `ObjectGameActivity` | Các trò chơi nhận biết/ghép hình mở rộng |
+| `AnimalGameActivity`, `AnimalSoundGameActivity`, `FruitMatchGameActivity` | Các trò chơi nhận biết hình ảnh, âm thanh và trái cây |
 | `BadgeCollectionActivity` | Hiển thị huy hiệu trẻ đã đạt |
 | `ChildProgressActivity` | Hiển thị điểm và tiến độ học tập |
 | `LeaderboardActivity` | Hiển thị bảng xếp hạng |
@@ -49,6 +59,11 @@ ParentFeedbackActivity / ParentFeedbackListActivity
 | `child/PatternGameActivity.java` | Logic trò chơi | Kiểm tra đáp án còn thiếu trong quy luật |
 | `child/FastEyeGameActivity.java` | Logic trò chơi | Kiểm tra thao tác chạm mục tiêu phản xạ |
 | `child/PuzzleGameActivity.java` | Logic trò chơi | Kiểm tra vị trí đặt mảnh ghép |
+| `child/ShadowMatchGameActivity.java` | Logic trò chơi mở rộng | Ghép hình với bóng tương ứng |
+| `child/ShapeGameActivity.java` | Logic trò chơi mở rộng | Nhận biết hình dạng |
+| `child/ObjectGameActivity.java` | Logic trò chơi mở rộng | Nhận biết đồ vật |
+| `child/AnimalGameActivity.java`, `child/AnimalSoundGameActivity.java` | Logic trò chơi mở rộng | Nhận biết hình ảnh và âm thanh |
+| `child/FruitMatchGameActivity.java` | Logic trò chơi mở rộng | Ghép trái cây tương ứng |
 | `data/repository/ActivityAttemptRepository.java` | `startAttempt()` | Tạo lượt chơi/lượt học mới |
 | `data/repository/ActivityAttemptRepository.java` | `completeAttempt()` | Lưu điểm, trạng thái và thời gian hoàn thành |
 | `data/repository/ActivityAttemptRepository.java` | `saveAnswer()` | Lưu đáp án chi tiết |
@@ -85,6 +100,7 @@ ParentFeedbackActivity / ParentFeedbackListActivity
 | Nhóm | File |
 |---|---|
 | Trò chơi giáo dục | `child/GameListActivity.java`, `child/PatternGameActivity.java`, `child/FastEyeGameActivity.java`, `child/PuzzleGameActivity.java` |
+| Trò chơi mở rộng không đánh số | `child/ShadowMatchGameActivity.java`, `child/ShapeGameActivity.java`, `child/ObjectGameActivity.java`, `child/AnimalGameActivity.java`, `child/AnimalSoundGameActivity.java`, `child/FruitMatchGameActivity.java` |
 | Phản hồi/khen thưởng | `child/BadgeCollectionActivity.java`, `child/ChildProgressActivity.java`, `child/LeaderboardActivity.java`, `child/ParentFeedbackActivity.java`, `child/ParentFeedbackListActivity.java` |
 | Repository/model | `data/repository/ActivityAttemptRepository.java`, `data/repository/BadgeRepository.java`, `data/repository/FeedbackRepository.java`, `data/repository/ContentRepository.java`, `data/model/ActivityAttempt.java`, `data/model/Game.java`, `data/model/Badge.java`, `data/model/ChildBadge.java`, `data/model/FeedbackNote.java`, `data/model/ChildStats.java`, `data/model/LeaderboardSnapshot.java` |
 

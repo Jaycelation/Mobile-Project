@@ -7,6 +7,12 @@
 | 2.1.2 | Câu đố và trắc nghiệm | Xây dựng màn hình thi, bộ đếm giờ và logic chấm điểm |
 | 2.1.5 | Trợ lý học tập AI thông minh | Tích hợp API trí tuệ nhân tạo và xây dựng giao diện khung chat |
 
+### Chức năng bổ sung không đánh số
+
+| Chức năng/code bổ sung | File/Class liên quan | Ghi chú |
+|---|---|---|
+| Học chữ cái, cộng đồng và hỗ trợ người dùng | `AlphabetLearningActivity`, `AlphabetMatchGameActivity`, `CommunityFeedActivity`, `CreatePostActivity`, `HelpSupportActivity` | Có code trong dự án nhưng không gán thêm chỉ mục mới |
+
 ## 2. Kiến trúc chi tiết module
 
 ```text
@@ -20,6 +26,12 @@ AiChatActivity
   -> GeminiService.generateResponse()
   -> AiRepository
   -> ai_conversations / messages
+
+AlphabetLearningActivity / AlphabetMatchGameActivity
+  -> ContentRepository / ActivityAttemptRepository
+
+CommunityFeedActivity / CreatePostActivity / HelpSupportActivity
+  -> posts / posts/{postId}/comments / Firebase Storage
 ```
 
 | Thành phần | Vai trò |
@@ -32,6 +44,8 @@ AiChatActivity
 | `AiRepository` | Lưu hội thoại và tin nhắn AI |
 | `ContentRepository` | Tải quiz và câu hỏi |
 | `ActivityAttemptRepository` | Lưu lượt làm quiz và đáp án |
+| `AlphabetLearningActivity`, `AlphabetMatchGameActivity` | Hiển thị bài học chữ cái và game ghép chữ cái |
+| `CommunityFeedActivity`, `CreatePostActivity`, `HelpSupportActivity` | Bài đăng cộng đồng và hỗ trợ người dùng |
 
 ## 3. Code đáp ứng chức năng
 
@@ -51,6 +65,10 @@ AiChatActivity
 | `data/repository/AiRepository.java` | `createConversation()` | Tạo hội thoại AI |
 | `data/repository/AiRepository.java` | `addMessage()` | Lưu tin nhắn của trẻ/AI |
 | `data/repository/AiRepository.java` | `getMessages()` | Tải lịch sử tin nhắn |
+| `child/AlphabetLearningActivity.java`, `child/AlphabetMatchGameActivity.java` | Luồng chữ cái | Hiển thị bài học chữ cái và lưu kết quả ghép chữ |
+| `child/CommunityFeedActivity.java` | Luồng cộng đồng | Hiển thị bài đăng, lượt thích và bình luận |
+| `child/CreatePostActivity.java` | Luồng tạo bài đăng | Tạo bài đăng và tải ảnh lên Firebase Storage |
+| `common/HelpSupportActivity.java` | Màn hỗ trợ | Hiển thị nội dung trợ giúp người dùng |
 
 ### 3.2. Bảng/collection trong CSDL
 
@@ -62,6 +80,8 @@ AiChatActivity
 | `child_profiles/{childId}/activity_attempts/{attemptId}/answers` | Đáp án chi tiết |
 | `ai_conversations` | Hội thoại AI |
 | `ai_conversations/{conversationId}/messages` | Tin nhắn AI |
+| `posts` | Bài đăng cộng đồng |
+| `posts/{postId}/comments` | Bình luận bài đăng |
 
 ### 3.3. API gọi ngoài
 
@@ -69,6 +89,7 @@ AiChatActivity
 |---|---|---|
 | Gemini API | `GeminiService`, `AiChatActivity` | Sinh phản hồi cho trợ lý AI |
 | Cloud Firestore | `AiRepository`, `ContentRepository`, `ActivityAttemptRepository`, `QuizHistoryActivity` | Lưu quiz, kết quả làm bài và lịch sử AI |
+| Firebase Storage | `CreatePostActivity` | Lưu ảnh bài đăng cộng đồng |
 
 ### 3.4. File code liên quan
 
@@ -76,6 +97,7 @@ AiChatActivity
 |---|---|
 | Quiz/trắc nghiệm | `child/QuizListActivity.java`, `child/QuizPlayActivity.java`, `child/QuizHistoryActivity.java`, `child/QuizHistoryAdapter.java` |
 | Trợ lý AI | `child/AiChatActivity.java`, `ai/AiService.java`, `ai/GeminiService.java`, `data/repository/AiRepository.java` |
+| Chức năng bổ sung không đánh số | `child/AlphabetLearningActivity.java`, `child/AlphabetMatchGameActivity.java`, `child/CommunityFeedActivity.java`, `child/CreatePostActivity.java`, `common/HelpSupportActivity.java` |
 | Repository/model | `data/repository/ContentRepository.java`, `data/repository/ActivityAttemptRepository.java`, `data/model/Quiz.java`, `data/model/QuizQuestion.java`, `data/model/ActivityAttempt.java`, `data/model/AttemptAnswer.java`, `data/model/AiConversation.java`, `data/model/AiMessage.java`, `data/model/ContentCatalog.java` |
 
 ## 4. Hướng dẫn và lưu ý cài đặt, triển khai

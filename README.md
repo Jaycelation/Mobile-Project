@@ -26,9 +26,9 @@ Phân công dưới đây bám theo bộ khung báo cáo cá nhân `khung_bao_ca
 | B22DCAT159 | Nguyễn Thanh Kiên | Học số đếm; kết nối lớp học & giáo viên | `CountingListActivity`, `CountingGameActivity`, `CountingFruitGameActivity`, `NumberMatchGameActivity`, `CreateClassActivity`, `ClassManagementActivity`, `ClassDetailActivity`, `JoinClassActivity`, `AssignmentManagementActivity`, `CreateAssignmentActivity`, `ChildAssignmentActivity` | `ContentRepository`, `ActivityAttemptRepository`, `ClassRepository`, `AssignmentRepository` | `ContentCatalog`, `CountingActivity`, `ContentLevel`, `ActivityAttempt`, `AppClass`, `ClassMember`, `Assignment`, `AssignmentSubmission`, `LeaderboardSnapshot` |
 | B22DCAT247 | Nguyễn Thanh Sơn | Học màu sắc; tài khoản, hồ sơ & cài đặt phụ huynh | `ColorListActivity`, `ColorGameActivity`, `ColorMatchGameActivity`, `SignInActivity`, `SignUpActivity`, `ForgotPasswordActivity`, `ParentHomeActivity`, `AddChildActivity`, `EditChildActivity`, `ChildSettingsActivity`, `ChildProfileActivity` | `AuthService`, `AccountRepository`, `ChildProfileService`, `ChildProfileRepository`, `ContentRepository`, `ActivityAttemptRepository` | `Account`, `ParentChildLink`, `ChildProfile`, `ChildSettings`, `ContentCatalog`, `ColorActivity`, `ContentLevel`, `ActivityAttempt` |
 
-### 2.1. Chức năng bổ sung không đánh số
+### Chức năng bổ sung không đánh số
 
-Các chức năng dưới đây có code trong dự án nhưng không nằm trong các mục chỉ mục 2.1.x của khung báo cáo cá nhân. Nhóm vẫn gán người phụ trách để khi mô tả source code không bị bỏ sót, nhưng không thêm số chỉ mục mới.
+Các chức năng dưới đây có code trong dự án nhưng không nằm trong các mục đã đánh số của khung báo cáo cá nhân. Nhóm vẫn gán người phụ trách để khi mô tả source code không bị bỏ sót, nhưng không thêm số chỉ mục mới.
 
 | Thành viên | Chức năng/code bổ sung | File/Class liên quan |
 |---|---|---|
