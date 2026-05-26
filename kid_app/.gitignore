@@ -1,15 +1,58 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Android / Gradle build output
+.gradle/
+.kotlin/
+build/
+**/build/
+captures/
+.cxx/
+.externalNativeBuild/
+
+# Local machine configuration
 local.properties
+*.iml
+
+# IDE/editor state
+.idea/
+.vscode/
+
+# Generated app packages
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# Firebase / local service config
+app/google-services.json
+google-services.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+
+# Crash dumps and runtime logs
+*.log
+hs_err_pid*.log
+replay_pid*.log
+*.hprof
+netstat
+
+# Documents and report drafts should not be uploaded with source code
+*.doc
+*.docx
+*.pdf
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.md
+
+# OS/editor temporary files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.temp
+*.swp
+*.swo
+~$*
