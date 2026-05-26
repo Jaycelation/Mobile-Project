@@ -1,46 +1,46 @@
-# Tài liệu kỹ thuật cá nhân - Kiên
+# Tài liệu kỹ thuật cá nhân - Nguyễn Thanh Kiên
 
 ## 1. Danh sách chức năng được phân công
 
-| STT | Nhóm chức năng | Phạm vi |
+| Mục | Chức năng | Nhiệm vụ cá nhân |
 |---|---|---|
-| 1 | Quản lý lớp học | Giáo viên tạo lớp, cấp mã tham gia và xem danh sách học sinh |
-| 2 | Đăng ký lớp | Phụ huynh dùng mã lớp để đăng ký lớp cho trẻ |
-| 3 | Bài tập và tiến độ lớp | Giáo viên tạo bài tập, xem bài nộp và tiến độ lớp |
-| 4 | Thông báo giáo viên | Hiển thị thông báo liên quan đến bài tập, tiến độ và huy hiệu |
-| 5 | Module số đếm | Trò chơi học số đếm và lưu kết quả làm bài |
+| 2.1.4 | Hoạt động học số đếm | Xử lý đồng bộ âm thanh đọc số và sự kiện chạm vào vật thể |
+| 2.1.7 | Kết nối lớp học và giáo viên | Xử lý logic tạo mã lớp và kết nối dữ liệu giáo viên - học sinh |
 
 ## 2. Kiến trúc chi tiết module
 
 ```text
-TeacherHomeActivity
-  -> ClassManagementActivity / CreateClassActivity / ClassDetailActivity
-  -> classes + class_members
+CountingListActivity
+  -> CountingGameActivity / CountingFruitGameActivity / NumberMatchGameActivity
+  -> ContentRepository / ActivityAttemptRepository
 
-CreateAssignmentActivity / AssignmentDetailActivity / AssignmentManagementActivity
-  -> assignments + assignment_submissions
-  -> child_profiles for child display data
+Teacher class flow
+  -> CreateClassActivity / ClassManagementActivity / ClassDetailActivity
+  -> ClassRepository
 
-JoinClassActivity
-  -> classes by joinCode
-  -> class_members + child_profiles class fields
+Assignment flow
+  -> AssignmentManagementActivity / CreateAssignmentActivity / ChildAssignmentActivity
+  -> AssignmentRepository
 
-CountingListActivity / CountingGameActivity / CountingFruitGameActivity / NumberMatchGameActivity
-  -> activity_attempts or assignment_submissions
+Parent class join
+  -> JoinClassActivity
+  -> ClassRepository
 ```
 
 | Thành phần | Vai trò |
 |---|---|
-| `ClassRepository` | Tạo lớp, tải danh sách lớp và quản lý thành viên lớp |
-| `AssignmentRepository` | Tạo bài tập và cập nhật bài nộp |
-| `TeacherHomeActivity` | Màn hình chính của giáo viên |
-| `ClassManagementActivity` | Quản lý danh sách lớp |
-| `CreateClassActivity` | Tạo lớp và sinh mã tham gia |
-| `ClassDetailActivity` | Hiển thị học sinh và bài tập trong lớp |
-| `CreateAssignmentActivity` | Tạo bài tập cho lớp |
-| `AssignmentDetailActivity` | Hiển thị trạng thái bài nộp |
-| `TeacherNotificationActivity` | Hiển thị thông báo cho giáo viên |
+| `CountingListActivity` | Hiển thị danh sách hoạt động số đếm |
 | `CountingGameActivity` | Trò chơi học số đếm |
+| `CountingFruitGameActivity` | Trò chơi đếm đồ vật |
+| `NumberMatchGameActivity` | Trò chơi ghép số với số lượng |
+| `CreateClassActivity` | Tạo lớp và sinh mã tham gia |
+| `ClassManagementActivity` | Quản lý danh sách lớp |
+| `ClassDetailActivity` | Xem học sinh và bài tập trong lớp |
+| `JoinClassActivity` | Phụ huynh cho trẻ tham gia lớp bằng mã lớp |
+| `AssignmentManagementActivity`, `CreateAssignmentActivity`, `ChildAssignmentActivity` | Quản lý, tạo và làm bài tập |
+| `ClassRepository` | Tạo lớp, tìm lớp, quản lý thành viên |
+| `AssignmentRepository` | Tạo bài tập và cập nhật bài nộp |
+| `ContentRepository`, `ActivityAttemptRepository` | Tải nội dung số đếm và lưu kết quả |
 
 ## 3. Code đáp ứng chức năng
 
@@ -48,58 +48,49 @@ CountingListActivity / CountingGameActivity / CountingFruitGameActivity / Number
 
 | File | Lớp/hàm | Giải thích |
 |---|---|---|
-| `data/repository/ClassRepository.java` | `createClass()` | Tạo document lớp học trên Firestore |
+| `child/CountingListActivity.java` | Luồng danh sách số đếm | Hiển thị hoạt động học số đếm |
+| `child/CountingGameActivity.java` | Logic số đếm | Kiểm tra đáp án và lưu kết quả |
+| `child/CountingFruitGameActivity.java` | Logic đếm đồ vật | Đếm số lượng vật thể |
+| `child/NumberMatchGameActivity.java` | Logic ghép số | Ghép số với số lượng tương ứng |
+| `data/repository/ClassRepository.java` | `createClass()` | Tạo lớp học |
 | `data/repository/ClassRepository.java` | `getClassByJoinCode()` | Tìm lớp theo mã tham gia |
 | `data/repository/ClassRepository.java` | `addMember()` | Thêm trẻ vào lớp |
 | `data/repository/ClassRepository.java` | `getMembersOfClass()` | Tải danh sách thành viên lớp |
-| `data/repository/AssignmentRepository.java` | `createAssignment()` | Tạo bài tập cho lớp |
-| `data/repository/AssignmentRepository.java` | `getAssignmentsByClass()` | Tải danh sách bài tập của lớp |
-| `data/repository/AssignmentRepository.java` | `getSubmission()` | Tải bài nộp của trẻ |
-| `data/repository/AssignmentRepository.java` | `submitAssignment()` | Cập nhật điểm và trạng thái bài nộp |
-| `teacher/CreateClassActivity.java` | Luồng tạo lớp | Kiểm tra form và lưu lớp |
-| `teacher/CreateAssignmentActivity.java` | Luồng tạo bài tập | Lưu bài tập lên Firestore |
-| `parent/JoinClassActivity.java` | Luồng tham gia lớp | Kiểm tra mã lớp và tạo thành viên lớp |
-| `child/CountingGameActivity.java` | Logic trò chơi số đếm | Kiểm tra đáp án và lưu kết quả |
-| `child/CountingFruitGameActivity.java` | Logic đếm đồ vật | Đếm số lượng và cập nhật bài nộp khi cần |
-| `child/NumberMatchGameActivity.java` | Logic nối số lượng | Ghép số với số lượng đồ vật tương ứng |
+| `data/repository/AssignmentRepository.java` | `createAssignment()` | Tạo bài tập |
+| `data/repository/AssignmentRepository.java` | `getAssignmentsByClass()` | Tải bài tập của lớp |
+| `data/repository/AssignmentRepository.java` | `submitAssignment()` | Cập nhật bài nộp |
 
 ### 3.2. Bảng/collection trong CSDL
 
 | Collection | Mục đích |
 |---|---|
-| `classes` | Lưu dữ liệu lớp, mã giáo viên và mã tham gia |
-| `class_members` | Lưu danh sách trẻ đã tham gia lớp |
-| `assignments` | Lưu bài tập do giáo viên tạo |
-| `assignment_submissions` | Lưu trạng thái bài nộp và điểm số của trẻ |
-| `child_profiles` | Tải hồ sơ trẻ cho màn hình lớp và bài tập |
-| `child_profiles/{childId}/activity_attempts` | Lưu kết quả hoạt động số đếm |
-| `feedback_notes` | Lưu phiên phản hồi giữa giáo viên và phụ huynh |
-| `child_badges` | Đọc dữ liệu thông báo liên quan đến huy hiệu |
+| `content_catalog` | Danh mục nội dung số đếm |
+| `content_catalog/{contentId}/levels` | Level số đếm |
+| `child_profiles/{childId}/activity_attempts` | Kết quả hoạt động số đếm |
+| `classes` | Lớp học |
+| `class_members` | Thành viên lớp |
+| `assignments` | Bài tập giáo viên giao |
+| `assignment_submissions` | Bài nộp của trẻ |
+| `leaderboard_snapshots` | Dữ liệu xếp hạng phục vụ lớp học |
 
 ### 3.3. API gọi ngoài
 
 | API | File sử dụng | Mục đích |
 |---|---|---|
-| Cloud Firestore | `ClassRepository`, `AssignmentRepository`, activity giáo viên/phụ huynh | Lưu lớp học, thành viên, bài tập và bài nộp |
-| Firebase Authentication | Các activity giáo viên | Xác định tài khoản giáo viên hiện tại |
+| Cloud Firestore | `ContentRepository`, `ActivityAttemptRepository`, `ClassRepository`, `AssignmentRepository` | Lưu nội dung số đếm, lớp học, thành viên lớp, bài tập và bài nộp |
+| Firebase Authentication | Activity giáo viên/phụ huynh liên quan | Xác định giáo viên hoặc phụ huynh hiện tại |
 
 ### 3.4. File code liên quan
 
 | Nhóm | File |
 |---|---|
-| Lớp học | `teacher/ClassManagementActivity.java`, `teacher/CreateClassActivity.java`, `teacher/ClassDetailActivity.java`, `teacher/AddStudentActivity.java`, `parent/JoinClassActivity.java` |
+| Học số đếm | `child/CountingListActivity.java`, `child/CountingGameActivity.java`, `child/CountingFruitGameActivity.java`, `child/NumberMatchGameActivity.java` |
+| Lớp học | `teacher/CreateClassActivity.java`, `teacher/ClassManagementActivity.java`, `teacher/ClassDetailActivity.java`, `teacher/AddStudentActivity.java`, `parent/JoinClassActivity.java` |
 | Bài tập | `teacher/AssignmentManagementActivity.java`, `teacher/CreateAssignmentActivity.java`, `teacher/AssignmentDetailActivity.java`, `child/ChildAssignmentActivity.java` |
-| Giáo viên | `teacher/TeacherHomeActivity.java`, `teacher/TeacherProfileActivity.java`, `teacher/EditTeacherProfileActivity.java` |
-| Thông báo/phản hồi | `teacher/TeacherNotificationActivity.java`, `teacher/NotificationSettingsActivity.java`, `teacher/FeedbackListActivity.java`, `teacher/FeedbackChatActivity.java` |
-| Số đếm | `child/CountingListActivity.java`, `child/CountingGameActivity.java`, `child/CountingFruitGameActivity.java`, `child/NumberMatchGameActivity.java` |
-| Repository/model | `data/repository/ClassRepository.java`, `data/repository/AssignmentRepository.java`, `data/model/AppClass.java`, `data/model/ClassMember.java`, `data/model/Assignment.java`, `data/model/AssignmentSubmission.java`, `data/model/CountingActivity.java` |
+| Repository/model | `data/repository/ContentRepository.java`, `data/repository/ActivityAttemptRepository.java`, `data/repository/ClassRepository.java`, `data/repository/AssignmentRepository.java`, `data/model/CountingActivity.java`, `data/model/AppClass.java`, `data/model/ClassMember.java`, `data/model/Assignment.java`, `data/model/AssignmentSubmission.java`, `data/model/LeaderboardSnapshot.java` |
 
 ## 4. Hướng dẫn và lưu ý cài đặt, triển khai
 
-- A teacher account must exist in `accounts`.
-- Required collections: `classes`, `class_members`, `assignments`, `assignment_submissions`.
-- To test class enrollment, create a class first and use its join code from a parent account.
-- To test assignments, at least one class and one child enrolled in that class are required.
-- Firestore rules cần cho phép giáo viên quản lý dữ liệu lớp/bài tập và phụ huynh đăng ký lớp cho trẻ.
-- Build from `kid_app` with `./gradlew :app:assembleDebug`.
-- Relevant classes and external API call sites include Vietnamese no-accent comments using `// Chuc nang: ...`.
+- Cần cấu hình Firebase Authentication và Cloud Firestore.
+- Firestore rules cần cho phép giáo viên quản lý lớp/bài tập và phụ huynh cho trẻ tham gia lớp.
+- Cần chuẩn bị dữ liệu demo cho lớp học, mã tham gia và bài tập.
