@@ -25,6 +25,7 @@ public class EditTeacherProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_teacher_profile);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
 
@@ -66,6 +67,7 @@ public class EditTeacherProfileActivity extends BaseActivity {
         updates.put("phone", phone);
 
         String uid = authService.getCurrentUser().getUid();
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("accounts").document(uid).update(updates)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Cập nhật thành công! ✨", Toast.LENGTH_SHORT).show();

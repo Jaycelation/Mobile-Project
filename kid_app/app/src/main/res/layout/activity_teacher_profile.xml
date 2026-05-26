@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_container"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -20,30 +20,39 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Profile Info -->
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_teacher_avatar"
+            <!-- Avatar đã phóng to (Đồng bộ trang chủ) -->
+            <FrameLayout
+                android:id="@+id/avatar_container"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher"
-                app:civ_border_color="@color/primary_green_dark"
-                app:civ_border_width="4dp" />
+                android:background="@drawable/bg_icon_circle"
+                android:backgroundTint="@color/white"
+                android:padding="2dp">
+
+                <ImageView
+                    android:id="@+id/iv_teacher_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_thay_giao"
+                    android:scaleType="centerInside" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_teacher_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="..."
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Hoàng Anh"
                 android:textColor="@color/primary_green_dark"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="24sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Giáo viên mầm non"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
@@ -73,14 +82,15 @@
                             android:id="@+id/tv_stat_classes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="--"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="01"
                             android:textColor="@color/primary_green_dark"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="20sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Lớp đang dạy"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Lớp dạy"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -94,13 +104,14 @@
                             android:id="@+id/tv_stat_students"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="--"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="1"
                             android:textColor="@color/primary_green_dark"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="20sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="Học sinh"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -115,13 +126,14 @@
                             android:id="@+id/tv_stat_assignments"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="--"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="0"
                             android:textColor="@color/primary_green_dark"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="20sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="Bài tập"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -147,9 +159,10 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="32dp"
                 android:backgroundTint="#FFEBEE"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Đăng xuất"
                 android:textColor="@color/status_error"
-                android:textStyle="bold"
+                android:textAllCaps="false"
                 app:cornerRadius="32dp"
                 app:strokeColor="@color/status_error"
                 app:strokeWidth="2dp" />
@@ -157,22 +170,64 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
+    <!-- Thanh điều hướng đẹp (Selected: Cá nhân) -->
     <LinearLayout
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottom_navigation_container"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/white"
-        android:elevation="10dp"
+        android:layout_height="85dp"
+        android:background="@drawable/bg_bottom_nav_bar"
+        android:elevation="15dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
         app:layout_constraintBottom_toBottomOf="parent">
-        <LinearLayout android:id="@+id/nav_home" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏠" android:textSize="20sp"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Trang chủ" android:textColor="@color/text_secondary" android:textSize="10sp"/></LinearLayout>
-        <LinearLayout android:id="@+id/nav_classes" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏫" android:textSize="20sp"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lớp học" android:textColor="@color/text_secondary" android:textSize="10sp"/></LinearLayout>
-        <LinearLayout android:id="@+id/nav_assignments" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📝" android:textSize="20sp"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bài tập" android:textColor="@color/text_secondary" android:textSize="10sp"/></LinearLayout>
-        <LinearLayout android:id="@+id/nav_profile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👤" android:textSize="20sp"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cá nhân" android:textColor="@color/primary_green" android:textSize="10sp" android:textStyle="bold"/></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏠" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Trang chủ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_classes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏫" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Lớp học" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_assignments"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📝" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Bài tập" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_nav_item_selected"
+            android:paddingVertical="8dp"
+            android:layout_marginHorizontal="4dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👤" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_bold" android:text="Cá nhân" android:textColor="@color/primary_green_dark" android:textSize="10sp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

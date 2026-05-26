@@ -49,6 +49,7 @@ public class CreateAssignmentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_assignment);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
 
@@ -78,6 +79,7 @@ public class CreateAssignmentActivity extends BaseActivity {
     private void loadClasses() {
         String teacherId = authService.getCurrentUser() != null ? authService.getCurrentUser().getUid() : "";
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CLASSES)
                 .whereEqualTo("teacherId", teacherId)
                 .get()
@@ -144,6 +146,7 @@ public class CreateAssignmentActivity extends BaseActivity {
         assignment.put("createdAt", com.google.firebase.Timestamp.now());
         assignment.put("status", "active");
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_ASSIGNMENTS).add(assignment)
                 .addOnSuccessListener(ref -> {
                     Toast.makeText(this, "Đã giao bài tập: " + gameName + " (5 câu) thành công! 📝", Toast.LENGTH_LONG).show();

@@ -1,6 +1,7 @@
 package com.example.kid_app.admin;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class SystemReportActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_report);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         initViews();
         loadReports();
@@ -40,44 +42,35 @@ public class SystemReportActivity extends BaseActivity {
     }
 
     private void loadReports() {
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
 
-        // 1. Thống kê người dùng
+        // 1. Thống kê người dùng (Lấy thực tế từ Firebase)
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_ACCOUNTS)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     int total = querySnapshot.size();
                     int parents = 0;
                     int teachers = 0;
-
                     for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
                         String role = doc.getString("role");
                         if (AppConstants.ROLE_PARENT.equals(role)) parents++;
                         else if (AppConstants.ROLE_TEACHER.equals(role)) teachers++;
                     }
-
                     tvTotalUsers.setText(String.valueOf(total));
                     tvParents.setText(String.valueOf(parents));
                     tvTeachers.setText(String.valueOf(teachers));
-                });
-
-        // 2. Thống kê nội dung
-        db.collection(AppConstants.COL_CONTENT_CATALOG)
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    tvTotalContent.setText(String.valueOf(querySnapshot.size()));
-                });
-
-        // 3. Thống kê lượt học (Sử dụng collectionGroup để quét tất cả subcollections)
-        db.collectionGroup(AppConstants.SUBCOL_ACTIVITY_ATTEMPTS)
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    tvTotalAttempts.setText(String.valueOf(querySnapshot.size()));
-                    progressBar.setVisibility(View.GONE);
+                    if (progressBar != null) progressBar.setVisibility(View.GONE);
                 })
                 .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
-                    showToast("Lỗi tải báo cáo lượt học");
+                    if (progressBar != null) progressBar.setVisibility(View.GONE);
                 });
+
+        // 2. Cập nhật con số theo yêu cầu của em
+        // Tổng số trò học tập: 6
+        tvTotalContent.setText("6");
+
+        // Tổng số trò thực hành: 10
+        tvTotalAttempts.setText("10");
     }
 }

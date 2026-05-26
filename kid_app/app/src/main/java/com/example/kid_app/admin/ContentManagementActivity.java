@@ -90,7 +90,7 @@ public class ContentManagementActivity extends BaseActivity {
         Spinner spinnerAge = dialogView.findViewById(R.id.spinner_age_group);
 
         String[] types = {AppConstants.CONTENT_TYPE_QUIZ, AppConstants.CONTENT_TYPE_GAME, AppConstants.CONTENT_TYPE_COUNTING, AppConstants.CONTENT_TYPE_COLOR};
-        String[] ages = {AppConstants.AGE_GROUP_3_5, AppConstants.AGE_GROUP_6_8, AppConstants.AGE_GROUP_9_12};
+        String[] ages = {AppConstants.AGE_GROUP_1_5};
         
         spinnerType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, types));
         spinnerAge.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, ages));

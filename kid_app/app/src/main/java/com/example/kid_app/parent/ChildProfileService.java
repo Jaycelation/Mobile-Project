@@ -46,7 +46,8 @@ public class ChildProfileService {
     public Task<String> createChildProfile(String parentId, ChildProfile profile,
                                            String relationship) {
         String childId = UUID.randomUUID().toString();
-        String linkId  = UUID.randomUUID().toString();
+        String linkId  = parentId + "_" + childId;
+        profile.setOwnerParentId(parentId);
 
         // Bước 1 + 2: tạo profile và link song song bằng Tasks.whenAll
         Task<Void> createProfile = childProfileRepository.createChildProfile(childId, profile);
@@ -99,15 +100,11 @@ public class ChildProfileService {
     // ==================== HELPERS ====================
 
     /**
-     * Trả về settings mặc định theo nhóm tuổi.
-     * - Trẻ nhỏ (3-5): giới hạn 30 phút, AI tắt.
-     * - Nhóm khác: 60 phút, AI bật.
+     * Trả về settings mặc định cho lứa tuổi 1-5.
+     * - Giới hạn 30 phút, AI tắt.
      */
     private ChildSettings defaultSettings(String ageGroup) {
-        if (AppConstants.AGE_GROUP_3_5.equals(ageGroup)) {
-            return new ChildSettings(30, false, ageGroup != null ? ageGroup : AppConstants.AGE_GROUP_3_5);
-        }
-        String filter = ageGroup != null ? ageGroup : AppConstants.AGE_GROUP_6_8;
-        return new ChildSettings(60, true, filter);
+        // Mặc định cho lứa tuổi 1-5
+        return new ChildSettings(30, false, AppConstants.AGE_GROUP_1_5);
     }
 }

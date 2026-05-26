@@ -42,6 +42,7 @@ public class ClassDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_detail);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         classId = getIntent().getStringExtra("class_id");
         className = getIntent().getStringExtra("class_name");
@@ -86,6 +87,7 @@ public class ClassDetailActivity extends BaseActivity {
         
         // Nếu joinCode chưa có (do mở từ một luồng khác), tải nó từ DB
         if (joinCode == null && classId != null) {
+            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
             db.collection("classes").document(classId).get().addOnSuccessListener(doc -> {
                 if (doc.exists()) {
                     joinCode = doc.getString("joinCode");
@@ -97,6 +99,7 @@ public class ClassDetailActivity extends BaseActivity {
     private void loadRealData() {
         if (classId == null) return;
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("class_members")
                 .whereEqualTo("classId", classId)
                 .get()
@@ -115,6 +118,7 @@ public class ClassDetailActivity extends BaseActivity {
                     for (DocumentSnapshot memberDoc : queryDocumentSnapshots) {
                         String childId = memberDoc.getString("childId");
                         if (childId != null) {
+                            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                             db.collection("child_profiles").document(childId).get()
                                     .addOnSuccessListener(childDoc -> {
                                         ChildProfile profile = DocumentMapper.toChildProfile(childDoc);
@@ -133,6 +137,7 @@ public class ClassDetailActivity extends BaseActivity {
     }
 
     private void loadAssignmentStats(int totalStudents) {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("assignments")
                 .whereEqualTo("classId", classId)
                 .whereEqualTo("status", "active")
@@ -152,6 +157,7 @@ public class ClassDetailActivity extends BaseActivity {
                     final int[] processedCount = {0};
 
                     for (String aId : assignmentIds) {
+                        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                         db.collection("assignment_submissions")
                                 .whereEqualTo("assignmentId", aId)
                                 .whereEqualTo("status", "submitted")
@@ -199,6 +205,7 @@ public class ClassDetailActivity extends BaseActivity {
                 .setTitle("Xóa học sinh")
                 .setMessage("Bạn có chắc chắn muốn mời bé " + childName + " ra khỏi lớp không?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("class_members")
                             .whereEqualTo("classId", classId)
                             .whereEqualTo("childId", childId)

@@ -81,8 +81,8 @@ public class AddChildActivity extends BaseActivity {
 
     private void showDatePicker() {
         Calendar cal = Calendar.getInstance();
-        // Default: 6 năm trước
-        cal.add(Calendar.YEAR, -6);
+        // Default: 3 năm trước (vì dự án 1-5 tuổi)
+        cal.add(Calendar.YEAR, -3);
 
         DatePickerDialog dialog = new DatePickerDialog(this,
                 (view, year, month, day) -> {
@@ -171,10 +171,8 @@ public class AddChildActivity extends BaseActivity {
     }
 
     private String getSelectedAgeGroup() {
-        int id = rgAgeGroup.getCheckedRadioButtonId();
-        if (id == R.id.rb_age_3_5)  return AppConstants.AGE_GROUP_3_5;
-        if (id == R.id.rb_age_9_12) return AppConstants.AGE_GROUP_9_12;
-        return AppConstants.AGE_GROUP_6_8; // default
+        // Chỉ còn 1-5 tuổi
+        return AppConstants.AGE_GROUP_1_5;
     }
 
     private String getSelectedRelationship() {

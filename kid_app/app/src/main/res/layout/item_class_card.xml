@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
     app:cardCornerRadius="25dp"
     app:cardElevation="2dp">
 
     <LinearLayout
-        android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -18,11 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <!-- Icon con vật mới -->
+            <ImageView
                 android:id="@+id/iv_class_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="?android:attr/galleryItemBackground" />
+                android:src="@drawable/icon_gau"
+                android:scaleType="centerInside" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -36,16 +38,17 @@
                     android:id="@+id/tv_class_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lớp Mầm 1"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="lop ho con"
                     android:textColor="@color/primary_green_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_student_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sĩ số: 25 bé"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:text="Sĩ số: 1 bé"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -62,54 +65,53 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_icon_circle"
-                    android:backgroundTint="#FFEBEE"
+                    android:background="@null"
                     android:src="@android:drawable/ic_menu_delete"
-                    app:tint="@color/status_error" />
+                    app:tint="#FF8A8A" />
 
                 <ImageButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/bg_icon_circle"
+                    android:background="@null"
                     android:src="@android:drawable/ic_media_play"
                     app:tint="@color/primary_green_dark" />
             </LinearLayout>
         </RelativeLayout>
 
-        <!-- Dashed Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_dashed_box"
-            android:alpha="0.5" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="16dp">
 
             <TextView
                 android:id="@+id/tv_join_code_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_explanation_box"
+                android:background="@drawable/bg_parent_list_container"
+                android:backgroundTint="#E8F5E9"
+                android:fontFamily="@font/quicksand_bold"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="4dp"
-                android:text="Mã: XYZ-89K"
+                android:text="Mã: L7FSM4"
                 android:textColor="@color/primary_green_dark"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/btn_view_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Xem chi tiết"
                 android:textColor="@color/text_hint"
                 android:textSize="11sp" />
         </RelativeLayout>
+
+        <!-- View ẩn để giữ logic code không lỗi -->
+        <View android:id="@+id/btn_manage" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <ProgressBar android:id="@+id/pb_class_progress" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <TextView android:id="@+id/tv_progress_percent" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

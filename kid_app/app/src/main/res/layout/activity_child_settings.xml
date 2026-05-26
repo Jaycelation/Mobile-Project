@@ -173,25 +173,12 @@
                 android:orientation="vertical">
 
                 <RadioButton
-                    android:id="@+id/rb_filter_3_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="3–5 tuổi  (nội dung đơn giản nhất)"/>
-
-                <RadioButton
-                    android:id="@+id/rb_filter_6_8"
+                    android:id="@+id/rb_filter_1_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:checked="true"
-                    android:text="6–8 tuổi  (nội dung phong phú vừa phải)"/>
-
-                <RadioButton
-                    android:id="@+id/rb_filter_9_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9–12 tuổi  (nội dung nâng cao)"/>
+                    android:text="1–5 tuổi (nội dung cho trẻ nhỏ)"/>
 
             </RadioGroup>
 

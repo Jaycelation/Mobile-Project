@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,7 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
     public interface ChildClickListener {
         void onChildClick(ChildProfile child);
         void onEditClick(ChildProfile child);
-        void onDeleteClick(ChildProfile child); // Thêm sự kiện xóa
+        void onDeleteClick(ChildProfile child);
     }
 
     private final List<ChildProfile> children;
@@ -49,20 +50,18 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
     @Override
     public int getItemCount() { return children.size(); }
 
-    // ==================== VIEW HOLDER ====================
-
     static class ChildViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView    tvAvatar;
+        private final ImageView   ivAvatar;
         private final TextView    tvName;
         private final TextView    tvAgeGroup;
         private final TextView    tvBirth;
         private final ImageButton btnEdit;
-        private final ImageButton btnDelete; // Nút xóa mới
+        private final ImageButton btnDelete;
 
         ChildViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvAvatar    = itemView.findViewById(R.id.tv_avatar);
+            ivAvatar    = itemView.findViewById(R.id.iv_avatar);
             tvName      = itemView.findViewById(R.id.tv_child_name);
             tvAgeGroup  = itemView.findViewById(R.id.tv_child_age_group);
             tvBirth     = itemView.findViewById(R.id.tv_child_birth);
@@ -79,19 +78,20 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
             String birth = child.getBirthDate();
             tvBirth.setText("Ngày sinh: " + (birth != null && !birth.isEmpty() ? birth : "--"));
 
-            // Avatar theo giới tính
+            // Thay đổi avatar dựa trên giới tính từ ảnh em gửi
             String gender = child.getGender();
-            tvAvatar.setText("female".equals(gender) ? "👧" : "👦");
+            if ("female".equals(gender)) {
+                ivAvatar.setImageResource(R.drawable.hoc_sinh_nu);
+            } else {
+                ivAvatar.setImageResource(R.drawable.hoc_sinh_nam);
+            }
 
-            // Click cả card → chọn bé vào chế độ học
             itemView.setOnClickListener(v -> listener.onChildClick(child));
 
-            // Nút Edit
             if (btnEdit != null) {
                 btnEdit.setOnClickListener(v -> listener.onEditClick(child));
             }
 
-            // Nút Delete
             if (btnDelete != null) {
                 btnDelete.setOnClickListener(v -> listener.onDeleteClick(child));
             }

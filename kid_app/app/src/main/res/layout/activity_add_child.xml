@@ -151,7 +151,7 @@
 
             </RadioGroup>
 
-            <!-- Nhóm tuổi -->
+            <!-- Nhóm tuổi (Đã mặc định 1-5 tuổi) -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,25 +168,12 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rb_age_3_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="3–5 tuổi"/>
-
-                <RadioButton
-                    android:id="@+id/rb_age_6_8"
+                    android:id="@+id/rb_age_1_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:checked="true"
-                    android:text="6–8 tuổi"/>
-
-                <RadioButton
-                    android:id="@+id/rb_age_9_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9–12 tuổi"/>
+                    android:text="1–5 tuổi"/>
 
             </RadioGroup>
 

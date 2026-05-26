@@ -43,9 +43,7 @@ public class ParentHomeActivity extends BaseActivity {
 
     private final ActivityResultLauncher<Intent> childFormLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    loadChildren();
-                }
+                // Không gọi loadChildren() ở đây nữa vì onResume() sẽ tự động gọi khi quay lại
             });
 
     @Override
@@ -138,19 +136,35 @@ public class ParentHomeActivity extends BaseActivity {
             return;
         }
 
-        if (childList.size() == 1) {
-            openJoinClass(childList.get(0));
-        } else {
-            String[] names = new String[childList.size()];
-            for (int i = 0; i < childList.size(); i++) {
-                names[i] = childList.get(i).getDisplayName();
-            }
+        // Hiện tất cả các bé để phụ huynh chọn
+        String[] names = new String[childList.size()];
+        for (int i = 0; i < childList.size(); i++) {
+            names[i] = childList.get(i).getDisplayName();
+        }
 
-            new AlertDialog.Builder(this)
-                    .setTitle("Chọn bé tham gia lớp học")
-                    .setItems(names, (dialog, which) -> openJoinClass(childList.get(which)))
-                    .setNegativeButton("Hủy", null)
-                    .show();
+        new AlertDialog.Builder(this)
+                .setTitle("Chọn bé tham gia lớp học")
+                .setItems(names, (dialog, which) -> {
+                    ChildProfile selectedChild = childList.get(which);
+                    handleChildSelection(selectedChild);
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    private void handleChildSelection(ChildProfile child) {
+        // Kiểm tra xem bé đã có lớp chưa
+        String classId = child.getCurrentClassId();
+        if (classId == null || classId.isEmpty()) {
+            classId = child.getClassId();
+        }
+
+        if (classId != null && !classId.isEmpty()) {
+            // Nếu bé đã có lớp, hiện thông báo
+            Toast.makeText(this, "Bé " + child.getDisplayName() + " đã tham gia lớp học rồi!", Toast.LENGTH_LONG).show();
+        } else {
+            // Nếu chưa có lớp, cho phép mở giao diện nhập mã
+            openJoinClass(child);
         }
     }
 
@@ -187,17 +201,22 @@ public class ParentHomeActivity extends BaseActivity {
                         return;
                     }
 
-                    childList.clear();
+                    // Sử dụng danh sách tạm để gom dữ liệu, tránh việc onResume và callback tạo trùng lặp
+                    List<ChildProfile> tempResults = new ArrayList<>();
                     final int[] remaining = {links.size()};
+                    
                     for (ParentChildLink link : links) {
                         childProfileRepository.getChildProfile(link.getChildId())
                                 .addOnSuccessListener(doc -> {
                                     ChildProfile profile = DocumentMapper.toChildProfile(doc);
                                     if (profile != null && !profile.isDeleted()) {
-                                        childList.add(profile);
+                                        tempResults.add(profile);
                                     }
                                     remaining[0]--;
                                     if (remaining[0] == 0) {
+                                        // Khi load xong hết link mới cập nhật danh sách chính 1 lần duy nhất
+                                        childList.clear();
+                                        childList.addAll(tempResults);
                                         hideLoading(progressBar);
                                         showEmptyState(childList.isEmpty());
                                         childAdapter.notifyDataSetChanged();
@@ -206,6 +225,8 @@ public class ParentHomeActivity extends BaseActivity {
                                 .addOnFailureListener(e -> {
                                     remaining[0]--;
                                     if (remaining[0] == 0) {
+                                        childList.clear();
+                                        childList.addAll(tempResults);
                                         hideLoading(progressBar);
                                         showEmptyState(childList.isEmpty());
                                         childAdapter.notifyDataSetChanged();

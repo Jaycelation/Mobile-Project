@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class CreateClassActivity extends BaseActivity {
 
@@ -30,6 +30,7 @@ public class CreateClassActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_class);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
 
@@ -57,8 +58,8 @@ public class CreateClassActivity extends BaseActivity {
     private void generateRandomCode() {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
+        SecureRandom random = new SecureRandom();
+        for (int i = 0; i < 8; i++) {
             sb.append(chars.charAt(random.nextInt(chars.length())));
         }
         generatedCode = sb.toString();
@@ -83,6 +84,7 @@ public class CreateClassActivity extends BaseActivity {
         clazz.put("status", "active");
         clazz.put("createdAt", com.google.firebase.Timestamp.now());
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("classes").add(clazz)
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(this, "Tạo lớp thành công! 🎉", Toast.LENGTH_LONG).show();

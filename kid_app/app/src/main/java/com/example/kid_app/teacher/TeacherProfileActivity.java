@@ -11,6 +11,7 @@ import com.example.kid_app.R;
 import com.example.kid_app.auth.AuthService;
 import com.example.kid_app.common.AppConstants;
 import com.example.kid_app.common.BaseActivity;
+import com.example.kid_app.common.HelpSupportActivity;
 import com.example.kid_app.data.mapper.DocumentMapper;
 import com.example.kid_app.data.model.Account;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,6 +38,7 @@ public class TeacherProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_teacher_profile);
 
         authService = new AuthService();
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
 
         bindViews();
@@ -70,13 +72,18 @@ public class TeacherProfileActivity extends BaseActivity {
             .setOnClickListener(v -> {
                 String email = authService.getCurrentUser() != null ? authService.getCurrentUser().getEmail() : null;
                 if (email != null) {
+                    // Chuc nang: goi Firebase Auth thong qua AuthService de gui email dat lai mat khau.
                     authService.sendPasswordResetEmail(email)
                             .addOnSuccessListener(aVoid -> Toast.makeText(this, "Đã gửi email đổi mật khẩu!", Toast.LENGTH_LONG).show());
                 }
             });
 
-        setupMenuItem(R.id.menu_settings, "Cài đặt thông báo");
-        setupMenuItem(R.id.menu_help, "Trợ giúp & Hỗ trợ");
+        setupMenuItem(R.id.menu_settings, "Cài đặt thông báo")
+            .setOnClickListener(v -> startActivity(new Intent(this, NotificationSettingsActivity.class)));
+
+        // ĐÃ SỬA: Mở màn hình Trợ giúp & Hỗ trợ thay vì gọi điện trực tiếp
+        setupMenuItem(R.id.menu_help, "Trợ giúp & Hỗ trợ")
+            .setOnClickListener(v -> startActivity(new Intent(this, HelpSupportActivity.class)));
     }
 
     private View setupMenuItem(int id, String title) {
@@ -114,6 +121,7 @@ public class TeacherProfileActivity extends BaseActivity {
                             classIds.add(doc.getId());
                         }
 
+                        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                         db.collection("class_members")
                                 .whereIn("classId", classIds)
                                 .get()

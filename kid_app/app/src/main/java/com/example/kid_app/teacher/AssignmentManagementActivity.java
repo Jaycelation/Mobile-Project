@@ -48,6 +48,7 @@ public class AssignmentManagementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment_management);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
 
@@ -98,6 +99,7 @@ public class AssignmentManagementActivity extends BaseActivity {
 
     private void loadClasses() {
         String teacherId = authService.getCurrentUser() != null ? authService.getCurrentUser().getUid() : "";
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("classes")
                 .whereEqualTo("teacherId", teacherId)
                 .get()
@@ -163,6 +165,7 @@ public class AssignmentManagementActivity extends BaseActivity {
                 .setTitle("Xóa bài tập")
                 .setMessage("Bạn có chắc chắn muốn xóa bài tập '" + title + "' không?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("assignments").document(assignmentId).delete()
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(this, "Đã xóa bài tập!", Toast.LENGTH_SHORT).show();

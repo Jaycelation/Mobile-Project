@@ -53,6 +53,7 @@ public class AddStudentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         classId = getIntent().getStringExtra("class_id");
         joinCode = getIntent().getStringExtra("join_code");
@@ -125,6 +126,7 @@ public class AddStudentActivity extends BaseActivity {
         String query = etSearchQuery.getText().toString().trim();
         if (query.isEmpty()) return;
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("child_profiles")
                 .whereGreaterThanOrEqualTo("displayName", query)
                 .whereLessThanOrEqualTo("displayName", query + "\uf8ff")
@@ -147,6 +149,7 @@ public class AddStudentActivity extends BaseActivity {
         member.put("studentName", child.getDisplayName());
         member.put("joinedAt", com.google.firebase.Timestamp.now());
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("class_members").add(member)
                 .addOnSuccessListener(ref -> {
                     Toast.makeText(this, "Đã thêm " + child.getDisplayName() + " vào lớp! 🎉", Toast.LENGTH_LONG).show();

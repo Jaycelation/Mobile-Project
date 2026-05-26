@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ public class ClassManagementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_management);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
 
@@ -54,15 +58,24 @@ public class ClassManagementActivity extends BaseActivity {
         });
 
         // Bottom Navigation
-        findViewById(R.id.nav_home).setOnClickListener(v -> finish());
-        findViewById(R.id.nav_assignments).setOnClickListener(v -> {
-            startActivity(new Intent(this, AssignmentManagementActivity.class));
-            finish();
-        });
-        findViewById(R.id.nav_profile).setOnClickListener(v -> {
-            startActivity(new Intent(this, TeacherProfileActivity.class));
-            finish();
-        });
+        View navHome = findViewById(R.id.nav_home);
+        if (navHome != null) navHome.setOnClickListener(v -> finish());
+        
+        View navAssignments = findViewById(R.id.nav_assignments);
+        if (navAssignments != null) {
+            navAssignments.setOnClickListener(v -> {
+                startActivity(new Intent(this, AssignmentManagementActivity.class));
+                finish();
+            });
+        }
+        
+        View navProfile = findViewById(R.id.nav_profile);
+        if (navProfile != null) {
+            navProfile.setOnClickListener(v -> {
+                startActivity(new Intent(this, TeacherProfileActivity.class));
+                finish();
+            });
+        }
 
         loadClasses();
     }
@@ -75,6 +88,7 @@ public class ClassManagementActivity extends BaseActivity {
 
     private void loadClasses() {
         String teacherId = authService.getCurrentUser() != null ? authService.getCurrentUser().getUid() : "";
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("classes")
                 .whereEqualTo("teacherId", teacherId)
                 .get()
@@ -94,6 +108,7 @@ public class ClassManagementActivity extends BaseActivity {
                 .setTitle("Xóa lớp học")
                 .setMessage("Bạn có chắc chắn muốn xóa lớp '" + className + "' không? Hành động này không thể hoàn tác.")
                 .setPositiveButton("Xóa", (dialog, which) -> {
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("classes").document(classId).delete()
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(this, "Đã xóa lớp " + className, Toast.LENGTH_SHORT).show();
@@ -123,49 +138,66 @@ public class ClassManagementActivity extends BaseActivity {
             String className = String.valueOf(item.get("className"));
             
             holder.tvName.setText(className);
-            holder.tvCode.setText("Mã: " + (item.get("joinCode") != null ? item.get("joinCode") : "N/A"));
+
+            // Gán icon tương ứng (Gấu/Mèo/Thỏ) dựa trên vị trí hoặc dữ liệu
+            if (position % 3 == 0) holder.ivIcon.setImageResource(R.drawable.icon_gau);
+            else if (position % 3 == 1) holder.ivIcon.setImageResource(R.drawable.icon_meo);
+            else holder.ivIcon.setImageResource(R.drawable.icon_tho);
 
             // Đếm sĩ số thực tế
+            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
             db.collection("class_members")
                     .whereEqualTo("classId", classId)
                     .get()
                     .addOnSuccessListener(snap -> {
                         int realCount = snap.size();
                         holder.tvCount.setText("Sĩ số: " + realCount + " bé");
+                        
+                        // Cập nhật progress bar demo (ví dụ mục tiêu là 30 bé)
+                        int progress = Math.min((realCount * 100) / 30, 100);
+                        holder.progressBar.setProgress(progress);
+                        holder.tvPercent.setText(progress + "%");
                     });
-
-            int[] colors = {0xFFFFD54F, 0xFF81D4FA, 0xFFF48FB1};
-            View container = holder.itemView.findViewById(R.id.layout_container);
-            if (container != null) {
-                container.setBackgroundTintList(android.content.res.ColorStateList.valueOf(colors[position % colors.length]));
-            }
 
             // Xử lý nút xóa
             if (holder.btnDelete != null) {
                 holder.btnDelete.setOnClickListener(v -> deleteClass(classId, className));
             }
 
-            holder.itemView.setOnClickListener(v -> {
+            // Xử lý các nút bấm mới
+            View.OnClickListener detailClick = v -> {
                 Intent intent = new Intent(ClassManagementActivity.this, ClassDetailActivity.class);
                 intent.putExtra("class_id", classId);
                 intent.putExtra("class_name", className);
                 intent.putExtra("join_code", String.valueOf(item.get("joinCode")));
                 startActivity(intent);
-            });
+            };
+
+            holder.itemView.setOnClickListener(detailClick);
+            if (holder.btnViewDetails != null) holder.btnViewDetails.setOnClickListener(detailClick);
+            if (holder.btnManage != null) holder.btnManage.setOnClickListener(detailClick);
         }
 
         @Override
         public int getItemCount() { return list.size(); }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvName, tvCount, tvCode;
+            TextView tvName, tvCount, tvPercent;
+            ImageView ivIcon;
+            ProgressBar progressBar;
             ImageButton btnDelete;
+            View btnViewDetails, btnManage;
+
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvName = itemView.findViewById(R.id.tv_class_name);
                 tvCount = itemView.findViewById(R.id.tv_student_count);
-                tvCode = itemView.findViewById(R.id.tv_join_code_display);
+                tvPercent = itemView.findViewById(R.id.tv_progress_percent);
+                ivIcon = itemView.findViewById(R.id.iv_class_icon);
+                progressBar = itemView.findViewById(R.id.pb_class_progress);
                 btnDelete = itemView.findViewById(R.id.btn_delete_class);
+                btnViewDetails = itemView.findViewById(R.id.btn_view_details);
+                btnManage = itemView.findViewById(R.id.btn_manage);
             }
         }
     }

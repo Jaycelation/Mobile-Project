@@ -13,15 +13,13 @@
         android:gravity="center_vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv_avatar_emoji"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_child_avatar"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:background="@drawable/bg_icon_circle"
-            android:backgroundTint="@color/accent_blue"
-            android:gravity="center"
-            android:text="👦"
-            android:textSize="20sp" />
+            android:src="@drawable/hoc_sinh_nam"
+            app:civ_border_color="@color/bg_main"
+            app:civ_border_width="1dp" />
 
         <LinearLayout
             android:layout_width="0dp"

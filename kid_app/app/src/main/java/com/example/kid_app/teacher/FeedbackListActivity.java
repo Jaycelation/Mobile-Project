@@ -45,6 +45,7 @@ public class FeedbackListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_list);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
 
@@ -81,6 +82,7 @@ public class FeedbackListActivity extends BaseActivity {
         if (teacherId.isEmpty()) return;
 
         // B1: Lấy danh sách các lớp của giáo viên
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("classes")
                 .whereEqualTo("teacherId", teacherId)
                 .get()
@@ -91,6 +93,7 @@ public class FeedbackListActivity extends BaseActivity {
                     for (DocumentSnapshot doc : classSnap) classIds.add(doc.getId());
 
                     // B2: Lấy tất cả thành viên trong các lớp này
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("class_members")
                             .whereIn("classId", classIds)
                             .get()
@@ -109,6 +112,7 @@ public class FeedbackListActivity extends BaseActivity {
                                 final int[] count = {0};
 
                                 for (String childId : uniqueChildIds) {
+                                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                                     db.collection("child_profiles").document(childId).get()
                                             .addOnSuccessListener(childDoc -> {
                                                 ChildProfile profile = DocumentMapper.toChildProfile(childDoc);
@@ -142,6 +146,7 @@ public class FeedbackListActivity extends BaseActivity {
 
     private void openChat(ChildProfile child) {
         // Tìm hoặc tạo session chat cho bé này
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes")
                 .whereEqualTo("childId", child.getChildId())
                 .limit(1)
@@ -159,6 +164,7 @@ public class FeedbackListActivity extends BaseActivity {
                         session.put("noteText", "Thầy/cô vừa bắt đầu trao đổi");
                         session.put("createdAt", com.google.firebase.firestore.FieldValue.serverTimestamp());
                         
+                        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                         db.collection("feedback_notes").add(session).addOnSuccessListener(ref -> {
                             startChatActivity(ref.getId());
                         });

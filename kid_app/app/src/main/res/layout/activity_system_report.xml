@@ -19,17 +19,17 @@
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Quay lại"
-            android:src="@android:drawable/ic_menu_revert"
+            android:src="@drawable/ic_back"
             app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/quicksand_bold"
             android:text="Báo Cáo Hệ Thống"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -48,9 +48,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Người dùng"
                 android:textColor="@color/primary_green_dark"
-                android:textStyle="bold"
                 android:textSize="18sp" />
 
             <androidx.cardview.widget.CardView
@@ -66,18 +66,18 @@
                     android:padding="16dp">
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tổng số tài khoản" />
-                        <TextView android:id="@+id/tv_report_total_users" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="0" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Tổng số tài khoản" />
+                        <TextView android:id="@+id/tv_report_total_users" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:fontFamily="@font/quicksand_bold" android:text="0" />
                     </RelativeLayout>
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Phụ huynh" />
-                        <TextView android:id="@+id/tv_report_parents" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="0" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Phụ huynh" />
+                        <TextView android:id="@+id/tv_report_parents" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:fontFamily="@font/quicksand_medium" android:text="0" />
                     </RelativeLayout>
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Giáo viên" />
-                        <TextView android:id="@+id/tv_report_teachers" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="0" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Giáo viên" />
+                        <TextView android:id="@+id/tv_report_teachers" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:fontFamily="@font/quicksand_medium" android:text="0" />
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -87,9 +87,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Nội dung &amp; Học tập"
                 android:textColor="@color/primary_green_dark"
-                android:textStyle="bold"
                 android:textSize="18sp" />
 
             <androidx.cardview.widget.CardView
@@ -105,13 +105,13 @@
                     android:padding="16dp">
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tổng số bài học" />
-                        <TextView android:id="@+id/tv_report_total_content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="0" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Tổng số trò học tập" />
+                        <TextView android:id="@+id/tv_report_total_content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:fontFamily="@font/quicksand_bold" android:text="0" />
                     </RelativeLayout>
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lượt bé tham gia học" />
-                        <TextView android:id="@+id/tv_report_total_attempts" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="0" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Tổng số trò thực hành" />
+                        <TextView android:id="@+id/tv_report_total_attempts" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:fontFamily="@font/quicksand_bold" android:text="0" />
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -120,6 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="* Dữ liệu được cập nhật thời gian thực từ hệ thống."
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp"

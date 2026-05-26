@@ -39,7 +39,9 @@ public class FeedbackChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_chat);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
+        // Chuc nang: lay uid nguoi dung hien tai tu Firebase Auth.
         currentUserId = FirebaseAuth.getInstance().getUid(); // UID của giáo viên đang đăng nhập
         feedbackId = getIntent().getStringExtra("feedback_id");
 
@@ -62,6 +64,7 @@ public class FeedbackChatActivity extends BaseActivity {
     }
 
     private void loadMessages() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes")
                 .document(feedbackId)
                 .collection("messages")
@@ -85,12 +88,14 @@ public class FeedbackChatActivity extends BaseActivity {
         // Lưu tin nhắn với UID của mình và role "teacher"
         FeedbackMessage msg = new FeedbackMessage(currentUserId, "teacher", text);
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes")
                 .document(feedbackId)
                 .collection("messages")
                 .add(msg)
                 .addOnSuccessListener(doc -> {
                     etInput.setText("");
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("feedback_notes").document(feedbackId).update("noteText", text);
                 });
     }

@@ -8,7 +8,7 @@
 
     <application
         android:name=".KidLearnApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kid_app"
-        android:usesCleartextTraffic="true"
+        android:usesCleartextTraffic="false"
         tools:targetApi="31">
 
         <!-- ==================== LAUNCHER ==================== -->
@@ -90,12 +90,17 @@
         <activity android:name=".teacher.FeedbackChatActivity" android:exported="false" android:theme="@style/Theme.Kid_app.Child" />
         <activity android:name=".teacher.TeacherProfileActivity" android:exported="false" />
         <activity android:name=".teacher.EditTeacherProfileActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".teacher.TeacherNotificationActivity" android:exported="false" />
+        <activity android:name=".teacher.NotificationSettingsActivity" android:exported="false" />
 
         <!-- ==================== ADMIN ==================== -->
         <activity android:name=".admin.AdminHomeActivity" android:exported="false" />
         <activity android:name=".admin.UserManagementActivity" android:exported="false" />
         <activity android:name=".admin.ContentManagementActivity" android:exported="false" />
         <activity android:name=".admin.SystemReportActivity" android:exported="false" />
+
+        <!-- KHAI BÁO MÀN HÌNH TRỢ GIÚP MỚI -->
+        <activity android:name=".common.HelpSupportActivity" android:exported="false" />
 
         <activity android:name=".MainActivity" android:exported="false" />
 

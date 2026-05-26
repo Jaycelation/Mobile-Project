@@ -18,10 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/quicksand_bold"
         android:text="HỆ THỐNG QUẢN TRỊ"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Xin chào, Admin! 🛡️"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Xin chào, Quản Trị 🛡️"
         android:textColor="#E0E0E0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,91 +47,87 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_header">
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:padding="16dp"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Quản lý Người dùng -->
+            <!-- Card Người dùng - CĂN GIỮA -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_manage_users"
-                android:layout_width="0dp"
+                android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="6dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👥" android:textSize="40sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Người dùng" android:textStyle="bold" android:textColor="@color/primary_green_dark"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👥" android:textSize="45sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/quicksand_bold" android:text="Người dùng" android:textColor="@color/primary_green_dark"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Quản lý Nội dung -->
+            <!-- Grid cho 2 card còn lại ở dưới -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
+
+                <!-- Xem Báo cáo -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_reports"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📊" android:textSize="40sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/quicksand_bold" android:text="Báo cáo" android:textColor="@color/primary_green_dark"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Đăng xuất -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_sign_out"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🚪" android:textSize="40sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/quicksand_bold" android:text="Đăng xuất" android:textColor="@color/status_error"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </GridLayout>
+
+            <!-- Quản lý Nội dung - ẨN TẠM THỜI -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_manage_content"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📚" android:textSize="40sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Nội dung học" android:textStyle="bold" android:textColor="@color/primary_green_dark"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
-            <!-- Xem Báo cáo -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_reports"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📊" android:textSize="40sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Báo cáo" android:textStyle="bold" android:textColor="@color/primary_green_dark"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Đăng xuất -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_sign_out"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🚪" android:textSize="40sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Đăng xuất" android:textStyle="bold" android:textColor="@color/status_error"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </GridLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

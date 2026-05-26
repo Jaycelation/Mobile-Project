@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class AssignmentDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment_detail);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         assignmentId = getIntent().getStringExtra("assignment_id");
 
@@ -90,6 +92,7 @@ public class AssignmentDetailActivity extends BaseActivity {
     private void loadAssignmentData() {
         if (assignmentId == null) return;
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("assignments").document(assignmentId).get()
                 .addOnSuccessListener(doc -> {
                     if (doc.exists()) {
@@ -104,6 +107,7 @@ public class AssignmentDetailActivity extends BaseActivity {
     private void loadClassStudents() {
         if (classId == null) return;
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("class_members")
                 .whereEqualTo("classId", classId)
                 .get()
@@ -118,6 +122,7 @@ public class AssignmentDetailActivity extends BaseActivity {
                     final int[] loadedCount = {0};
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         String childId = doc.getString("childId");
+                        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                         db.collection("child_profiles").document(childId).get()
                                 .addOnSuccessListener(childDoc -> {
                                     ChildProfile profile = DocumentMapper.toChildProfile(childDoc);
@@ -156,7 +161,6 @@ public class AssignmentDetailActivity extends BaseActivity {
     private void updateStatsUI(int total, int submitted) {
         if (tvSubmittedSummary != null) tvSubmittedSummary.setText("Đã làm bài: " + submitted + "/" + total + " học sinh");
         
-        // THAY ĐỔI: Thanh tiến độ hiển thị tỉ lệ hoàn thành của cả lớp
         if (pbCompletion != null) {
             pbCompletion.setMax(total > 0 ? total : 100);
             pbCompletion.setProgress(submitted);
@@ -165,7 +169,6 @@ public class AssignmentDetailActivity extends BaseActivity {
         if (btnFilterDone != null) btnFilterDone.setText("Đã làm (" + submitted + ")");
         if (btnFilterPending != null) btnFilterPending.setText("Chưa làm (" + (total - submitted) + ")");
         
-        // THAY ĐỔI: Điểm trung bình chỉ tính trên những bé đã nộp bài
         double avg = 0;
         if (!studentScores.isEmpty()) {
             int sum = 0;
@@ -217,6 +220,16 @@ public class AssignmentDetailActivity extends BaseActivity {
             holder.tvName.setText(item.getFullName());
             holder.tvId.setText("Mã bé: " + (item.getChildId() != null ? item.getChildId().substring(0,6).toUpperCase() : "N/A"));
             
+            // ĐỔI AVATAR TẠI ĐÂY: Dựa trên giới tính của bé
+            if (holder.ivAvatar != null) {
+                String gender = item.getGender();
+                if ("female".equals(gender)) {
+                    holder.ivAvatar.setImageResource(R.drawable.hoc_sinh_nu);
+                } else {
+                    holder.ivAvatar.setImageResource(R.drawable.hoc_sinh_nam);
+                }
+            }
+
             if (studentScores.containsKey(item.getChildId())) {
                 int score = studentScores.get(item.getChildId());
                 holder.tvStatus.setVisibility(View.VISIBLE);
@@ -235,12 +248,14 @@ public class AssignmentDetailActivity extends BaseActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvName, tvId, tvStatus;
+            ImageView ivAvatar;
             View btnAction;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvName = itemView.findViewById(R.id.tv_student_name);
                 tvId = itemView.findViewById(R.id.tv_parent_info);
                 tvStatus = itemView.findViewById(R.id.tv_status_text);
+                ivAvatar = itemView.findViewById(R.id.iv_student_avatar);
                 btnAction = itemView.findViewById(R.id.btn_student_action);
             }
         }

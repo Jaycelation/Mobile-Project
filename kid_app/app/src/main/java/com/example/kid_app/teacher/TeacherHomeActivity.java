@@ -44,6 +44,7 @@ public class TeacherHomeActivity extends BaseActivity {
         setContentView(R.layout.activity_teacher_home);
 
         authService = new AuthService();
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
 
         bindViews();
@@ -75,6 +76,14 @@ public class TeacherHomeActivity extends BaseActivity {
         findViewById(R.id.nav_classes).setOnClickListener(v -> startActivity(new Intent(this, ClassManagementActivity.class)));
         findViewById(R.id.nav_assignments).setOnClickListener(v -> startActivity(new Intent(this, AssignmentManagementActivity.class)));
         findViewById(R.id.nav_profile).setOnClickListener(v -> startActivity(new Intent(this, TeacherProfileActivity.class)));
+
+        // SỬA LỖI: Thêm sự kiện click cho nút chuông (btn_notifications)
+        View btnNotif = findViewById(R.id.btn_notifications);
+        if (btnNotif != null) {
+            btnNotif.setOnClickListener(v -> {
+                startActivity(new Intent(this, TeacherNotificationActivity.class));
+            });
+        }
     }
 
     private void loadUserInfo() {
@@ -91,6 +100,7 @@ public class TeacherHomeActivity extends BaseActivity {
         String teacherId = authService.getCurrentUser() != null ? authService.getCurrentUser().getUid() : "";
         if (teacherId.isEmpty()) return;
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("classes")
                 .whereEqualTo("teacherId", teacherId)
                 .get()
@@ -110,6 +120,7 @@ public class TeacherHomeActivity extends BaseActivity {
                         classIds.add(doc.getId());
                     }
 
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("class_members")
                             .whereIn("classId", classIds)
                             .get()
@@ -133,12 +144,15 @@ public class TeacherHomeActivity extends BaseActivity {
         if (teacherId.isEmpty()) return;
 
         // B1: Lấy danh sách ID các bài tập thầy đã giao
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("assignments")
                 .whereEqualTo("teacherId", teacherId)
                 .get()
                 .addOnSuccessListener(assignmentSnap -> {
                     if (assignmentSnap.isEmpty()) {
                         tvEmptySubmissions.setVisibility(View.VISIBLE);
+                        latestSubmissions.clear();
+                        submissionAdapter.notifyDataSetChanged();
                         return;
                     }
 
@@ -147,15 +161,21 @@ public class TeacherHomeActivity extends BaseActivity {
                         assignmentIds.add(doc.getId());
                     }
 
-                    // B2: Lấy 5 bài nộp mới nhất của các bài tập này
+                    // B2: Lấy tất cả bài nộp "submitted" của các bài tập này, sắp xếp theo thời gian nộp mới nhất
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("assignment_submissions")
                             .whereIn("assignmentId", assignmentIds)
+                            .whereEqualTo("status", "submitted")
                             .orderBy("completedAt", Query.Direction.DESCENDING)
-                            .limit(5)
-                            .get()
-                            .addOnSuccessListener(subSnap -> {
+                            .limit(5) // Chỉ lấy 5 bài nộp gần nhất
+                            .addSnapshotListener((subSnap, error) -> {
+                                if (error != null) {
+                                    Log.e(TAG, "Listen failed.", error);
+                                    return;
+                                }
+
                                 latestSubmissions.clear();
-                                if (subSnap.isEmpty()) {
+                                if (subSnap == null || subSnap.isEmpty()) {
                                     tvEmptySubmissions.setVisibility(View.VISIBLE);
                                 } else {
                                     tvEmptySubmissions.setVisibility(View.GONE);
@@ -165,10 +185,6 @@ public class TeacherHomeActivity extends BaseActivity {
                                     }
                                 }
                                 submissionAdapter.notifyDataSetChanged();
-                            })
-                            .addOnFailureListener(e -> {
-                                tvEmptySubmissions.setVisibility(View.VISIBLE);
-                                Log.e(TAG, "Error loading submissions", e);
                             });
                 });
     }
@@ -192,12 +208,22 @@ public class TeacherHomeActivity extends BaseActivity {
 
             holder.tvScore.setText(score + "đ");
             
+            // Reset text để tránh hiện dữ liệu cũ khi scroll
+            holder.tvName.setText("Đang tải...");
+            holder.tvInfo.setText("...");
+
             // Fetch Child Name
+            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
             db.collection("child_profiles").document(childId).get().addOnSuccessListener(d -> {
-                if (d.exists()) holder.tvName.setText(d.getString("fullName"));
+                if (d.exists()) {
+                    String name = d.getString("fullName");
+                    if (name == null) name = d.getString("name");
+                    holder.tvName.setText(name);
+                }
             });
 
             // Fetch Assignment Title
+            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
             db.collection("assignments").document(assignmentId).get().addOnSuccessListener(d -> {
                 if (d.exists()) holder.tvInfo.setText("Vừa hoàn thành: " + d.getString("title"));
             });

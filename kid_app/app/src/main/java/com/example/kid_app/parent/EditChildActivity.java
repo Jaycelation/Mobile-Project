@@ -2,12 +2,10 @@ package com.example.kid_app.parent;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.kid_app.R;
@@ -41,7 +39,6 @@ public class EditChildActivity extends BaseActivity {
     private TextInputLayout tilNickName;
     private TextInputLayout tilBirthDate;
     private RadioGroup rgGender;
-    private RadioGroup rgAgeGroup;
     private ProgressBar progressBar;
 
     private String selectedBirthDate = "";
@@ -68,7 +65,6 @@ public class EditChildActivity extends BaseActivity {
         tilNickName    = findViewById(R.id.til_nick_name);
         tilBirthDate   = findViewById(R.id.til_birth_date);
         rgGender       = findViewById(R.id.rg_gender);
-        rgAgeGroup     = findViewById(R.id.rg_age_group);
         progressBar    = findViewById(R.id.progress_bar);
 
         ImageButton    btnBack   = findViewById(R.id.btn_back);
@@ -125,16 +121,6 @@ public class EditChildActivity extends BaseActivity {
             rgGender.check(R.id.rb_male);
         }
 
-        // Nhóm tuổi
-        String ag = profile.getAgeGroup();
-        if (AppConstants.AGE_GROUP_3_5.equals(ag)) {
-            rgAgeGroup.check(R.id.rb_age_3_5);
-        } else if (AppConstants.AGE_GROUP_9_12.equals(ag)) {
-            rgAgeGroup.check(R.id.rb_age_9_12);
-        } else {
-            rgAgeGroup.check(R.id.rb_age_6_8);
-        }
-
         // Avatar emoji
         updateAvatarEmoji(profile.getGender());
     }
@@ -157,7 +143,7 @@ public class EditChildActivity extends BaseActivity {
                         Integer.parseInt(parts[2]));
             } catch (Exception ignored) {}
         } else {
-            cal.add(Calendar.YEAR, -6);
+            cal.add(Calendar.YEAR, -3); // Mặc định cho lứa tuổi 1-5
         }
 
         new DatePickerDialog(this,
@@ -185,7 +171,7 @@ public class EditChildActivity extends BaseActivity {
 
         String nickName = getText(tilNickName);
         String gender   = rgGender.getCheckedRadioButtonId() == R.id.rb_female ? "female" : "male";
-        String ageGroup = getSelectedAgeGroup();
+        String ageGroup = AppConstants.AGE_GROUP_1_5; // Mặc định 1-5 tuổi
 
         ChildProfile updated = new ChildProfile(fullName, nickName, selectedBirthDate, gender, ageGroup);
 
@@ -236,12 +222,5 @@ public class EditChildActivity extends BaseActivity {
     private String getText(TextInputLayout til) {
         if (til.getEditText() == null) return "";
         return til.getEditText().getText().toString().trim();
-    }
-
-    private String getSelectedAgeGroup() {
-        int id = rgAgeGroup.getCheckedRadioButtonId();
-        if (id == R.id.rb_age_3_5)  return AppConstants.AGE_GROUP_3_5;
-        if (id == R.id.rb_age_9_12) return AppConstants.AGE_GROUP_9_12;
-        return AppConstants.AGE_GROUP_6_8;
     }
 }

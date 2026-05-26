@@ -115,15 +115,8 @@ public class ChildSettingsActivity extends BaseActivity {
         // AI switch
         switchAi.setChecked(settings.isAiEnabled());
 
-        // Bộ lọc nội dung
-        String filter = settings.getContentAgeFilter();
-        if (AppConstants.AGE_GROUP_3_5.equals(filter)) {
-            rgContentFilter.check(R.id.rb_filter_3_5);
-        } else if (AppConstants.AGE_GROUP_9_12.equals(filter)) {
-            rgContentFilter.check(R.id.rb_filter_9_12);
-        } else {
-            rgContentFilter.check(R.id.rb_filter_6_8); // default
-        }
+        // Bộ lọc nội dung: Luôn mặc định 1-5 tuổi
+        rgContentFilter.check(R.id.rb_filter_1_5);
     }
 
     // ==================== SAVE ====================
@@ -152,7 +145,7 @@ public class ChildSettingsActivity extends BaseActivity {
         }
 
         boolean aiEnabled    = switchAi.isChecked();
-        String  contentFilter = getSelectedFilter();
+        String  contentFilter = AppConstants.AGE_GROUP_1_5;
 
         ChildSettings settings = new ChildSettings(dailyLimitMinutes, aiEnabled, contentFilter);
 
@@ -169,14 +162,5 @@ public class ChildSettingsActivity extends BaseActivity {
                     hideLoading(progressBar);
                     showToast("Lưu thất bại: " + e.getMessage());
                 });
-    }
-
-    // ==================== HELPERS ====================
-
-    private String getSelectedFilter() {
-        int id = rgContentFilter.getCheckedRadioButtonId();
-        if (id == R.id.rb_filter_3_5)  return AppConstants.AGE_GROUP_3_5;
-        if (id == R.id.rb_filter_9_12) return AppConstants.AGE_GROUP_9_12;
-        return AppConstants.AGE_GROUP_6_8;
     }
 }
