@@ -173,6 +173,7 @@ public class ColorGameActivity extends BaseActivity {
         attempt.put("contentType", "color");
         attempt.put("score", 30);
         attempt.put("startedAt", com.google.firebase.firestore.FieldValue.serverTimestamp());
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection(AppConstants.COL_CHILD_PROFILES).document(selectedChildId).collection(AppConstants.SUBCOL_ACTIVITY_ATTEMPTS).add(attempt);
     }
 

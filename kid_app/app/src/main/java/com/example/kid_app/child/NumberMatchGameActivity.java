@@ -124,13 +124,14 @@ public class NumberMatchGameActivity extends BaseActivity {
 
         if (options.get(index) == targetNumber) {
             totalScore += 2;
-            if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, 2);
+            if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, 2); // Trả lời đúng +2đ
             
             selectedCard.startAnimation(jumpAnim);
             Toast.makeText(this, "Chính xác! 🥳", Toast.LENGTH_SHORT).show();
             speak("Đúng rồi! Bé giỏi quá!", "praise_id");
             currentLevel++;
         } else {
+            if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, -1); // Trả lời sai -1đ
             if (isAssignmentMode) {
                 currentLevel++;
                 new Handler(Looper.getMainLooper()).postDelayed(this::nextLevel, 1000);
@@ -154,6 +155,8 @@ public class NumberMatchGameActivity extends BaseActivity {
         if (isAssignmentMode && assignmentId != null && selectedChildId != null) {
             updateAssignment();
         }
+        // Thưởng 10đ khi hoàn thành trò chơi
+        if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, 10);
         Toast.makeText(this, "Hoàn thành! Điểm: " + totalScore, Toast.LENGTH_LONG).show();
         finish();
     }
@@ -161,10 +164,12 @@ public class NumberMatchGameActivity extends BaseActivity {
     private void updateAssignment() {
         Map<String, Object> s = new HashMap<>();
         s.put("status", "submitted"); s.put("score", totalScore); s.put("completedAt", new java.util.Date());
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection("assignment_submissions")
                 .whereEqualTo("childId", selectedChildId).whereEqualTo("assignmentId", assignmentId)
                 .get().addOnSuccessListener(snap -> {
                     if (!snap.isEmpty()) snap.getDocuments().get(0).getReference().update(s);
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     else { s.put("childId", selectedChildId); s.put("assignmentId", assignmentId); FirebaseFirestore.getInstance().collection("assignment_submissions").add(s); }
                 });
     }

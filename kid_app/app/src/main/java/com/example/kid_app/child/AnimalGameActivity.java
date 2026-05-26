@@ -143,7 +143,7 @@ public class AnimalGameActivity extends BaseActivity {
             totalScore += 2;
             v.startAnimation(jumpAnim);
             playAnimalSound(allAnimals.get(currentOptions.get(idx)).soundId);
-            if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, 2);
+            if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, 2); // Trả lời đúng +2đ
             new Handler().postDelayed(() -> {
                 Bundle p = new Bundle(); p.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "praise_id");
                 if (tts != null) tts.speak("Đúng rồi! Bé giỏi quá!", TextToSpeech.QUEUE_FLUSH, p, "praise_id");
@@ -151,6 +151,7 @@ public class AnimalGameActivity extends BaseActivity {
             }, 1000);
             currentLevel++;
         } else {
+            if (selectedChildId != null) childProfileRepository.addPoints(selectedChildId, -1); // Trả lời sai -1đ
             if (isAssignmentMode) {
                 setCardsEnabled(false);
                 currentLevel++;
@@ -183,10 +184,12 @@ public class AnimalGameActivity extends BaseActivity {
     private void updateAssignment() {
         Map<String, Object> s = new HashMap<>();
         s.put("status", "submitted"); s.put("score", totalScore); s.put("completedAt", new java.util.Date());
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection("assignment_submissions")
                 .whereEqualTo("childId", selectedChildId).whereEqualTo("assignmentId", assignmentId)
                 .get().addOnSuccessListener(snap -> {
                     if (!snap.isEmpty()) snap.getDocuments().get(0).getReference().update(s);
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     else { s.put("childId", selectedChildId); s.put("assignmentId", assignmentId); FirebaseFirestore.getInstance().collection("assignment_submissions").add(s); }
                 });
     }

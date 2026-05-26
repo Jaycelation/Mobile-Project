@@ -43,7 +43,9 @@ public class ParentFeedbackActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_chat);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
+        // Chuc nang: lay uid nguoi dung hien tai tu Firebase Auth.
         currentUserId = FirebaseAuth.getInstance().getUid(); // UID của phụ huynh đang đăng nhập
         
         SharedPreferences prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE);
@@ -84,6 +86,7 @@ public class ParentFeedbackActivity extends BaseActivity {
     private void findOrCreateFeedbackSession() {
         if (selectedChildId == null) return;
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes")
                 .whereEqualTo("childId", selectedChildId)
                 .limit(1)
@@ -104,6 +107,7 @@ public class ParentFeedbackActivity extends BaseActivity {
         session.put("noteText", "Bắt đầu cuộc hội thoại");
         session.put("createdAt", FieldValue.serverTimestamp());
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes").add(session).addOnSuccessListener(ref -> {
             feedbackId = ref.getId();
             loadMessages();
@@ -113,6 +117,7 @@ public class ParentFeedbackActivity extends BaseActivity {
     private void loadMessages() {
         if (feedbackId == null) return;
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes")
                 .document(feedbackId)
                 .collection("messages")
@@ -135,12 +140,14 @@ public class ParentFeedbackActivity extends BaseActivity {
 
         // Lưu tin nhắn với UID của phụ huynh và role "parent"
         FeedbackMessage msg = new FeedbackMessage(currentUserId, "parent", text);
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("feedback_notes")
                 .document(feedbackId)
                 .collection("messages")
                 .add(msg)
                 .addOnSuccessListener(d -> {
                     etInput.setText("");
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("feedback_notes").document(feedbackId).update("noteText", text);
                 });
     }

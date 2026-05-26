@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kid_app.R;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 public class ChildProfileActivity extends BaseActivity {
 
     private TextView tvName, tvClassInfo;
+    private ImageView ivAvatar;
     private ChildProfileRepository childProfileRepository;
     private AuthService authService;
     private String childId;
@@ -56,17 +58,12 @@ public class ChildProfileActivity extends BaseActivity {
     private void bindViews() {
         tvName = findViewById(R.id.tv_child_name);
         tvClassInfo = findViewById(R.id.tv_class_info);
+        ivAvatar = findViewById(R.id.iv_child_avatar);
 
         View btnBack = findViewById(R.id.btn_back);
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
         }
-
-        findViewById(R.id.btn_settings_profile).setOnClickListener(v -> {
-            Intent intent = new Intent(this, com.example.kid_app.parent.ChildSettingsActivity.class);
-            intent.putExtra(AppConstants.KEY_CHILD_ID, childId);
-            startActivity(intent);
-        });
 
         findViewById(R.id.btn_edit_profile).setOnClickListener(v -> {
             Intent intent = new Intent(this, com.example.kid_app.parent.EditChildActivity.class);
@@ -82,13 +79,6 @@ public class ChildProfileActivity extends BaseActivity {
                     .apply();
             navigateToClearStack(com.example.kid_app.WelcomeActivity.class);
         });
-        
-        View viewAll = findViewById(R.id.tv_view_all_badges);
-        if (viewAll != null) {
-            viewAll.setOnClickListener(v -> {
-                startActivity(new Intent(this, BadgeCollectionActivity.class));
-            });
-        }
     }
 
     private void listenToChildData() {
@@ -103,6 +93,16 @@ public class ChildProfileActivity extends BaseActivity {
                         if (profile != null) {
                             if (tvName != null) tvName.setText(profile.getDisplayName());
                             
+                            // Cập nhật Avatar dựa trên giới tính
+                            if (ivAvatar != null) {
+                                String gender = profile.getGender();
+                                if ("female".equals(gender)) {
+                                    ivAvatar.setImageResource(R.drawable.hoc_sinh_nu);
+                                } else {
+                                    ivAvatar.setImageResource(R.drawable.hoc_sinh_nam);
+                                }
+                            }
+
                             String classId = profile.getPrimaryClassId();
                             String className = profile.getClassName();
                             
@@ -121,10 +121,12 @@ public class ChildProfileActivity extends BaseActivity {
             startActivity(new Intent(this, ChildHomeActivity.class));
             finish();
         });
+        
         findViewById(R.id.nav_community).setOnClickListener(v -> {
-            startActivity(new Intent(this, CommunityFeedActivity.class));
+            startActivity(new Intent(this, LeaderboardActivity.class));
             finish();
         });
+
         findViewById(R.id.nav_progress).setOnClickListener(v -> {
             startActivity(new Intent(this, ChildProgressActivity.class));
             finish();

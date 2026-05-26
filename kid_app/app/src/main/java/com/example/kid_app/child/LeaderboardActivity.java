@@ -42,6 +42,7 @@ public class LeaderboardActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         SharedPreferences prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE);
         selectedChildId = prefs.getString(AppConstants.PREF_SELECTED_CHILD_ID, null);
@@ -66,6 +67,7 @@ public class LeaderboardActivity extends BaseActivity {
         if (selectedChildId == null) return;
         progressBar.setVisibility(View.VISIBLE);
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CHILD_PROFILES).document(selectedChildId).get()
             .addOnSuccessListener(doc -> {
                 if (doc.exists()) {
@@ -85,6 +87,7 @@ public class LeaderboardActivity extends BaseActivity {
     }
 
     private void loadClassName() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CLASSES).document(currentClassId).get()
             .addOnSuccessListener(doc -> {
                 if (doc.exists()) {
@@ -94,6 +97,7 @@ public class LeaderboardActivity extends BaseActivity {
     }
 
     private void loadLeaderboard() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CLASS_MEMBERS)
             .whereEqualTo("classId", currentClassId)
             .get()
@@ -116,6 +120,7 @@ public class LeaderboardActivity extends BaseActivity {
     }
 
     private void fetchStudentData(String childId, int totalStudents, AtomicInteger count) {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CHILD_PROFILES).document(childId).get()
             .addOnSuccessListener(profileDoc -> {
                 String name = profileDoc.getString("name");
@@ -124,6 +129,7 @@ public class LeaderboardActivity extends BaseActivity {
                 
                 final String finalName = name;
                 
+                // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                 db.collection(AppConstants.COL_CHILD_STATS).document(childId).get()
                     .addOnCompleteListener(statsTask -> {
                         long points = 0;

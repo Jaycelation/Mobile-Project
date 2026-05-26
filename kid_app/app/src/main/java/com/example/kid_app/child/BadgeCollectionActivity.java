@@ -26,6 +26,7 @@ public class BadgeCollectionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badge_collection);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         SharedPreferences prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE);
         selectedChildId = prefs.getString(AppConstants.PREF_SELECTED_CHILD_ID, null);
@@ -47,6 +48,7 @@ public class BadgeCollectionActivity extends BaseActivity {
     }
 
     private void loadStatsAndBadges() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CHILD_STATS)
                 .document(selectedChildId)
                 .get()

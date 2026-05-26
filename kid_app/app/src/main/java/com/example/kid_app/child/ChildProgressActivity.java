@@ -8,7 +8,6 @@ import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,18 +16,15 @@ import com.example.kid_app.common.AppConstants;
 import com.example.kid_app.common.BaseActivity;
 import com.example.kid_app.data.model.ChildStats;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class ChildProgressActivity extends BaseActivity {
 
     private TextView tvPoints, tvBadges, tvStreak, tvLevelName, tvLevelTitle, tvMascot;
-    private ProgressBar pbMath, pbLanguage, pbLogic;
     private ImageView ivBadgeStar, ivBadgePainter;
     private String selectedChildId;
+    private String childClassId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +38,8 @@ public class ChildProgressActivity extends BaseActivity {
         selectedChildId = prefs.getString(AppConstants.PREF_SELECTED_CHILD_ID, null);
 
         if (selectedChildId != null) {
+            loadChildInfo();
             loadStats();
-            loadDailySkills(); 
         } else {
             Toast.makeText(this, "Không tìm thấy hồ sơ bé", Toast.LENGTH_SHORT).show();
             finish();
@@ -67,12 +63,23 @@ public class ChildProgressActivity extends BaseActivity {
         tvLevelTitle = findViewById(R.id.tv_level_title);
         tvMascot = findViewById(R.id.tv_mascot_quote);
 
-        pbMath = findViewById(R.id.pb_math);
-        pbLanguage = findViewById(R.id.pb_language);
-        pbLogic = findViewById(R.id.pb_logic);
-
         ivBadgeStar = findViewById(R.id.iv_badge_star);
         ivBadgePainter = findViewById(R.id.iv_badge_painter);
+    }
+
+    private void loadChildInfo() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
+        FirebaseFirestore.getInstance().collection(AppConstants.COL_CHILD_PROFILES)
+                .document(selectedChildId)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        childClassId = doc.getString("currentClassId");
+                        if (childClassId == null || childClassId.isEmpty()) {
+                            childClassId = doc.getString("classId");
+                        }
+                    }
+                });
     }
 
     private void loadStats() {
@@ -139,46 +146,26 @@ public class ChildProgressActivity extends BaseActivity {
         return "Bậc Thầy Trí Tuệ";
     }
 
-    private void loadDailySkills() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        Date todayStart = cal.getTime();
-
-        FirebaseFirestore.getInstance()
-                .collection(AppConstants.COL_CHILD_PROFILES)
-                .document(selectedChildId)
-                .collection(AppConstants.SUBCOL_ACTIVITY_ATTEMPTS)
-                .whereGreaterThanOrEqualTo("startedAt", todayStart)
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    if (queryDocumentSnapshots != null) {
-                        int math = 0, lang = 0, logic = 0;
-                        int dailyTarget = 3; 
-
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            String cType = doc.getString("contentType");
-                            if ("counting".equals(cType)) math++;
-                            else if ("color".equals(cType)) lang++;
-                            else logic++;
-                        }
-                        
-                        pbMath.setProgress(Math.min((math * 100) / dailyTarget, 100));
-                        pbLanguage.setProgress(Math.min((lang * 100) / dailyTarget, 100));
-                        pbLogic.setProgress(Math.min((logic * 100) / dailyTarget, 100));
-                    }
-                });
-    }
-
     private void bindBottomNavigation() {
         findViewById(R.id.nav_home).setOnClickListener(v -> finish());
+        
+        // ĐÃ SỬA: Chuyển hướng tới LeaderboardActivity (Bảng xếp hạng)
         findViewById(R.id.nav_community).setOnClickListener(v -> {
-            startActivity(new Intent(this, CommunityFeedActivity.class));
-            finish();
+            if (isJoinedClass()) {
+                startActivity(new Intent(this, LeaderboardActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Tính năng này yêu cầu bé tham gia lớp học trước nhé!", Toast.LENGTH_LONG).show();
+            }
         });
+
         findViewById(R.id.nav_profile).setOnClickListener(v -> {
             startActivity(new Intent(this, ChildProfileActivity.class));
             finish();
         });
+    }
+
+    private boolean isJoinedClass() {
+        return childClassId != null && !childClassId.isEmpty();
     }
 }

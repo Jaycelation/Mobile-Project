@@ -295,6 +295,7 @@ public class PuzzleGameActivity extends BaseActivity {
         submission.put("score", totalScore);
         submission.put("completedAt", new java.util.Date());
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection("assignment_submissions")
                 .whereEqualTo("childId", childId)
                 .whereEqualTo("assignmentId", assignmentId)
@@ -304,6 +305,7 @@ public class PuzzleGameActivity extends BaseActivity {
                     } else {
                         submission.put("childId", childId);
                         submission.put("assignmentId", assignmentId);
+                        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                         FirebaseFirestore.getInstance().collection("assignment_submissions").add(submission);
                     }
                 });

@@ -139,6 +139,10 @@ public class ShapeGameActivity extends BaseActivity {
         cardShapeMain.startAnimation(jumpAnim);
         vibrateDevice();
 
+        if (selectedChildId != null) {
+            childProfileRepository.addPoints(selectedChildId, 2); // Cộng 2 điểm khi ấn vào hình
+        }
+
         String text = "Đây là " + shapeList.get(currentIndex).name;
         Bundle params = new Bundle();
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "shape_info_id");
@@ -173,7 +177,7 @@ public class ShapeGameActivity extends BaseActivity {
 
     private void finishGame() {
         if (selectedChildId != null) {
-            childProfileRepository.addPoints(selectedChildId, 10);
+            childProfileRepository.addPoints(selectedChildId, 10); // Cộng 10 điểm khi hoàn thành bài
         }
         Toast.makeText(this, "Giỏi quá! Bé đã học xong! 🌟", Toast.LENGTH_LONG).show();
         finish();

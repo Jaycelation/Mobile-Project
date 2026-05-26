@@ -136,7 +136,7 @@ public class AlphabetLearningActivity extends BaseActivity {
         vibrateDevice();
 
         if (selectedChildId != null) {
-            childProfileRepository.addPoints(selectedChildId, 2);
+            childProfileRepository.addPoints(selectedChildId, 2); // Quy tắc: ấn vào hình được 2 điểm
         }
 
         String text = "Đây là chữ " + letterNames[currentIndex];
@@ -176,7 +176,7 @@ public class AlphabetLearningActivity extends BaseActivity {
 
     private void finishGame() {
         if (selectedChildId != null) {
-            childProfileRepository.addPoints(selectedChildId, 42);
+            childProfileRepository.addPoints(selectedChildId, 10); // Quy tắc: Hoàn thành bài học được 10 điểm
             saveActivityAttempt();
             if (assignmentId != null) {
                 updateAssignmentSubmission();
@@ -191,6 +191,7 @@ public class AlphabetLearningActivity extends BaseActivity {
         attempt.put("contentType", "game");
         attempt.put("score", 100);
         attempt.put("startedAt", com.google.firebase.firestore.FieldValue.serverTimestamp());
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection(AppConstants.COL_CHILD_PROFILES).document(selectedChildId).collection(AppConstants.SUBCOL_ACTIVITY_ATTEMPTS).add(attempt);
     }
 
@@ -199,6 +200,7 @@ public class AlphabetLearningActivity extends BaseActivity {
         submission.put("status", "submitted");
         submission.put("score", 100);
         submission.put("completedAt", new java.util.Date());
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection("assignment_submissions").whereEqualTo("childId", selectedChildId).whereEqualTo("assignmentId", assignmentId).get().addOnSuccessListener(snap -> {
             if (!snap.isEmpty()) snap.getDocuments().get(0).getReference().update(submission);
         });

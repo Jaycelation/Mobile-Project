@@ -46,6 +46,7 @@ public class CommunityFeedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_feed);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         authService = new AuthService();
         rvFeed = findViewById(R.id.rv_feed);
@@ -81,6 +82,7 @@ public class CommunityFeedActivity extends BaseActivity {
     }
 
     private void loadPostsFromFirestore() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("posts")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
@@ -134,6 +136,7 @@ public class CommunityFeedActivity extends BaseActivity {
             
             // Nút Thích
             holder.layoutLike.setOnClickListener(v -> {
+                // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                 db.collection("posts").document(postId).update("likes", FieldValue.increment(1));
             });
 
@@ -145,6 +148,7 @@ public class CommunityFeedActivity extends BaseActivity {
         }
 
         private void loadCommentsForPost(String postId, LinearLayout container) {
+            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
             db.collection("posts").document(postId).collection("comments")
                     .orderBy("createdAt", Query.Direction.ASCENDING)
                     .addSnapshotListener((value, error) -> {
@@ -180,6 +184,7 @@ public class CommunityFeedActivity extends BaseActivity {
                     Map<String, Object> data = new HashMap<>();
                     data.put("text", comment);
                     data.put("createdAt", FieldValue.serverTimestamp());
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     db.collection("posts").document(postId).collection("comments").add(data);
                 }
             });

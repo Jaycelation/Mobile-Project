@@ -21,6 +21,7 @@ public class QuizListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_list);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         assignmentId = getIntent().getStringExtra(AppConstants.KEY_ASSIGNMENT_ID);
 
@@ -53,6 +54,7 @@ public class QuizListActivity extends BaseActivity {
         // Nếu là bài tập, dùng assignmentId. Nếu không, mặc định dùng quiz_animals_01 của em
         String contentId = (assignmentId != null) ? assignmentId : "quiz_animals_01";
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("content_catalog").document(contentId).collection("questions")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {

@@ -153,7 +153,7 @@ public class AlphabetMatchGameActivity extends BaseActivity {
         tvLetter2.setText(options[1]);
         tvLetter3.setText(options[2]);
         
-        tvInstruction.setText("Câu " + (currentLevel + 1) + "/" + maxQuestions + ": Chạm vào chữ " + targetLetter);
+        tvInstruction.setText("Chạm vào chữ " + targetLetter);
     }
 
     private void speakQuestion() {
@@ -230,6 +230,7 @@ public class AlphabetMatchGameActivity extends BaseActivity {
         submission.put("score", totalScore);
         submission.put("completedAt", new java.util.Date());
         
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection("assignment_submissions")
                 .whereEqualTo("childId", selectedChildId)
                 .whereEqualTo("assignmentId", assignmentId)
@@ -239,6 +240,7 @@ public class AlphabetMatchGameActivity extends BaseActivity {
                     } else {
                         submission.put("childId", selectedChildId);
                         submission.put("assignmentId", assignmentId);
+                        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                         FirebaseFirestore.getInstance().collection("assignment_submissions").add(submission);
                     }
                 });

@@ -50,7 +50,9 @@ public class CreatePostActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
+        // Chuc nang: khoi tao Firebase Storage de luu va lay anh tren cloud.
         storage = FirebaseStorage.getInstance();
         etContent = findViewById(R.id.et_post_content);
         ivPreview = findViewById(R.id.iv_post_preview);
@@ -79,6 +81,7 @@ public class CreatePostActivity extends BaseActivity {
         String selectedChildId = prefs.getString(AppConstants.PREF_SELECTED_CHILD_ID, null);
 
         if (selectedChildId != null) {
+            // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
             db.collection(AppConstants.COL_CHILD_PROFILES)
                     .document(selectedChildId)
                     .get()
@@ -99,9 +102,11 @@ public class CreatePostActivity extends BaseActivity {
         String fileName = "posts/" + UUID.randomUUID().toString();
         StorageReference ref = storage.getReference().child(fileName);
 
+        // Chuc nang: tai tep len Firebase Storage.
         ref.putFile(imageUri)
                 .continueWithTask(task -> {
                     if (!task.isSuccessful()) throw task.getException();
+                    // Chuc nang: lay duong dan tep sau khi tai len Firebase Storage.
                     return ref.getDownloadUrl();
                 })
                 .addOnSuccessListener(uri -> {
@@ -133,6 +138,7 @@ public class CreatePostActivity extends BaseActivity {
             post.put("imageUrl", imageUrl);
         }
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("posts")
                 .add(post)
                 .addOnSuccessListener(documentReference -> {

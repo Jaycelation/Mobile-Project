@@ -217,10 +217,12 @@ public class PatternGameActivity extends BaseActivity {
     private void updateAssignment() {
         Map<String, Object> s = new HashMap<>();
         s.put("status", "submitted"); s.put("score", totalScore); s.put("completedAt", new java.util.Date());
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         FirebaseFirestore.getInstance().collection("assignment_submissions")
                 .whereEqualTo("childId", childId).whereEqualTo("assignmentId", assignmentId)
                 .get().addOnSuccessListener(snap -> {
                     if (!snap.isEmpty()) snap.getDocuments().get(0).getReference().update(s);
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
                     else { s.put("childId", childId); s.put("assignmentId", assignmentId); FirebaseFirestore.getInstance().collection("assignment_submissions").add(s); }
                 });
     }

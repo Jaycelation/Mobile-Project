@@ -1,11 +1,12 @@
 package com.example.kid_app.child;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +22,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ChildAssignmentActivity extends BaseActivity {
 
@@ -31,15 +34,21 @@ public class ChildAssignmentActivity extends BaseActivity {
     private List<Map<String, Object>> assignmentList = new ArrayList<>();
     private FirebaseFirestore db;
     private String classId;
+    private String childId;
     private TextView tvEmpty;
+    private Set<String> submittedAssignmentIds = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_assignment);
 
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
         classId = getIntent().getStringExtra("classId");
+        
+        SharedPreferences prefs = getSharedPreferences(AppConstants.PREF_NAME, Context.MODE_PRIVATE);
+        childId = prefs.getString(AppConstants.PREF_SELECTED_CHILD_ID, null);
 
         rvAssignments = findViewById(R.id.rv_assignments);
         tvEmpty = findViewById(R.id.tv_empty);
@@ -50,7 +59,28 @@ public class ChildAssignmentActivity extends BaseActivity {
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
-        loadAssignments();
+        loadSubmittedAssignments();
+    }
+
+    private void loadSubmittedAssignments() {
+        if (childId == null) {
+            loadAssignments();
+            return;
+        }
+
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
+        db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
+                .whereEqualTo("childId", childId)
+                .whereEqualTo("status", "submitted")
+                .addSnapshotListener((value, error) -> {
+                    submittedAssignmentIds.clear();
+                    if (value != null) {
+                        for (QueryDocumentSnapshot doc : value) {
+                            submittedAssignmentIds.add(doc.getString("assignmentId"));
+                        }
+                    }
+                    loadAssignments();
+                });
     }
 
     private void loadAssignments() {
@@ -59,6 +89,7 @@ public class ChildAssignmentActivity extends BaseActivity {
             return;
         }
 
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection("assignments")
                 .whereEqualTo("classId", classId)
                 .whereEqualTo("status", "active")
@@ -67,9 +98,13 @@ public class ChildAssignmentActivity extends BaseActivity {
                     if (value != null) {
                         assignmentList.clear();
                         for (QueryDocumentSnapshot doc : value) {
-                            Map<String, Object> data = doc.getData();
-                            data.put("id", doc.getId());
-                            assignmentList.add(data);
+                            String id = doc.getId();
+                            // Chỉ thêm những bài chưa nộp
+                            if (!submittedAssignmentIds.contains(id)) {
+                                Map<String, Object> data = doc.getData();
+                                data.put("id", id);
+                                assignmentList.add(data);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                         tvEmpty.setVisibility(assignmentList.isEmpty() ? View.VISIBLE : View.GONE);

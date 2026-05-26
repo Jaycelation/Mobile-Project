@@ -13,15 +13,14 @@
     android:layout_marginBottom="12dp"
     android:elevation="2dp">
 
-    <!-- Avatar emoji -->
-    <TextView
-        android:id="@+id/tv_avatar"
+    <!-- Avatar Image (Dùng CircleImageView để bo tròn đẹp) -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:background="@drawable/bg_avatar_circle"
-        android:gravity="center"
-        android:text="👧"
-        android:textSize="28sp"/>
+        android:src="@drawable/hoc_sinh_nam"
+        app:civ_border_color="@color/bg_main"
+        app:civ_border_width="2dp"/>
 
     <!-- Thông tin bé -->
     <LinearLayout

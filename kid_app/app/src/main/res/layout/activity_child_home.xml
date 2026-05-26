@@ -10,7 +10,7 @@
     <View
         android:id="@+id/header_bg"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="240dp"
         android:background="@drawable/bg_child_home_header"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,26 +26,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
-    <ImageButton
-        android:id="@+id/btn_settings"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_icon_circle"
-        android:backgroundTint="#4DFFFFFF"
-        android:src="@android:drawable/ic_menu_manage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
+    <!-- Avatar bé đã được phóng to (Giống mẫu thầy giáo) -->
+    <ImageView
         android:id="@+id/iv_child_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/bg_avatar_circle"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="3dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/hoc_sinh_nam"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,11 +42,11 @@
         android:id="@+id/tv_child_greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/quicksand_bold"
         android:text="Chào bé! 👋"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_child_avatar" />
@@ -67,10 +55,10 @@
         android:id="@+id/tv_current_badge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
         android:text="Danh hiệu: Mầm Non Chăm Chỉ 🌱"
         android:textColor="#FFEB3B"
         android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_child_greeting" />
@@ -80,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/quicksand_medium"
         android:text="Thứ Hai, 13/04/2026"
         android:textColor="#E0F2F1"
         android:textSize="12sp"
@@ -110,8 +99,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-                <TextView android:id="@+id/tv_total_points" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/secondary_yellow" android:textSize="20sp" android:textStyle="bold" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⭐ Điểm" android:textSize="12sp" />
+                <TextView android:id="@+id/tv_total_points" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/secondary_yellow" android:textSize="20sp" android:fontFamily="@font/quicksand_bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⭐ Điểm" android:textSize="12sp" android:fontFamily="@font/quicksand_medium" />
             </LinearLayout>
 
             <View android:layout_width="1dp" android:layout_height="40dp" android:layout_gravity="center" android:background="#EEEEEE" />
@@ -122,8 +111,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-                <TextView android:id="@+id/tv_streak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/secondary_orange" android:textSize="20sp" android:textStyle="bold" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥 Chuỗi" android:textSize="12sp" />
+                <TextView android:id="@+id/tv_streak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/secondary_orange" android:textSize="20sp" android:fontFamily="@font/quicksand_bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥 Chuỗi" android:textSize="12sp" android:fontFamily="@font/quicksand_medium" />
             </LinearLayout>
 
             <View android:layout_width="1dp" android:layout_height="40dp" android:layout_gravity="center" android:background="#EEEEEE" />
@@ -134,26 +123,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-                <TextView android:id="@+id/tv_completed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/primary_green" android:textSize="22sp" android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@android:drawable/checkbox_on_background"
-                        app:tint="#A5D6A7" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="Xong"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                <TextView android:id="@+id/tv_completed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/primary_green" android:textSize="22sp" android:fontFamily="@font/quicksand_bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="✅ Xong" android:textColor="@color/text_secondary" android:textSize="12sp" android:fontFamily="@font/quicksand_medium" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -164,7 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_container"
         app:layout_constraintTop_toBottomOf="@id/card_stats">
 
         <LinearLayout
@@ -191,8 +162,8 @@
                     android:backgroundTint="#E3F2FD">
                     <TextView android:layout_width="45dp" android:layout_height="45dp" android:background="@drawable/bg_icon_circle" android:backgroundTint="@color/white" android:gravity="center" android:text="📝" android:textSize="22sp" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bài tập cô giao" android:textColor="@color/primary_green_dark" android:textStyle="bold" android:textSize="16sp" />
-                        <TextView android:id="@+id/tv_assignment_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nhấn để xem các bài tập mới nhé!" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bài tập cô giao" android:textColor="@color/primary_green_dark" android:fontFamily="@font/quicksand_bold" android:textSize="16sp" />
+                        <TextView android:id="@+id/tv_assignment_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bé có 1 bài tập mới đang chờ!" android:textColor="@color/text_secondary" android:fontFamily="@font/quicksand_medium" android:textSize="12sp" />
                     </LinearLayout>
                     <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/gray_500" />
                 </LinearLayout>
@@ -214,8 +185,8 @@
                     android:padding="16dp">
                     <TextView android:layout_width="45dp" android:layout_height="45dp" android:background="@drawable/bg_icon_circle" android:backgroundTint="#FFF3E0" android:gravity="center" android:text="✉️" android:textSize="22sp" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lời nhắn từ cô giáo" android:textColor="@color/primary_green_dark" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bé nhấn vào đây để xem cô nhận xét nhé!" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lời nhắn từ cô giáo" android:textColor="@color/primary_green_dark" android:fontFamily="@font/quicksand_bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bé nhấn vào đây để xem cô nhận xét nhé!" android:textColor="@color/text_secondary" android:fontFamily="@font/quicksand_medium" android:textSize="12sp" />
                     </LinearLayout>
                     <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/gray_500" />
                 </LinearLayout>
@@ -236,8 +207,8 @@
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="#AD1457">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
-                        <ImageView android:layout_width="60dp" android:layout_height="60dp" android:src="@android:drawable/ic_menu_agenda" app:tint="#80FFFFFF" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="HỌC TẬP" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🗓️" android:textSize="50sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="HỌC TẬP" android:textColor="@color/white" android:textSize="20sp" android:fontFamily="@font/quicksand_bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -250,8 +221,8 @@
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="#EF6C00">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
-                        <ImageView android:layout_width="60dp" android:layout_height="60dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#80FFFFFF" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="THỰC HÀNH" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▶️" android:textSize="50sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="THỰC HÀNH" android:textColor="@color/white" android:textSize="20sp" android:fontFamily="@font/quicksand_bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -268,7 +239,7 @@
         app:cardCornerRadius="32.5dp"
         app:cardElevation="8dp"
         app:cardBackgroundColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_container"
         app:layout_constraintEnd_toEndOf="parent">
         <TextView
             android:layout_width="match_parent"
@@ -276,31 +247,75 @@
             android:gravity="center"
             android:text="🤖"
             android:textSize="38sp" />
-    </androidx.cardview.widget.CardView>    <!-- Bottom Navigation -->
+    </androidx.cardview.widget.CardView>
+
+    <!-- THANH ĐIỀU HƯỚNG MỚI (PHONG CÁCH GIÁO VIÊN) -->
     <LinearLayout
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottom_navigation_container"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/white"
-        android:elevation="10dp"
+        android:layout_height="85dp"
+        android:background="@drawable/bg_bottom_nav_bar"
+        android:elevation="15dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
         app:layout_constraintBottom_toBottomOf="parent">
-        <LinearLayout android:id="@+id/nav_home" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏠" android:textSize="20sp"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Trang chủ" android:textColor="@color/primary_green" android:textSize="10sp" android:textStyle="bold"/>
+
+        <LinearLayout
+            android:id="@+id/nav_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_nav_item_selected"
+            android:paddingVertical="8dp"
+            android:layout_marginHorizontal="4dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏠" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_bold" android:text="Trang chủ" android:textColor="@color/primary_green_dark" android:textSize="10sp"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/nav_community" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌍" android:textSize="20sp"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cộng đồng" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+
+        <LinearLayout
+            android:id="@+id/nav_community"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏆" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Xếp hạng" android:textColor="@color/text_secondary" android:textSize="10sp"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/nav_progress" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📈" android:textSize="20sp"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tiến độ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+
+        <LinearLayout
+            android:id="@+id/nav_progress"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📈" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Tiến độ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/nav_profile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎒" android:textSize="20sp"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hồ sơ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
+
+        <LinearLayout
+            android:id="@+id/nav_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎒" android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/quicksand_medium" android:text="Hồ sơ" android:textColor="@color/text_secondary" android:textSize="10sp"/>
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

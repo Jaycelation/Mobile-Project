@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +19,15 @@ import com.example.kid_app.common.AppConstants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.text.SimpleDateFormat;
 
 public class ChildHomeActivity extends AppCompatActivity {
 
@@ -36,7 +41,7 @@ public class ChildHomeActivity extends AppCompatActivity {
     private CardView fabAiChat;
     private LinearLayout navHome, navCommunity, navProgress, navProfile;
 
-    private ImageButton btnBack, btnSettings;
+    private ImageButton btnBack;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -49,7 +54,9 @@ public class ChildHomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_child_home);
 
+        // Chuc nang: khoi tao Firebase Auth de lay phien dang nhap hien tai.
         mAuth = FirebaseAuth.getInstance();
+        // Chuc nang: khoi tao Firestore de doc ghi du lieu cloud cho man hinh.
         db = FirebaseFirestore.getInstance();
 
         SharedPreferences prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE);
@@ -64,12 +71,10 @@ public class ChildHomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (selectedChildId != null) {
-            new com.example.kid_app.data.repository.ChildProfileRepository().addPoints(selectedChildId, 0);
             loadChildInfo();
             loadStats();
-            loadAssignments();
         } else {
-            android.widget.Toast.makeText(this, "Không tìm thấy hồ sơ bé. Vui lòng đăng nhập lại.", android.widget.Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Không tìm thấy hồ sơ bé. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -98,7 +103,6 @@ public class ChildHomeActivity extends AppCompatActivity {
         navProfile = findViewById(R.id.nav_profile);
 
         btnBack = findViewById(R.id.btn_back);
-        btnSettings = findViewById(R.id.btn_settings);
     }
 
     private void setupStaticUI() {
@@ -109,19 +113,23 @@ public class ChildHomeActivity extends AppCompatActivity {
     private void setupClickEvents() {
         if (btnBack != null) btnBack.setOnClickListener(v -> finish());
         
-        if (btnSettings != null) btnSettings.setOnClickListener(v -> 
-                startActivity(new Intent(this, ChildProfileActivity.class)));
-
-        // SỬA ĐỔI: Vào thẳng màn hình Chat (ParentFeedbackActivity)
         if (cardFeedback != null) cardFeedback.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ParentFeedbackActivity.class);
-            startActivity(intent);
+            if (isJoinedClass()) {
+                Intent intent = new Intent(this, ParentFeedbackActivity.class);
+                startActivity(intent);
+            } else {
+                showJoinClassNotice();
+            }
         });
 
         if (cardAssignments != null) cardAssignments.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChildAssignmentActivity.class);
-            intent.putExtra("classId", childClassId);
-            startActivity(intent);
+            if (isJoinedClass()) {
+                Intent intent = new Intent(this, ChildAssignmentActivity.class);
+                intent.putExtra("classId", childClassId);
+                startActivity(intent);
+            } else {
+                showJoinClassNotice();
+            }
         });
 
         if (cardLearningPortal != null) cardLearningPortal.setOnClickListener(v -> 
@@ -133,8 +141,13 @@ public class ChildHomeActivity extends AppCompatActivity {
         if (fabAiChat != null) fabAiChat.setOnClickListener(v -> 
                 startActivity(new Intent(this, AiChatActivity.class)));
 
-        if (navCommunity != null) navCommunity.setOnClickListener(v -> 
-                startActivity(new Intent(this, LeaderboardActivity.class)));
+        if (navCommunity != null) navCommunity.setOnClickListener(v -> {
+            if (isJoinedClass()) {
+                startActivity(new Intent(this, LeaderboardActivity.class));
+            } else {
+                showJoinClassNotice();
+            }
+        });
 
         if (navProgress != null) navProgress.setOnClickListener(v -> 
                 startActivity(new Intent(this, ChildProgressActivity.class)));
@@ -143,7 +156,16 @@ public class ChildHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChildProfileActivity.class)));
     }
 
+    private boolean isJoinedClass() {
+        return childClassId != null && !childClassId.isEmpty();
+    }
+
+    private void showJoinClassNotice() {
+        Toast.makeText(this, "Tính năng này yêu cầu bé tham gia lớp học trước nhé!", Toast.LENGTH_LONG).show();
+    }
+
     private void loadChildInfo() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CHILD_PROFILES)
                 .document(selectedChildId)
                 .get()
@@ -153,36 +175,69 @@ public class ChildHomeActivity extends AppCompatActivity {
                         if (name == null || name.isEmpty()) name = doc.getString("fullName");
                         if (name == null || name.isEmpty()) name = "bé";
                         tvChildGreeting.setText("Chào " + name + "! 👋");
+
+                        String gender = doc.getString("gender");
+                        if ("Nữ".equals(gender) || "Female".equals(gender)) {
+                            ivChildAvatar.setImageResource(R.drawable.hoc_sinh_nu);
+                        } else {
+                            ivChildAvatar.setImageResource(R.drawable.hoc_sinh_nam);
+                        }
                         
                         childClassId = doc.getString("currentClassId");
                         if (childClassId == null || childClassId.isEmpty()) {
                             childClassId = doc.getString("classId");
                         }
-                        loadAssignments();
+                        
+                        if (isJoinedClass()) {
+                            loadAssignments();
+                        } else {
+                            tvAssignmentCount.setText("Bé chưa tham gia lớp học nào.");
+                            tvAssignmentCount.setTextColor(getResources().getColor(R.color.text_secondary));
+                        }
                     }
                 });
     }
 
     private void loadAssignments() {
-        if (childClassId == null) return;
+        if (childClassId == null || selectedChildId == null) return;
 
-        db.collection("assignments")
-                .whereEqualTo("classId", childClassId)
-                .whereEqualTo("status", "active")
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
+        db.collection(AppConstants.COL_ASSIGNMENT_SUBMISSIONS)
+                .whereEqualTo("childId", selectedChildId)
+                .whereEqualTo("status", "submitted")
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    int count = queryDocumentSnapshots.size();
-                    if (count > 0) {
-                        tvAssignmentCount.setText("Bé có " + count + " bài tập mới đang chờ!");
-                        tvAssignmentCount.setTextColor(getResources().getColor(R.color.secondary_orange));
-                    } else {
-                        tvAssignmentCount.setText("Hiện không có bài tập nào.");
-                        tvAssignmentCount.setTextColor(getResources().getColor(R.color.text_secondary));
+                .addOnSuccessListener(submissionSnaps -> {
+                    Set<String> submittedIds = new HashSet<>();
+                    for (QueryDocumentSnapshot doc : submissionSnaps) {
+                        submittedIds.add(doc.getString("assignmentId"));
                     }
+
+                    // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
+                    db.collection("assignments")
+                            .whereEqualTo("classId", childClassId)
+                            .whereEqualTo("status", "active")
+                            .get()
+                            .addOnSuccessListener(assignmentSnaps -> {
+                                int count = 0;
+                                for (QueryDocumentSnapshot doc : assignmentSnaps) {
+                                    if (!submittedIds.contains(doc.getId())) {
+                                        count++;
+                                    }
+                                }
+                                
+                                if (count > 0) {
+                                    tvAssignmentCount.setText("Bé có " + count + " bài tập mới đang chờ!");
+                                    tvAssignmentCount.setTextColor(getResources().getColor(R.color.secondary_orange));
+                                } else {
+                                    tvAssignmentCount.setText("Hiện không có bài tập nào.");
+                                    tvAssignmentCount.setTextColor(getResources().getColor(R.color.text_secondary));
+                                }
+                            });
                 });
     }
 
     private void loadStats() {
+        // Chuc nang: goi Firestore de doc hoac ghi du lieu cho chuc nang hien tai.
         db.collection(AppConstants.COL_CHILD_STATS)
                 .document(selectedChildId)
                 .get()
